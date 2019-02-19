@@ -9,7 +9,7 @@ function(nsims=1, nobs=0, ndvs=4, mu=0.1,
   "--save-output": true,
   "--output-path": output_path,
   "--output-prefix": "d_%d_b_%0.2f_e_%0.3f_k_%d_h_Base_sim" % [ndvs, pubbias, mu, maxpubs],
-  "Journal Parameters" :{
+  "Journal Parameters": {
     "--pub-bias": pubbias,
     "--journal-selection-model": "SignificantSelection",
     "--max-pubs": maxpubs,
