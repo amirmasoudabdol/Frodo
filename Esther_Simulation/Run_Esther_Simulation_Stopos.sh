@@ -1,7 +1,10 @@
 #!/bin/bash
 #SBATCH -N 1
 #SBATCH -n 16
-#SBATCH -t 00:15:00
+#SBATCH -t 01:00:00
+#SBATCH --constraint=avx
+#SBATCH --mail-type=END
+#SBATCH --mail-user=a.m.abdol@uvt.nl
 
 module load stopos
 
@@ -9,7 +12,7 @@ export STOPOS_POOL=esther
 
 ncores=`sara-get-num-cores`
 
-nsims=1000
+nsims=5000
 
 simpath=/home/amabdol/Projects/SAMoo/Esther_Simulation
 configpath=${simpath}/configs/
@@ -32,20 +35,27 @@ for ((i=1; i<=ncores; i++)) ; do
 	b=${params[1]}
 	e=${params[2]}
 	k=${params[3]}
-	h=${params[4]}
+	ish=${params[4]}
+	hid="${params[5]}"
+
+	configprefix=d_${d}_b_${b}_e_${e}_k_${k}_h_${hid}
+
 	jsonnet --tla-code nsims=${nsims} \
 			--tla-code ndvs=${d} \
 			--tla-code pubbias=${b} \
 			--tla-code maxpubs=${k} \
 			--tla-code mu=${e} \
-			--tla-str output_path=${outputpath} \
-			Esther_${h}.jsonnet > ${configpath}d_${d}_b_${b}_e_${e}_k_${k}_h_${h}.json
+			--tla-code ishacker=${ish} \
+			--tla-str hackid=${hid} \
+			--tla-str outputpath=${outputpath} \
+			--tla-str outputfilename=${configprefix} \
+			esther.jsonnet > "${configpath}${configprefix}".json
 
-	echo "Configuration file: d_${d}_b_${b}_e_${e}_k_${k}_h_${h}.json"
-	${sam} --config=${configpath}d_${d}_b_${b}_e_${e}_k_${k}_h_${h}.json
+	echo "Configuration file: ${configprefix}.json"
+	${sam} --config=${configpath}${configprefix}.json
 	echo
 	echo "Computing Meta-Analysis Metrics"
-	nohup Rscript ${samrrpath}post-analyzer.R ${outputpath}d_${d}_b_${b}_e_${e}_k_${k}_h_${h}_sim.csv FALSE
+	nohup Rscript ${samrrpath}post-analyzer.R ${outputpath}${configprefix}_sim.csv FALSE
 	echo
 	stopos remove
 ) &
