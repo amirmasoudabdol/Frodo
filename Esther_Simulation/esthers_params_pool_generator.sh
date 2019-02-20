@@ -1,7 +1,6 @@
-nsims=1000
 ndvs=(4)
 biaspool=(0.00 0.05 0.50 1.00)
-effectpool=(0.147 0.384 0.669)
+effectpool=(0.000 0.147 0.384 0.669)
 metapool=(8 24 70 300)
 hackids=(0 1 2 3)
 ishacker=(false true true true)
