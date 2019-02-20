@@ -30,9 +30,8 @@
 	    "--alpha": alpha,
 	    "--side": side
 	},
-	researcher(ishacker, selpref, hacks, hackid): {
+	researcher(ishacker, hacks, hackid): {
 	    "--is-phacker": ishacker,
-	    "--selection-pref": selpref,
 	    "--p-hacking-methods": hacks[hackid]
 	}
 }
