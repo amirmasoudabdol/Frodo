@@ -38,7 +38,7 @@ for ((i=1; i<=ncores; i++)) ; do
 	ish=${params[4]}
 	hid="${params[5]}"
 
-	configprefix=d_${d}_b_${b}_e_${e}_k_${k}_h_${hid}
+	configprefix=d_${d}_b_${b}_e_${e}_k_${k}_${ish}_h_${hid}
 
 	jsonnet --tla-code nsims=${nsims} \
 			--tla-code ndvs=${d} \
@@ -55,7 +55,7 @@ for ((i=1; i<=ncores; i++)) ; do
 	${sam} --config=${configpath}${configprefix}.json
 	echo
 	echo "Computing Meta-Analysis Metrics"
-	nohup Rscript ${samrrpath}post-analyzer.R ${outputpath}${configprefix}_sim.csv FALSE
+	Rscript ${samrrpath}post-analyzer.R ${outputpath}${configprefix}_sim.csv FALSE
 	echo
 	stopos remove
 ) &

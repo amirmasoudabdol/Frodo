@@ -19,7 +19,7 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
 	ish=${params[4]}
 	hid="${params[5]}"
 
-	configprefix=d_${d}_b_${b}_e_${e}_k_${k}_h_${hid}
+	configprefix=d_${d}_b_${b}_e_${e}_k_${k}_${ish}_h_${hid}
 
 	jsonnet --tla-code nsims=${nsims} \
 			--tla-code ndvs=${d} \
@@ -35,9 +35,9 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
 	echo "Configuration file: ${configprefix}.json"
 	${sam} --config="${configpath}${configprefix}".json
 	echo
-	echo "Computing Meta-Analysis Metrics"
-	nohup Rscript ${samrrpath}post-analyzer.R ${outputpath}${configprefix}_sim.csv FALSE
-	echo
+	# echo "Computing Meta-Analysis Metrics"
+	# Rscript ${samrrpath}post-analyzer.R ${outputpath}${configprefix}_sim.csv FALSE
+	# echo
 
 wait
 done < "$1"
