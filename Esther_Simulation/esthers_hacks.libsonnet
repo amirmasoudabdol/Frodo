@@ -3,7 +3,10 @@
 		# Base, no hacking
     ],
     "1": [
-    	# Selective Reporting
+    	{
+        "type": "Outcome Switching",
+        "preference": "MinPvalue"
+      }
     ],
 	"2" : [
         {
@@ -13,6 +16,10 @@
         }
     ],
     "3" : [
+        {
+          "type": "Outcome Switching",
+          "preference": "MinPvalue"
+        },
         {
           "type": "OptionalStopping",
           "size": 0,
