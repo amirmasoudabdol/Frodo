@@ -1,6 +1,7 @@
 # Outputs and Configs
 outputs/
 configs/
+nohop.out
 
 
 # ------------------------ macOS ---------------------
