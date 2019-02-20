@@ -1,21 +1,25 @@
 {
-	"0" : [
+	"0" : 
+    [
 		# Base, no hacking
     ],
-    "1": [
+  "1": 
+    [
     	{
         "type": "Outcome Switching",
         "preference": "MinPvalue"
       }
     ],
-	"2" : [
+	"2" : 
+    [
         {
           "type": "OptionalStopping",
           "size": 3,
           "attempts": 10
         }
     ],
-    "3" : [
+  "3" : 
+    [
         {
           "type": "Outcome Switching",
           "preference": "MinPvalue"

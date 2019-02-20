@@ -11,19 +11,19 @@ ishacker=(false true true true)
 
 for d in "${ndvs[@]}"
 do
-	for b in "${biaspool[@]}"
+	for k in "${metapool[@]}"
 	do
-		for e in "${effectpool[@]}"
+		for hid in "${hackids[@]}"
 		do
-			for k in "${metapool[@]}"
+			for b in "${biaspool[@]}"
 			do
-				for hid in "${hackids[@]}"
+				# for ish in "${ishacker[@]}"
+				# do
+				for e in "${effectpool[@]}"
 				do
-					for ish in "${ishacker[@]}"
-					do
-						echo "${d} ${b} ${e} ${k} ${ish} ${hid}"
-					done
+					echo "${d} ${b} ${e} ${k} ${ishacker[$hid]} ${hid}"
 				done
+				# done
 			done
 		done
 	done

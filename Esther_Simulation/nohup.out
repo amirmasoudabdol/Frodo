@@ -1,0 +1,211 @@
+[1] "/Users/amabdol/Projects/SAMoo/Esther_Simulation/outputs/d_4_b_0.00_e_0.147_k_8_h_0_sim.csv"
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+
+Execution halted
+
+Execution halted
+[1] "/Users/amabdol/Projects/SAMoo/Esther_Simulation/outputs/d_4_b_0.00_e_0.147_k_8_h_0_sim.csv"
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+[1] "/Users/amabdol/Projects/SAMoo/Esther_Simulation/outputs/d_4_b_0.00_e_0.147_k_8_h_1_sim.csv"
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+[1] "/Users/amabdol/Projects/SAMoo/Esther_Simulation/outputs/d_4_b_0.00_e_0.147_k_8_h_2_sim.csv"
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+[1] "/Users/amabdol/Projects/SAMoo/Esther_Simulation/outputs/d_4_b_0.00_e_0.147_k_8_h_3_sim.csv"
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+[1] "/Users/amabdol/Projects/SAMoo/Esther_Simulation/outputs/d_4_b_0.00_e_0.147_k_24_h_0_sim.csv"
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+[1] "/Users/amabdol/Projects/SAMoo/Esther_Simulation/outputs/d_4_b_0.00_e_0.147_k_24_h_1_sim.csv"
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+[1] "/Users/amabdol/Projects/SAMoo/Esther_Simulation/outputs/d_4_b_0.00_e_0.147_k_24_h_2_sim.csv"
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+[1] "/Users/amabdol/Projects/SAMoo/Esther_Simulation/outputs/d_4_b_0.00_e_0.147_k_24_h_3_sim.csv"
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+[1] "/Users/amabdol/Projects/SAMoo/Esther_Simulation/outputs/d_4_b_0.00_e_0.147_k_70_h_0_sim.csv"
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+
+Execution halted
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+Error in rma(yi = df$yi, sei = df$sei, verbose = FALSE, method = "FE") : 
+  Division by zero when computing the inverse variance weights.
+Calls: meta_analysis_on_file ... values.list -> value -> value.Future -> resignalConditions
+Execution halted
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in rma(yi = df$yi, sei = df$sei, verbose = FALSE, method = "FE") : 
+  Division by zero when computing the inverse variance weights.
+Calls: meta_analysis_on_file ... values.list -> value -> value.Future -> resignalConditions
+Execution halted
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in rma(yi = df$yi, sei = df$sei, verbose = FALSE, method = "FE") : 
+  Division by zero when computing the inverse variance weights.
+Calls: meta_analysis_on_file ... values.list -> value -> value.Future -> resignalConditions
+Execution halted
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+Error in rma(yi = df$yi, sei = df$sei, verbose = FALSE, method = "FE") : 
+  Division by zero when computing the inverse variance weights.
+Calls: meta_analysis_on_file ... values.list -> value -> value.Future -> resignalConditions
+Execution halted
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in rma(yi = df$yi, sei = df$sei, verbose = FALSE, method = "FE") : 
+  Division by zero when computing the inverse variance weights.
+Calls: meta_analysis_on_file ... values.list -> value -> value.Future -> resignalConditions
+Execution halted
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in rma(yi = df$yi, sei = df$sei, verbose = FALSE, method = "FE") : 
+  Division by zero when computing the inverse variance weights.
+Calls: meta_analysis_on_file ... values.list -> value -> value.Future -> resignalConditions
+Execution halted
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+Error in rma(yi = df$yi, sei = df$sei, verbose = FALSE, method = "FE") : 
+  Division by zero when computing the inverse variance weights.
+Calls: meta_analysis_on_file ... values.list -> value -> value.Future -> resignalConditions
+Execution halted
+Error in rma(yi = df$yi, sei = df$sei, verbose = FALSE, method = "FE") : 
+  Division by zero when computing the inverse variance weights.
+Calls: meta_analysis_on_file ... values.list -> value -> value.Future -> resignalConditions
+Execution halted
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in rma(yi = df$yi, sei = df$sei, verbose = FALSE, method = "FE") : 
+  Division by zero when computing the inverse variance weights.
+Calls: meta_analysis_on_file ... values.list -> value -> value.Future -> resignalConditions
+Execution halted
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+
+Execution halted
+
+Execution halted
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+Error in rma(yi = df$yi, sei = df$sei, verbose = FALSE, method = "FE") : 
+  Division by zero when computing the inverse variance weights.
+Calls: meta_analysis_on_file ... values.list -> value -> value.Future -> resignalConditions
+Execution halted
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in rma(yi = df$yi, sei = df$sei, verbose = FALSE, method = "FE") : 
+  Division by zero when computing the inverse variance weights.
+Calls: meta_analysis_on_file ... values.list -> value -> value.Future -> resignalConditions
+Execution halted
+Error in rma(yi = df$yi, sei = df$sei, verbose = FALSE, method = "FE") : 
+  Division by zero when computing the inverse variance weights.
+Calls: meta_analysis_on_file ... values.list -> value -> value.Future -> resignalConditions
+Execution halted
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+Error in rma(yi = df$yi, sei = df$sei, verbose = FALSE, method = "FE") : 
+  Division by zero when computing the inverse variance weights.
+Calls: meta_analysis_on_file ... values.list -> value -> value.Future -> resignalConditions
+Execution halted
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in rma(yi = df$yi, sei = df$sei, verbose = FALSE, method = "FE") : 
+  Division by zero when computing the inverse variance weights.
+Calls: meta_analysis_on_file ... values.list -> value -> value.Future -> resignalConditions
+Execution halted
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in rma(yi = df$yi, sei = df$sei, verbose = FALSE, method = "FE") : 
+  Division by zero when computing the inverse variance weights.
+Calls: meta_analysis_on_file ... values.list -> value -> value.Future -> resignalConditions
+Execution halted
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+Error in sendMaster(try(eval(expr, env), silent = TRUE)) : 
+  ignoring SIGPIPE signal
+Calls: meta_analysis_on_file ... run.MulticoreFuture -> do.call -> <Anonymous> -> sendMaster
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+ Progress: ──────────────────────────────────────────────────────────────── 100%
+
+
+Execution halted
+
+Execution halted
