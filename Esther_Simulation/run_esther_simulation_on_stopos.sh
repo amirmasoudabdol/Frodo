@@ -1,26 +1,38 @@
 #!/bin/bash
 #SBATCH -N 1
 #SBATCH -n 16
-#SBATCH -t 01:00:00
+#SBATCH -p short
 #SBATCH --constraint=avx
 #SBATCH --mail-type=END
 #SBATCH --mail-user=a.m.abdol@uvt.nl
 
 module load stopos
-
 export STOPOS_POOL=esther
-
 ncores=`sara-get-num-cores`
 
-nsims=5000
+# Setting Paths
 
-simpath=/home/amabdol/Projects/SAMoo/Esther_Simulation
-configpath=${simpath}/configs/
-outputpath=${simpath}/outputs/
+sam_oo_home_path=$HOME/Projects/SAMoo/
 
-sam=${simpath}/SAMpp
+sim_home_path=${HOME}/SAMoo/Esther_Simulation
+sim_tmp_path=${TMPDIR}/SAMoo/Esther_Simulation
 
-samrrpath=/home/amabdol/Projects/SAMrr/
+sam_pp_exec=${sim_tmp_path}/SAMpp
+
+# samrrpath=$HOME/Projects/SAMrr/
+
+# configpath=${sim_tmp_path}/configs/
+# outputpath=${sim_tmp_path}/outputs/
+
+
+# Copying everything to the /scratch
+
+rsync -av --progress ${sam_oo_home_path} ${TMPDIR} --exclude configs --exclude outputs --exclude .git
+
+
+# Setting up and running the simulation
+
+nsims=1000
 
 for ((i=1; i<=ncores; i++)) ; do
 (
@@ -47,21 +59,25 @@ for ((i=1; i<=ncores; i++)) ; do
 			--tla-code mu=${e} \
 			--tla-code ishacker=${ish} \
 			--tla-str hackid=${hid} \
-			--tla-str outputpath=${outputpath} \
+			--tla-str outputpath=${sim_tmp_path}/outputs \
 			--tla-str outputfilename=${configprefix} \
-			esther.jsonnet > "${configpath}${configprefix}".json
+			esther.jsonnet > "${sim_tmp_path}/configs/${configprefix}".json
 
 	echo "Configuration file: ${configprefix}.json"
-	${sam} --config=${configpath}${configprefix}.json
+	${sam_pp_exec} --config=${sim_tmp_path}/configs/${configprefix}.json
 	echo
 	echo "Computing Meta-Analysis Metrics"
-	Rscript ${samrrpath}post-analyzer.R ${outputpath}${configprefix}_sim.csv FALSE
+	Rscript ${sim_tmp_path}/SAMrr/post-analyzer.R ${sim_tmp_path}/outputs/${configprefix}_sim.csv FALSE
 	echo
+	rsycn -av ${sim_tmp_path}/configs ${sim_home_path}
+	rsycn -av ${sim_tmp_path}/outputs ${sim_home_path}
 	stopos remove
 ) &
 done
-
 wait
+
+# Copying eveyrhing back
+rsync -av ${TMPDIR}/
 
 # echo "Running the Batch Meta-Analysis"
 # Rscript ~/Projects/SAMrr/post-analyzer.R outputs TRUE
