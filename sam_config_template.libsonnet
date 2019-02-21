@@ -25,7 +25,7 @@
   	},
 	journal(pubbias, maxpubs, alpha, side): {
 	    "--pub-bias": pubbias,
-	    "--journal-selection-model": "SignificantSelection",
+	    "--journal-selection-model": "Significant Selection",
 	    "--max-pubs": maxpubs,
 	    "--alpha": alpha,
 	    "--side": side

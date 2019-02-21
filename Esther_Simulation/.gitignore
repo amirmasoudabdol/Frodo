@@ -1,6 +1,7 @@
 # Outputs and Configs
 outputs/
 configs/
+dbs/
 nohop.out
 
 

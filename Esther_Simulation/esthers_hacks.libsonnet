@@ -7,26 +7,26 @@
     [
     	{
         "type": "Outcome Switching",
-        "preference": "MinPvalue"
+        "preference": "Min P-value"
       }
     ],
 	"2" : 
     [
         {
-          "type": "OptionalStopping",
+          "type": "Optional Stopping",
           "size": 3,
-          "attempts": 10
+          "attempts": 3
         }
     ],
   "3" : 
     [
         {
           "type": "Outcome Switching",
-          "preference": "MinPvalue"
+          "preference": "Min P-value"
         },
         {
-          "type": "OptionalStopping",
-          "size": 0,
+          "type": "Optional Stopping",
+          "size": 3,
           "attempts": 3
         }
     ]
