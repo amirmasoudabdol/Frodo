@@ -38,7 +38,7 @@ mkdir ${sim_tmp_path}/outputs
 # -----------------------------------
 # Setting up and running the simulation
 
-nsims=1000
+nsims=5000
 
 for ((i=1; i<=ncores; i++)) ; do
 (
@@ -76,7 +76,7 @@ for ((i=1; i<=ncores; i++)) ; do
 	echo
 
 	echo "Computing Meta-Analysis Metrics"
-	Rscript ${sam_rr_path}/post-analyzer.R ${sim_tmp_path}/outputs/${configprefix}_sim.csv FALSE
+	nohup Rscript ${sam_rr_path}/post-analyzer.R ${sim_tmp_path}/outputs/${configprefix}_sim.csv FALSE
 	echo
 
 	echo "Copying back the outputs"

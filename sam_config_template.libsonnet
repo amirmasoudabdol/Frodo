@@ -2,7 +2,7 @@
 	simulation(nsims, outputpath, outputfilename): {
 		"--debug": false,
 		"--verbose": false,
-		"--progress": true,
+		"--progress": false,
 		"--n-sims": nsims,
 		"--master-seed": 42,
 		"--save-output": true,
