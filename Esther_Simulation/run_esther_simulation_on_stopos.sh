@@ -10,34 +10,42 @@ module load stopos
 export STOPOS_POOL=esther
 ncores=`sara-get-num-cores`
 
+# -----------------------------------
 # Setting Paths
+sim_home_path=${HOME}/Projects/SAMoo/Esther_Simulation
+mkdir ${sim_home_path}/outputs
+mkdir ${sim_home_path}/configs
 
 sam_oo_home_path=$HOME/Projects/SAMoo/
+sam_rr_home_path=$HOME/Projects/SAMrr/
 
-sim_home_path=${HOME}/SAMoo/Esther_Simulation
 sim_tmp_path=${TMPDIR}/SAMoo/Esther_Simulation
 
 sam_pp_exec=${sim_tmp_path}/SAMpp
 
-# samrrpath=$HOME/Projects/SAMrr/
+sam_rr_path=${TMPDIR}/SAMrr/
 
-# configpath=${sim_tmp_path}/configs/
-# outputpath=${sim_tmp_path}/outputs/
-
-
+# -----------------------------------
 # Copying everything to the /scratch
 
-rsync -av --progress ${sam_oo_home_path} ${TMPDIR} --exclude configs --exclude outputs --exclude .git
+mkdir ${TMPDIR}/SAMoo
+mkdir ${TMPDIR}/SAMrr
+rsync -r ${sam_oo_home_path} ${TMPDIR}/SAMoo --exclude configs --exclude outputs --exclude .git
+rsync -r ${sam_rr_home_path} ${TMPDIR}/SAMrr --exclude configs --exclude outputs --exclude .git
+mkdir ${sim_tmp_path}/configs
+mkdir ${sim_tmp_path}/outputs
 
-
+# -----------------------------------
 # Setting up and running the simulation
 
 nsims=1000
 
 for ((i=1; i<=ncores; i++)) ; do
 (
+	# Getting the next parameters from the pool
 	stopos next
 
+	# Checking if the parameters pool is empty
 	if ["$STOPOS_RC" != "OK"]; then
 		break
 	fi
@@ -49,9 +57,9 @@ for ((i=1; i<=ncores; i++)) ; do
 	k=${params[3]}
 	ish=${params[4]}
 	hid="${params[5]}"
-
 	configprefix=d_${d}_b_${b}_e_${e}_k_${k}_${ish}_h_${hid}
 
+	# Preparing the config file for SAMpp using JSONnet
 	jsonnet --tla-code nsims=${nsims} \
 			--tla-code ndvs=${d} \
 			--tla-code pubbias=${b} \
@@ -59,25 +67,30 @@ for ((i=1; i<=ncores; i++)) ; do
 			--tla-code mu=${e} \
 			--tla-code ishacker=${ish} \
 			--tla-str hackid=${hid} \
-			--tla-str outputpath=${sim_tmp_path}/outputs \
+			--tla-str outputpath=${sim_tmp_path}/outputs/ \
 			--tla-str outputfilename=${configprefix} \
 			esther.jsonnet > "${sim_tmp_path}/configs/${configprefix}".json
 
-	echo "Configuration file: ${configprefix}.json"
+	echo "Running the simulation for: ${configprefix}.json"
 	${sam_pp_exec} --config=${sim_tmp_path}/configs/${configprefix}.json
 	echo
+
 	echo "Computing Meta-Analysis Metrics"
-	Rscript ${sim_tmp_path}/SAMrr/post-analyzer.R ${sim_tmp_path}/outputs/${configprefix}_sim.csv FALSE
+	Rscript ${sam_rr_path}/post-analyzer.R ${sim_tmp_path}/outputs/${configprefix}_sim.csv FALSE
 	echo
-	rsycn -av ${sim_tmp_path}/configs ${sim_home_path}
-	rsycn -av ${sim_tmp_path}/outputs ${sim_home_path}
+
+	echo "Copying back the outputs"
+	rsync -r ${sim_tmp_path}/configs ${sim_home_path}
+	rsync -r ${sim_tmp_path}/outputs ${sim_home_path}
+
+	# Removing the used parameter from the pool
 	stopos remove
 ) &
 done
 wait
 
 # Copying eveyrhing back
-rsync -av ${TMPDIR}/
+# rsync -av ${TMPDIR}/
 
 # echo "Running the Batch Meta-Analysis"
 # Rscript ~/Projects/SAMrr/post-analyzer.R outputs TRUE
