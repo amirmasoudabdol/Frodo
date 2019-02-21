@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -N 1
 #SBATCH -n 16
-#SBATCH -t 06:00:00
+#SBATCH -t 03:00:00
 #SBATCH --constraint=avx
 #SBATCH --mail-type=BEGIN,END
 #SBATCH --mail-user=a.m.abdol@uvt.nl
@@ -23,15 +23,15 @@ sim_tmp_path=${TMPDIR}/SAMoo/Esther_Simulation
 
 sam_pp_exec=${sim_tmp_path}/SAMpp
 
-sam_rr_path=${TMPDIR}/SAMrr/
+sam_rr_path=${HOME}/SAMrr
 
 # -----------------------------------
 # Copying everything to the /scratch
 
 mkdir ${TMPDIR}/SAMoo
-mkdir ${TMPDIR}/SAMrr
-rsync -r ${sam_oo_home_path} ${TMPDIR}/SAMoo --exclude configs --exclude outputs --exclude .git
-rsync -r ${sam_rr_home_path} ${TMPDIR}/SAMrr --exclude configs --exclude outputs --exclude .git
+# mkdir ${TMPDIR}/SAMrr
+rsync -r ${sam_oo_home_path} ${TMPDIR}/SAMoo --exclude configs --exclude outputs --exclude dbs --exclude .git
+# rsync -r ${sam_rr_home_path} ${TMPDIR}/SAMrr --exclude .git
 mkdir ${sim_tmp_path}/configs
 mkdir ${sim_tmp_path}/outputs
 
@@ -76,7 +76,7 @@ for ((i=1; i<=ncores; i++)) ; do
 	echo
 
 	echo "Computing Meta-Analysis Metrics"
-	Rscript ${sam_rr_path}/post-analyzer.R ${sim_tmp_path}/outputs/${configprefix}_sim.csv FALSE
+	${sam_rr_path}/post-analyzer.R ${sim_tmp_path}/outputs/${configprefix}_sim.csv FALSE
 	echo
 
 	echo "Copying back the outputs"
