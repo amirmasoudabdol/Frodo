@@ -23,7 +23,7 @@ sim_tmp_path=${TMPDIR}/SAMoo/Esther_Simulation
 
 sam_pp_exec=${sim_tmp_path}/SAMpp
 
-sam_rr_path=${HOME}/SAMrr
+sam_rr_path=${HOME}/Projects/SAMrr
 
 # -----------------------------------
 # Copying everything to the /scratch
@@ -76,7 +76,7 @@ for ((i=1; i<=ncores; i++)) ; do
 	echo
 
 	echo "Computing Meta-Analysis Metrics"
-	${sam_rr_path}/post-analyzer.R ${sim_tmp_path}/outputs/${configprefix}_sim.csv FALSE
+	Rscript ${sam_rr_path}/post-analyzer.R ${sim_tmp_path}/outputs/${configprefix}_sim.csv FALSE
 	echo
 
 	echo "Copying back the outputs"
