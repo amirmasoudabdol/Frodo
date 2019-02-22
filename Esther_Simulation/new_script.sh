@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -N 1
 #SBATCH -n 16
-#SBATCH -t 03:00:00
+#SBATCH -p short
 #SBATCH --constraint=avx
 #SBATCH --mail-type=BEGIN,END
 #SBATCH --mail-user=a.m.abdol@uvt.nl
@@ -80,13 +80,20 @@ for ((i=1; i<=ncores; i++)) ; do
 	${sam_pp_exec} --config=${sim_tmp_path}/configs/${configprefix}.json
 	echo
 
+	rsync -r ${sim_tmp_path}/configs ${sim_home_path}
+
 	echo "Computing Meta-Analysis Metrics"
 	nohup Rscript ${sam_rr_path}/post-analyzer.R ${sim_tmp_path}/outputs/${configprefix}_sim.csv FALSE
 	echo
 
-	echo "Copying back the outputs"
-	rsync -r ${sim_tmp_path}/configs ${sim_home_path}
-	rsync -r ${sim_tmp_path}/outputs ${sim_home_path}
+	echo "Creating a new job file"
+	${sim_tmp_path}/rscript-job-temp.sh ${configprefix} > ${configprefix}_r_job.sh
+	echo
+
+	sbatch ${configprefix}_r_job.sh
+
+	# echo "Copying back the outputs"
+	# rsync -r ${sim_tmp_path}/outputs ${sim_home_path}
 
 ) &
 done
