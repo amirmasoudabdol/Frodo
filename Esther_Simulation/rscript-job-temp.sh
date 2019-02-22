@@ -1,7 +1,7 @@
 echo "#!/bin/bash"
 echo "#SBATCH -N 1"
 echo "#SBATCH -n 16"
-echo "#SBATCH -p short"
+echo "#SBATCH -t 00:05:00"
 echo "#SBATCH --constraint=avx"
 echo "#SBATCH --mail-type=BEGIN,END"
 echo "#SBATCH --mail-user=a.m.abdol@uvt.nl"
@@ -31,7 +31,7 @@ echo "mkdir \${sim_tmp_path}/outputs"
 echo 
 echo 
 echo "echo "Computing Meta-Analysis Metrics""
-echo "nohup Rscript \${sam_rr_path}/post-analyzer.R \${sim_tmp_path}/outputs/${1}_sim.csv FALSE"
+echo "Rscript \${sam_rr_path}/post-analyzer.R \${sim_tmp_path}/outputs/${1}_sim.csv FALSE"
 echo "echo"
 echo 
 echo "echo "Copying back the outputs""
