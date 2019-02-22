@@ -25,7 +25,7 @@ echo "# -----------------------------------"
 echo "# Copying everything to the /scratch"
 echo 
 echo "mkdir \${TMPDIR}/SAMoo"
-echo "rsync -r \${sam_oo_home_path} \${TMPDIR}/SAMoo --exclude configs --exclude outputs --exclude dbs --exclude .git"
+echo "rsync -r \${sam_oo_home_path} \${TMPDIR}/SAMoo --exclude configs --exclude dbs --exclude .git"
 echo "mkdir \${sim_tmp_path}/configs"
 echo "mkdir \${sim_tmp_path}/outputs"
 echo 
