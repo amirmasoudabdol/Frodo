@@ -15,29 +15,33 @@ export STOPOS_POOL=esther
 ncores=`sara-get-num-cores`
 
 # -----------------------------------
-# Setting Paths
-sim_home_path=${HOME}/Projects/SAMoo/Esther_Simulation
-mkdir ${sim_home_path}/outputs
-mkdir ${sim_home_path}/configs
+# Setting DIRs
 
-sam_oo_home_path=$HOME/Projects/SAMoo/
-sam_rr_home_path=$HOME/Projects/SAMrr/
+SIM_HOME_DIR=${HOME}/Projects/SAMoo/Esther_Simulation
+mkdir ${SIM_HOME_DIR}/outputs
+mkdir ${SIM_HOME_DIR}/configs
 
-sim_tmp_path=${TMPDIR}/SAMoo/Esther_Simulation
+SAMoo_DIR=$HOME/Projects/SAMoo/
+SAMrr_DIR=$HOME/Projects/SAMrr/
+SAMpp_DIR=$HOME/Projects/SAMpp/
 
-sam_pp_exec=${sim_tmp_path}/SAMpp
+SIM_TMP_DIR=${TMPDIR}/SAMoo/Esther_Simulation
 
-sam_rr_path=${HOME}/Projects/SAMrr
+SAM_EXEC=${SIM_TMP_DIR}/SAMpp
 
 # -----------------------------------
 # Copying everything to the /scratch
 
 mkdir ${TMPDIR}/SAMoo
-# mkdir ${TMPDIR}/SAMrr
-rsync -r ${sam_oo_home_path} ${TMPDIR}/SAMoo --exclude configs --exclude outputs --exclude dbs --exclude .git
-# rsync -r ${sam_rr_home_path} ${TMPDIR}/SAMrr --exclude .git
-mkdir ${sim_tmp_path}/configs
-mkdir ${sim_tmp_path}/outputs
+rsync -r ${SAMoo_DIR} ${TMPDIR}/SAMoo --exclude configs \
+									  --exclude outputs \
+									  --exclute logs \
+									  --exclude jobs \
+									  --exclude dbs \
+									  --exclude .git
+# rsync -r ${SAMrr_DIR} ${TMPDIR}/SAMrr --exclude .git
+mkdir ${SIM_TMP_DIR}/configs
+mkdir ${SIM_TMP_DIR}/outputs
 
 # -----------------------------------
 # Setting up and running the simulation
@@ -57,34 +61,34 @@ for ((i=1; i<=ncores; i++)) ; do
 	params=($STOPOS_VALUE)
 	
 	# `prepare_config_file` is being imported from `prepare-config-file.sh`
-	configfilename="$(prepare_config_file params[@] $sim_tmp_path)"
-	configfile="${sim_tmp_path}/configs/${configfilename}.json"
+	CONFIG_FILE_PREFIX="$(prepare_config_file params[@] $SIM_TMP_DIR)"
+	CONFIG_FILE="${SIM_TMP_DIR}/configs/${CONFIG_FILE_PREFIX}.json"
 	
-	cp ${configfile} $sim_home_path/configs/
+	cp ${CONFIG_FILE} $SIM_HOME_DIR/configs/
 
 	# Removing the used parameter from the pool
 	stopos remove
 	
 	echo
-	echo "Running the simulation for: ${configfilename}.json"
-	simlogfile="${sim_tmp_path}/logs/${configfilename}_sim.log"
-	${sam_pp_exec} --config=${configfile} > ${simlogfile}
+	echo "Running the simulation for: ${CONFIG_FILE_PREFIX}.json"
+	SIM_LOG_FILE="${SIM_TMP_DIR}/logs/${CONFIG_FILE_PREFIX}_sim.log"
+	${SAM_EXEC} --config=${CONFIG_FILE} > ${SIM_LOG_FILE}
 
-	cp $simlogfile $sim_home_path/logs/
+	cp $SIM_LOG_FILE $SIM_HOME_DIR/logs/
 
 	echo
 	echo "Copying back the output file"
-	outputfile="${sim_tmp_path}/outputs/${configfilename}_sim.csv"
-	cp ${outputfile} $sim_home_path/outputs/
+	SIM_OUT_FILE="${SIM_TMP_DIR}/outputs/${CONFIG_FILE_PREFIX}_sim.csv"
+	cp ${SIM_OUT_FILE} $SIM_HOME_DIR/outputs/
 
 
 	echo
 	echo "Creating a new job file"
-	rjobfile="${sim_tmp_path}/jobs/${configfilename}_r_job.sh"
-	${sim_tmp_path}/rscript-job-temp.sh ${configfilename} > ${rjobfile}
-	cp ${rjobfile} $sim_home_path/jobs/
+	R_JOB_FILE="${SIM_HOME_DIR}/jobs/${CONFIG_FILE_PREFIX}_r_job.sh"
+	${SIM_TMP_DIR}/rscript-job-temp.sh ${CONFIG_FILE_PREFIX} > ${R_JOB_FILE}
+	cp ${R_JOB_FILE} $SIM_HOME_DIR/jobs/
 
-	sbatch ${rjobfile}
+	sbatch ${R_JOB_FILE}
 
 
 ) &
