@@ -9,7 +9,7 @@
 		"--output-path": outputpath,
 		"--output-prefix": outputfilename
 	},
-	experiment(ndvs, nobs, mu, sd, cov): {
+	experiment(ndvs, nobs, mu, sd, cov, loadings=0.1, errsds=0.01, errcovs=0.001): {
 	    "--data-strategy": "FixedModel",
 	    "--n-conditions": 1,
 	    "--n-dep-vars": ndvs,
@@ -19,9 +19,9 @@
 	    "--sds": sd,
 	    "--is-correlated": cov > 0,
 	    "--covs": cov,
-	    "--loadings": 0.7,
-	    "--err-sds": 0.01,
-	    "--err-covs": 0.001
+	    "--loadings": loadings,
+	    "--err-sds": errsds,
+	    "--err-covs": errcovs
   	},
 	journal(pubbias, maxpubs, alpha, side): {
 	    "--pub-bias": pubbias,
