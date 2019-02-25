@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ARCHIVEPATH=$(HOME)/Projects/archive
+ARCHIVEPATH=$(HOME)/archive
 
 prepare:
 	mkdir -pv $(PROJECT)/configs
@@ -15,6 +15,7 @@ clean:
 	rm -vrf $(PROJECT)logs/*
 	rm -vrf $(PROJECT)jobs/*
 	rm -vrf $(PROJECT)dbs/*
+	rm $(PROJECT)/params.pool
 
 archive:
 	mkdir -pv $(ARCHIVEPATH)/$(ARCHIVENAME)
