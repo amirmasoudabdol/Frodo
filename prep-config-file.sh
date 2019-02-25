@@ -27,7 +27,7 @@ prepare_config_file() {
 				--tla-code sd=${sd} \
 				--tla-code cov=${cov} \
 				--tla-code nobs=${obs} \
-				--tla-code a=${a} \
+				--tla-code alpha=${a} \
 				--tla-code ishacker=${ish} \
 				--tla-str hackid=${hid} \
 				--tla-str outputpath=${path}/outputs/ \
