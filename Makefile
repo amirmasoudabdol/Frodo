@@ -16,7 +16,6 @@ clean:
 	rm -vrf $(PROJECT)/jobs/*
 	rm -vrf $(PROJECT)/dbs/*
 	rm -vrf $(PROJECT)/slurm-*.out
-	rm $(PROJECT)/params.pool
 
 archive:
 	mkdir -pv $(ARCHIVEPATH)/$(ARCHIVENAME)

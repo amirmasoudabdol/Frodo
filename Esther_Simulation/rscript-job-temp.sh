@@ -1,7 +1,7 @@
 echo "#!/bin/bash"
 echo "#SBATCH -N 1"
 echo "#SBATCH -n 16"
-echo "#SBATCH -p short"
+echo "#SBATCH -t 00:05:00"
 echo "#SBATCH --constraint=avx"
 echo "#SBATCH --mail-type=BEGIN,END"
 echo "#SBATCH --mail-user=a.m.abdol@uvt.nl"

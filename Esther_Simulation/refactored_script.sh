@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -N 1
 #SBATCH -n 16
-#SBATCH -p short
+#SBATCH -t 00:05:00
 #SBATCH --constraint=avx
 #SBATCH --mail-type=BEGIN,END
 #SBATCH --mail-user=a.m.abdol@uvt.nl
@@ -18,10 +18,6 @@ ncores=`sara-get-num-cores`
 # Setting DIRs
 
 SIM_HOME_DIR=${HOME}/Projects/SAMoo/Esther_Simulation
-mkdir ${SIM_HOME_DIR}/outputs
-mkdir ${SIM_HOME_DIR}/configs
-mkdir ${SIM_HOME_DIR}/logs
-mkdir ${SIM_HOME_DIR}/jobs
 
 SAMoo_DIR=$HOME/Projects/SAMoo/
 SAMrr_DIR=$HOME/Projects/SAMrr/
@@ -36,11 +32,11 @@ SAM_EXEC=${SIM_TMP_DIR}/SAMpp
 
 mkdir ${TMPDIR}/SAMoo
 rsync -r ${SAMoo_DIR} ${TMPDIR}/SAMoo --exclude configs \
-									  --exclude outputs \
-									  --exclute logs \
-									  --exclude jobs \
-									  --exclude dbs \
-									  --exclude .git
+										--exclude outputs \
+										--exclude logs \
+										--exclude jobs \
+										--exclude dbs \
+										--exclude .git
 # rsync -r ${SAMrr_DIR} ${TMPDIR}/SAMrr --exclude .git
 mkdir ${SIM_TMP_DIR}/outputs
 mkdir ${SIM_TMP_DIR}/configs
@@ -80,17 +76,17 @@ for ((i=1; i<=ncores; i++)) ; do
 
 	cp $SIM_LOG_FILE $SIM_HOME_DIR/logs/
 
-	echo
+	# echo
 	echo "Copying back the output file"
 	SIM_OUT_FILE="${SIM_TMP_DIR}/outputs/${CONFIG_FILE_PREFIX}_sim.csv"
 	cp ${SIM_OUT_FILE} $SIM_HOME_DIR/outputs/
 
 
-	echo
+	# echo
 	echo "Creating a new job file"
 	R_JOB_FILE="${SIM_HOME_DIR}/jobs/${CONFIG_FILE_PREFIX}_r_job.sh"
 	${SIM_TMP_DIR}/rscript-job-temp.sh ${CONFIG_FILE_PREFIX} > ${R_JOB_FILE}
-	cp ${R_JOB_FILE} $SIM_HOME_DIR/jobs/
+	# cp ${R_JOB_FILE} $SIM_HOME_DIR/jobs/
 
 	sbatch ${R_JOB_FILE}
 
