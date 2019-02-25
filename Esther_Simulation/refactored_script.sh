@@ -20,6 +20,8 @@ ncores=`sara-get-num-cores`
 SIM_HOME_DIR=${HOME}/Projects/SAMoo/Esther_Simulation
 mkdir ${SIM_HOME_DIR}/outputs
 mkdir ${SIM_HOME_DIR}/configs
+mkdir ${SIM_HOME_DIR}/logs
+mkdir ${SIM_HOME_DIR}/jobs
 
 SAMoo_DIR=$HOME/Projects/SAMoo/
 SAMrr_DIR=$HOME/Projects/SAMrr/
@@ -40,8 +42,10 @@ rsync -r ${SAMoo_DIR} ${TMPDIR}/SAMoo --exclude configs \
 									  --exclude dbs \
 									  --exclude .git
 # rsync -r ${SAMrr_DIR} ${TMPDIR}/SAMrr --exclude .git
-mkdir ${SIM_TMP_DIR}/configs
 mkdir ${SIM_TMP_DIR}/outputs
+mkdir ${SIM_TMP_DIR}/configs
+mkdir ${SIM_TMP_DIR}/logs
+mkdir ${SIM_TMP_DIR}/jobs
 
 # -----------------------------------
 # Setting up and running the simulation
