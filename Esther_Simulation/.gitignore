@@ -1,6 +1,8 @@
 # Outputs and Configs
-outputs/
 configs/
+outputs/
+logs/
+jobs/
 dbs/
 nohop.out
 
