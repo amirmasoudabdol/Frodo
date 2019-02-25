@@ -24,7 +24,7 @@ SIMrrDIR=${HOME}/Projects/SAMrr
 # Copying everything to the /scratch
 
 mkdir ${TMPDIR}/SAMoo
-rsync -r ${SAMoo_DIR} ${TMPDIR}/SAMoo --exclude configs --exclude outputs --exclude dbs --exclude .git
+rsync -r ${SAMoo_DIR} ${TMPDIR}/SAMoo --exclude configs --exclude outputs --exclude logs --exclude jobs --exclude dbs --exclude .git
 mkdir ${SIM_TMP_DIR}/configs
 mkdir ${SIM_TMP_DIR}/outputs
 
