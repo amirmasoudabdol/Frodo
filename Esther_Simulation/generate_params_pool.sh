@@ -5,7 +5,7 @@ metapool=(8 24 70 300)
 hackids=(0 1 2 3)
 ishacker=(false true true true)
 sds=(0.5)
-covs=(0.001)
+covs=(0)
 nobs=(0)
 alpha=(0.05)
 
