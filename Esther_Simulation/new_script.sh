@@ -40,7 +40,7 @@ mkdir ${sim_tmp_path}/outputs
 # -----------------------------------
 # Setting up and running the simulation
 
-nsims=5000
+nsims=100
 
 for ((i=1; i<=ncores; i++)) ; do
 (

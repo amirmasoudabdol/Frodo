@@ -1,7 +1,7 @@
 echo "#!/bin/bash"
 echo "#SBATCH -N 1"
 echo "#SBATCH -n 16"
-echo "#SBATCH -t 00:05:00"
+echo "#SBATCH -p short"
 echo "#SBATCH --constraint=avx"
 echo "#SBATCH --mail-type=BEGIN,END"
 echo "#SBATCH --mail-user=a.m.abdol@uvt.nl"
@@ -25,15 +25,19 @@ echo "# -----------------------------------"
 echo "# Copying everything to the /scratch"
 echo 
 echo "mkdir \${TMPDIR}/SAMoo"
-echo "rsync -r \${sam_oo_home_path} \${TMPDIR}/SAMoo --exclude configs --exclude dbs --exclude .git"
+echo "rsync -r \${sam_oo_home_path} \${TMPDIR}/SAMoo --exclude configs --exclude outputs --exclude dbs --exclude .git"
 echo "mkdir \${sim_tmp_path}/configs"
 echo "mkdir \${sim_tmp_path}/outputs"
 echo 
+echo "echo "Copying the simulation output file to the $TMPDIR""
+echo "cp \${sim_home_path}/outputs/${1}_sim.csv \${sim_tmp_path}/outputs/"
 echo 
 echo "echo "Computing Meta-Analysis Metrics""
-echo "Rscript \${sam_rr_path}/post-analyzer.R \${sim_tmp_path}/outputs/${1}_sim.csv FALSE"
+echo "simfile=\"\${sim_tmp_path}/outputs/${1}_sim.csv\""
+echo "Rscript \${sam_rr_path}/post-analyzer.R \${simfile} FALSE"
 echo "echo"
-echo 
+echo
 echo "echo "Copying back the outputs""
-echo "rsync -r \${sim_tmp_path}/outputs \${sim_home_path}"
+echo "metafile=\"\${sim_tmp_path}/outputs/${1}_meta.csv\""
+echo "cp \${metafile} \${sim_home_path}/outputs/"
 echo 

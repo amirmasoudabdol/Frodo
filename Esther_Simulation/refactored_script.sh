@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -N 1
 #SBATCH -n 16
-#SBATCH -t 00:05:00
+#SBATCH -p short
 #SBATCH --constraint=avx
 #SBATCH --mail-type=BEGIN,END
 #SBATCH --mail-user=a.m.abdol@uvt.nl
@@ -42,7 +42,7 @@ mkdir ${sim_tmp_path}/outputs
 # -----------------------------------
 # Setting up and running the simulation
 
-nsims=100
+nsims=10
 
 for ((i=1; i<=ncores; i++)) ; do
 (
@@ -58,27 +58,33 @@ for ((i=1; i<=ncores; i++)) ; do
 	
 	# `prepare_config_file` is being imported from `prepare-config-file.sh`
 	configfilename="$(prepare_config_file params[@] $sim_tmp_path)"
+	configfile="${sim_tmp_path}/configs/${configfilename}.json"
+	
+	cp ${configfile} $sim_home_path/configs/
 
 	# Removing the used parameter from the pool
 	stopos remove
 	
-	echo "Running the simulation for: ${configprefix}.json"
-	${sam_pp_exec} --config=${sim_tmp_path}/configs/${configprefix}.json
 	echo
+	echo "Running the simulation for: ${configfilename}.json"
+	simlogfile="${sim_tmp_path}/logs/${configfilename}_sim.log"
+	${sam_pp_exec} --config=${configfile} > ${simlogfile}
 
-	# echo "Copying back the outputs"
-	rsync -r ${sim_tmp_path}/configs ${sim_home_path}
-	rsync -r ${sim_tmp_path}/outputs ${sim_home_path}
+	cp $simlogfile $sim_home_path/logs/
 
-	# echo "Computing Meta-Analysis Metrics"
-	# nohup Rscript ${sam_rr_path}/post-analyzer.R ${sim_tmp_path}/outputs/${configprefix}_sim.csv FALSE
-	# echo
+	echo
+	echo "Copying back the output file"
+	outputfile="${sim_tmp_path}/outputs/${configfilename}_sim.csv"
+	cp ${outputfile} $sim_home_path/outputs/
 
+
+	echo
 	echo "Creating a new job file"
-	${sim_tmp_path}/rscript-job-temp.sh ${configprefix} > ${configprefix}_r_job.sh
-	echo
+	rjobfile="${sim_tmp_path}/jobs/${configfilename}_r_job.sh"
+	${sim_tmp_path}/rscript-job-temp.sh ${configfilename} > ${rjobfile}
+	cp ${rjobfile} $sim_home_path/jobs/
 
-	sbatch ${configprefix}_r_job.sh
+	sbatch ${rjobfile}
 
 
 ) &

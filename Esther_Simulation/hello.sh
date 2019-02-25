@@ -30,10 +30,14 @@ mkdir ${sim_tmp_path}/configs
 mkdir ${sim_tmp_path}/outputs
 
 
+cp ${sim_home_path}/outputs/d_4_b_1.00_e_0.669_k_8_false_h_0_sim.csv ${sim_tmp_path}/outputs/
+
 echo Computing Meta-Analysis Metrics
-Rscript ${sam_rr_path}/post-analyzer.R ${sim_tmp_path}/outputs/hello_sim.csv FALSE
+simfile="${sim_tmp_path}/outputs/d_4_b_1.00_e_0.669_k_8_false_h_0_sim.csv"
+Rscript ${sam_rr_path}/post-analyzer.R ${simfile} FALSE
 echo
 
 echo Copying back the outputs
-rsync -r ${sim_tmp_path}/outputs ${sim_home_path}
+metafile="${sim_tmp_path}/outputs/d_4_b_1.00_e_0.669_k_8_false_h_0_meta.csv"
+cp ${metafile} ${sim_home_path}/outputs/
 
