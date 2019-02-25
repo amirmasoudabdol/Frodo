@@ -18,6 +18,10 @@ ncores=`sara-get-num-cores`
 # Setting DIRs
 
 SIM_HOME_DIR=${HOME}/Projects/SAMoo/Esther_Simulation
+mkdir ${SIM_HOME_DIR}/outputs
+mkdir ${SIM_HOME_DIR}/configs
+mkdir ${SIM_HOME_DIR}/logs
+mkdir ${SIM_HOME_DIR}/jobs
 
 SAMoo_DIR=$HOME/Projects/SAMoo/
 SAMrr_DIR=$HOME/Projects/SAMrr/

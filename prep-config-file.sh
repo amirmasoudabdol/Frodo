@@ -4,6 +4,9 @@ prepare_config_file() {
 	params=("${!1}")
 	path=($2)
 
+	uuid=$(uuidgen)
+	uuid=${uuid:0:8}
+
 	d=${params[0]}
 	b=${params[1]}
 	e=${params[2]}

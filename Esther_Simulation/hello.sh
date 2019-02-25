@@ -8,36 +8,35 @@
 
 # -----------------------------------
 # Setting Paths
-sim_home_path=${HOME}/Projects/SAMoo/Esther_Simulation
-mkdir ${sim_home_path}/outputs
-mkdir ${sim_home_path}/configs
+SIM_HOME_DIR=${HOME}/Projects/SAMoo/Esther_Simulation
+mkdir ${SIM_HOME_DIR}/outputs
+mkdir ${SIM_HOME_DIR}/configs
 
-sam_oo_home_path=/Users/amabdol/Projects/SAMoo/
-sam_rr_home_path=/Users/amabdol/Projects/SAMrr/
+SAMoo_DIR=/Users/amabdol/Projects/SAMoo/
+SAMrr_DIR=/Users/amabdol/Projects/SAMrr/
 
-sim_tmp_path=${TMPDIR}/SAMoo/Esther_Simulation
+SIM_TMP_DIR=${TMPDIR}/SAMoo/Esther_Simulation
 
-sam_pp_exec=${sim_tmp_path}/SAMpp
 
-sam_rr_path=${HOME}/Projects/SAMrr
+SIMrrDIR=${HOME}/Projects/SAMrr
 
 # -----------------------------------
 # Copying everything to the /scratch
 
 mkdir ${TMPDIR}/SAMoo
-rsync -r ${sam_oo_home_path} ${TMPDIR}/SAMoo --exclude configs --exclude outputs --exclude dbs --exclude .git
-mkdir ${sim_tmp_path}/configs
-mkdir ${sim_tmp_path}/outputs
+rsync -r ${SAMoo_DIR} ${TMPDIR}/SAMoo --exclude configs --exclude outputs --exclude dbs --exclude .git
+mkdir ${SIM_TMP_DIR}/configs
+mkdir ${SIM_TMP_DIR}/outputs
 
+echo "Copying the simulation output file to the /var/folders/x_/2261qy0d4lb6y0dyhs7zwwx80000gn/T/"
+cp ${SIM_HOME_DIR}/outputs/hello_sim.csv ${SIM_TMP_DIR}/outputs/
 
-cp ${sim_home_path}/outputs/d_4_b_1.00_e_0.669_k_8_false_h_0_sim.csv ${sim_tmp_path}/outputs/
-
-echo Computing Meta-Analysis Metrics
-simfile="${sim_tmp_path}/outputs/d_4_b_1.00_e_0.669_k_8_false_h_0_sim.csv"
-Rscript ${sam_rr_path}/post-analyzer.R ${simfile} FALSE
+echo "Computing Meta-Analysis Metrics"
+SIM_OUT_FILE="${SIM_TMP_DIR}/outputs/hello_sim.csv"
+Rscript ${SIMrrDIR}/post-analyzer.R ${SIM_OUT_FILE} FALSE
 echo
 
-echo Copying back the outputs
-metafile="${sim_tmp_path}/outputs/d_4_b_1.00_e_0.669_k_8_false_h_0_meta.csv"
-cp ${metafile} ${sim_home_path}/outputs/
+echo "Copying back the outputs"
+META_OUT_FILE="${SIM_TMP_DIR}/outputs/hello_meta.csv"
+cp ${META_OUT_FILE} ${SIM_HOME_DIR}/outputs/
 

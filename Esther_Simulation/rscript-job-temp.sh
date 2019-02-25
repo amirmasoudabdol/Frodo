@@ -28,15 +28,15 @@ echo "rsync -r \${SAMoo_DIR} \${TMPDIR}/SAMoo --exclude configs --exclude output
 echo "mkdir \${SIM_TMP_DIR}/configs"
 echo "mkdir \${SIM_TMP_DIR}/outputs"
 echo 
-echo "echo "Copying the simulation output file to the $TMPDIR""
+echo "echo \"Copying the simulation output file to the $TMPDIR\""
 echo "cp \${SIM_HOME_DIR}/outputs/${1}_sim.csv \${SIM_TMP_DIR}/outputs/"
 echo 
-echo "echo "Computing Meta-Analysis Metrics""
+echo "echo \"Computing Meta-Analysis Metrics\""
 echo "SIM_OUT_FILE=\"\${SIM_TMP_DIR}/outputs/${1}_sim.csv\""
 echo "Rscript \${SIMrrDIR}/post-analyzer.R \${SIM_OUT_FILE} FALSE"
 echo "echo"
 echo
-echo "echo "Copying back the outputs""
+echo "echo \"Copying back the outputs\""
 echo "META_OUT_FILE=\"\${SIM_TMP_DIR}/outputs/${1}_meta.csv\""
 echo "cp \${META_OUT_FILE} \${SIM_HOME_DIR}/outputs/"
 echo 
