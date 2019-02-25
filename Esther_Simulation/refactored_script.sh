@@ -50,32 +50,14 @@ for ((i=1; i<=ncores; i++)) ; do
 	stopos next
 
 	# Checking if the parameters pool is empty
-	if ["$STOPOS_RC" != "OK"]; then
+	if [ "$STOPOS_RC" != "OK" ]; then
 		break
 	fi
 
 	params=($STOPOS_VALUE)
-	# d=${params[0]}
-	# b=${params[1]}
-	# e=${params[2]}
-	# k=${params[3]}
-	# ish=${params[4]}
-	# hid="${params[5]}"
-	# configprefix=d_${d}_b_${b}_e_${e}_k_${k}_${ish}_h_${hid}
-
-	# # Preparing the config file for SAMpp using JSONnet
-	# jsonnet --tla-code nsims=${nsims} \
-	# 		--tla-code ndvs=${d} \
-	# 		--tla-code pubbias=${b} \
-	# 		--tla-code maxpubs=${k} \
-	# 		--tla-code mu=${e} \
-	# 		--tla-code ishacker=${ish} \
-	# 		--tla-str hackid=${hid} \
-	# 		--tla-str outputpath=${sim_tmp_path}/outputs/ \
-	# 		--tla-str outputfilename=${configprefix} \
-	# 		esther.jsonnet > "${sim_tmp_path}/configs/${configprefix}".json
-
-	configfilename=$(prepare_config_file params[@])
+	
+	# `prepare_config_file` is being imported from `prepare-config-file.sh`
+	configfilename="$(prepare_config_file params[@] $sim_tmp_path)"
 
 	# Removing the used parameter from the pool
 	stopos remove
