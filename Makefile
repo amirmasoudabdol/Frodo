@@ -10,11 +10,12 @@ prepare:
 	mkdir -pv $(PROJECT)/dbs
 
 clean:
-	rm -vrf $(PROJECT)configs/*
-	rm -vrf $(PROJECT)outputs/*
-	rm -vrf $(PROJECT)logs/*
-	rm -vrf $(PROJECT)jobs/*
-	rm -vrf $(PROJECT)dbs/*
+	rm -vrf $(PROJECT)/configs/*
+	rm -vrf $(PROJECT)/outputs/*
+	rm -vrf $(PROJECT)/logs/*
+	rm -vrf $(PROJECT)/jobs/*
+	rm -vrf $(PROJECT)/dbs/*
+	rm -vrf $(PROJECT)/slurm-*.out
 	rm $(PROJECT)/params.pool
 
 archive:
