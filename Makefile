@@ -6,7 +6,7 @@ ARCHIVEPATH=$(HOME)/archive
 
 sam:
 	mkdir -pv $(PROJECT)/build
-	cmake -DEVENT__DISABLE_TESTS=ON -DCMAKE_BUILD_TYPE=Release -H$(HOME)/Projects/SAMpp -B$(PROJECT)/build 
+	cmake -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -H$(HOME)/Projects/SAMpp -B$(PROJECT)/build 
 	make -C $(PROJECT)/build
 
 prepare:
@@ -20,6 +20,7 @@ prepare:
 	# Add some scripts here to generate template files for their projects
 
 clean:
+	rm -vrf $(PROJECT)/build/*
 	rm -vrf $(PROJECT)/configs/*
 	rm -vrf $(PROJECT)/outputs/*
 	rm -vrf $(PROJECT)/logs/*

@@ -1,5 +1,5 @@
-local lib = import '../sam.libsonnet';
-local hacks = import 'esthers_hacks.libsonnet';
+local lib = import 'sam.libsonnet';
+local hacks = import 'hacks.libsonnet';
 
 function(nsims=1, outputpath = "outputs/", outputfilename="res",
           ndvs=4, nobs=0, mu=0.1, sd=0.1, cov=0,
@@ -7,7 +7,7 @@ function(nsims=1, outputpath = "outputs/", outputfilename="res",
           ishacker=false, hackid="0") {
   
   "Simulation Parameters": 
-    lib.simulation(nsims, outputpath, outputfilename),
+    lib.simulation(debug, verbose, progress, nsims, outputpath, outputfilename),
   "Journal Parameters": 
     lib.journal(pubbias, maxpubs, alpha, side),
   "Experiment Parameters": 
