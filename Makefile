@@ -17,6 +17,8 @@ prepare:
 	mkdir -pv $(PROJECT)/jobs
 	mkdir -pv $(PROJECT)/dbs
 
+	# Add some scripts here to generate template files for their projects
+
 clean:
 	rm -vrf $(PROJECT)/configs/*
 	rm -vrf $(PROJECT)/outputs/*
