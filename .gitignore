@@ -1,3 +1,12 @@
+# SAM
+
+/*/build
+/*/configs
+/*/outputs
+/*/logs
+/*/jobs
+/*/dbs
+
 # ------------------------ macOS ---------------------
 # General
 .DS_Store

@@ -1,8 +1,16 @@
 #!/bin/bash
 
+# This is a utility Makefile
+
 ARCHIVEPATH=$(HOME)/archive
 
+sam:
+	mkdir -pv $(PROJECT)/build
+	cmake -DEVENT__DISABLE_TESTS=ON -DCMAKE_BUILD_TYPE=Release -H$(HOME)/Projects/SAMpp -B$(PROJECT)/build 
+	make -C $(PROJECT)/build
+
 prepare:
+	mkdir -pv $(PROJECT)/build
 	mkdir -pv $(PROJECT)/configs
 	mkdir -pv $(PROJECT)/outputs
 	mkdir -pv $(PROJECT)/logs

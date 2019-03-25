@@ -10,7 +10,7 @@
 		"--output-prefix": outputfilename
 	},
 	experiment(ndvs, nobs, mu, sd, cov, loadings=0.1, errsds=0.01, errcovs=0.001): {
-	    "--data-strategy": "FixedModel",
+	    "--data-strategy": "Linear Model",
 	    "--n-conditions": 1,
 	    "--n-dep-vars": ndvs,
 	    "--n-items": 3,
