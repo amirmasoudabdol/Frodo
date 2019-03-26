@@ -1,0 +1,57 @@
+{
+   "Experiment Parameters": {
+      "--alpha": 0.050000000000000003,
+      "--journal-selection-model": "Significant Selection",
+      "--max-pubs": 70,
+      "--pub-bias": 0.94999999999999996,
+      "--side": 1
+   },
+   "Journal Parameters": {
+      "--covs": 0,
+      "--data-strategy": "Linear Model",
+      "--effect-estimators": [
+         "Cohens D",
+         "Hedges G"
+      ],
+      "--err-covs": 0,
+      "--err-vars": 0,
+      "--loadings": 0.10000000000000001,
+      "--means": 0.123,
+      "--meta-seed": 43,
+      "--n-conditions": 1,
+      "--n-dep-vars": 2,
+      "--n-items": 0,
+      "--n-obs": 20,
+      "--test-strategy": {
+         "alpha": 0.050000000000000003,
+         "side": 1,
+         "type": "TTest"
+      },
+      "--vars": 0.01
+   },
+   "Researcher Parameters": {
+      "--decision-strategy": {
+         "name": "Patient Decision Maker",
+         "preference": "Min Pvalue"
+      },
+      "--is-phacker": false,
+      "--p-hacking-methods": [
+         [
+            { }
+         ],
+         [
+            { }
+         ]
+      ]
+   },
+   "Simulation Parameters": {
+      "--debug": false,
+      "--master-seed": 42,
+      "--n-sims": 1,
+      "--output-path": "output/",
+      "--output-prefix": "",
+      "--progress": true,
+      "--save-output": true,
+      "--verbose": false
+   }
+}
