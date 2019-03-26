@@ -17,7 +17,14 @@ prepare:
 	mkdir -pv $(PROJECT)/jobs
 	mkdir -pv $(PROJECT)/dbs
 
+	# Making SAM
+	$(MAKE) sam
+
 	# Add some scripts here to generate template files for their projects
+	$(MAKE) config
+
+config:
+	echo
 
 clean:
 	rm -vrf $(PROJECT)/build/*
@@ -30,6 +37,7 @@ clean:
 
 archive:
 	mkdir -pv $(ARCHIVEPATH)/$(ARCHIVENAME)
+	mv -v $(PROJECT)/build $(ARCHIVEPATH)/$(ARCHIVENAME)
 	mv -v $(PROJECT)/configs $(ARCHIVEPATH)/$(ARCHIVENAME)
 	mv -v $(PROJECT)/outputs $(ARCHIVEPATH)/$(ARCHIVENAME)
 	mv -v $(PROJECT)/logs $(ARCHIVEPATH)/$(ARCHIVENAME)

@@ -1,17 +1,17 @@
 local lib = import 'sam.libsonnet';
 local hacks = import 'hacks.libsonnet';
 
-function(nsims=1, outputpath = "outputs/", outputfilename="res",
-          ndvs=4, nobs=0, mu=0.1, sd=0.1, cov=0,
-          pubbias=0.95, maxpubs=25, alpha=0.05, side = 1,
-          ishacker=false, hackid="0") {
+function(debug=false, verbose=false, progress=true, nsims=1, masterseed=42, saveoutput=true, outputpath="output/", outputprefix="",
+          metaseed=43, datastrategy="Linear Model", nc=1, nd=2, ni=0, nobs=20, mu=0.123, var=0.01, cov=0.0, loadings=0.1, errvars=0.0, errcovs=0.0, teststrategy="TTest", testside=1, testalpha=0.05,
+          pubbias=0.95, selectionmodel="Significant Selection", maxpubs=70, journalalpha=0.05, journalside=1,
+          ishacker=false, hackid="0", decisionstrategy="Patient Decision Maker", decisionpref="Min Pvalue") {
   
   "Simulation Parameters": 
-    lib.simulation(debug, verbose, progress, nsims, outputpath, outputfilename),
+    lib.simulation(debug, verbose, progress, nsims, masterseed, saveoutput, outputpath, outputprefix),
   "Journal Parameters": 
-    lib.journal(pubbias, maxpubs, alpha, side),
+    lib.experiment(metaseed, datastrategy, nc, nd, ni, nobs, mu, var, cov, loadings, errvars, errcovs, teststrategy, testside, testalpha),
   "Experiment Parameters": 
-    lib.experiment(ndvs, nobs, mu, sd, cov),
+    lib.journal(pubbias, selectionmodel, maxpubs, journalalpha, journalside),
   "Researcher Parameters": 
-    lib.researcher(ishacker, hacks, hackid)
+    lib.researcher(ishacker, hacks, hackid, decisionstrategy, decisionpref)
 }

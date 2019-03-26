@@ -1,5 +1,5 @@
 {
-  simulation(debug, verbose, progress, nsims, masterseed, saveoutput=true, outputpath, outputprefix): {
+  simulation(debug, verbose, progress, nsims, masterseed, saveoutput, outputpath, outputprefix): {
     "--debug": debug,
     "--verbose": verbose,
     "--progress": progress,
@@ -39,7 +39,7 @@
     "--alpha": journalalpha,
     "--side": journalside
   },
-  researcher(ishacker, hackid, decisionstrategy, decisionpref): {
+  researcher(ishacker, hacks, hackid, decisionstrategy, decisionpref): {
     "--is-phacker": ishacker,
     "--p-hacking-methods": hacks[hackid],
     "--decision-strategy": {
