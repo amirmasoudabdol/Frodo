@@ -9,6 +9,13 @@ sam:
 	cmake -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -H$(HOME)/Projects/SAMpp -B$(PROJECT)/build 
 	make -C $(PROJECT)/build
 
+config:
+	cp sam.jsonnet $(PROJECT)/$(PROJECT).jsonnet
+	sed -ie 's/sam.libsonnet/$(PROJECT).libsonnet/g' $(PROJECT)/$(PROJECT).jsonnet
+	sed -ie 's/hacks.libsonnet/$(PROJECT)_hacks.libsonnet/g' $(PROJECT)/$(PROJECT).jsonnet
+
+	cp sam.sh $(PROJECT)/$(PROJECT).sh
+
 prepare:
 	mkdir -pv $(PROJECT)/build
 	mkdir -pv $(PROJECT)/configs
@@ -22,9 +29,6 @@ prepare:
 
 	# Add some scripts here to generate template files for their projects
 	$(MAKE) config
-
-config:
-	echo
 
 clean:
 	rm -vrf $(PROJECT)/build/*
