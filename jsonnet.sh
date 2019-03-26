@@ -33,3 +33,5 @@ jsonnet --tla-code debug=false \
 		--tla-str decisionstrategy="Patient Decision Maker" \
 		--tla-str decisionpref="Min Pvalue" \
 		sam.jsonnet > config.json
+
+echo 'Saved "config.json"'
