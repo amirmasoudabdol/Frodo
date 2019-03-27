@@ -26,6 +26,7 @@ source ${PROJECT_DIR}/prep_json_file.sh
 # -----------------------------------
 # Copying everything to the /scratch
 
+rm -rf ${TMPDIR}/yourprojectname
 PROJECT_TMP_DIR=${TMPDIR}/yourprojectname
 
 mkdir ${PROJECT_TMP_DIR}
