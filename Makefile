@@ -11,11 +11,17 @@ sam:
 
 config:
 	cp sam.jsonnet $(PROJECT)/$(PROJECT).jsonnet
-	sed -ie 's/sam.libsonnet/$(PROJECT).libsonnet/g' $(PROJECT)/$(PROJECT).jsonnet
-	sed -ie 's/hacks.libsonnet/$(PROJECT)_hacks.libsonnet/g' $(PROJECT)/$(PROJECT).jsonnet
+	awk '{gsub(/sam.libsonnet/,"$(PROJECT).libsonnet");}1' $(PROJECT)/$(PROJECT).jsonnet > tmp && mv tmp $(PROJECT)/$(PROJECT).jsonnet
+	awk '{gsub(/hacks.libsonnet/,"$(PROJECT)_hacks.libsonnet");}1' $(PROJECT)/$(PROJECT).jsonnet > tmp && mv tmp $(PROJECT)/$(PROJECT).jsonnet
+
+	cp sam.libsonnet $(PROJECT)/$(PROJECT).libsonnet
+	cp hacks.libsonnet $(PROJECT)/$(PROJECT)_hacks.libsonnet
+
+	cp prep_json_file.sh $(PROJECT)/prep_json_file.sh
+	awk '{gsub(/sam.jsonnet/,"$(PROJECT).jsonnet");}1' $(PROJECT)/prep_json_file.sh > tmp && mv tmp $(PROJECT)/prep_json_file.sh
 
 	cp sam_local_run.sh $(PROJECT)/$(PROJECT)_local_run.sh
-	cp sam_parallel_run.sh $(PROJECT)/$(PROJECT)_local_run.sh
+	cp sam_parallel_run.sh $(PROJECT)/$(PROJECT)_parallel_run.sh
 	cp grid.R $(PROJECT)/$(PROJECT)_params_grid_generator.R
 
 prepare:
@@ -27,7 +33,7 @@ prepare:
 	mkdir -pv $(PROJECT)/dbs
 
 	# Making SAM
-	$(MAKE) sam
+# 	$(MAKE) sam
 
 	# Add some scripts here to generate template files for their projects
 	$(MAKE) config
