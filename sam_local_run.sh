@@ -14,7 +14,6 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
 	CONFIG_FILE="configs/${CONFIG_FILE_NAME}.json"
 
 	echo "Running the simulation..."
-	${SAM_EXEC} --config=CONFIG_FILE
-
+	${SAM_EXEC} --config=${CONFIG_FILE}
 
 done < "$1"
