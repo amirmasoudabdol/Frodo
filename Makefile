@@ -41,16 +41,22 @@ config:
 	cp prep_json_file.sh $(PROJECT)/prep_json_file.sh
 	awk '{gsub(/sam.jsonnet/,"$(PROJECT).jsonnet");}1' $(PROJECT)/prep_json_file.sh > tmp && mv tmp $(PROJECT)/prep_json_file.sh
 
-	cp sam_local_run.sh $(PROJECT)/$(PROJECT)_local_run.sh
-	cp sam_parallel_run.sh $(PROJECT)/$(PROJECT)_parallel_run.sh
-	
 	cp grid.R $(PROJECT)/$(PROJECT)_params_grid_generator.R
-
+	
 	rsync -r $(rrDIR)/* $(PROJECT)/rscripts/ --exclude .git
+
+	cp sam_local_run.sh $(PROJECT)/$(PROJECT)_local_run.sh
+	
+	cp sam_parallel_run.sh $(PROJECT)/$(PROJECT)_parallel_run.sh
+	awk '{gsub(/yourprojectname/,"$(PROJECT)");}1' $(PROJECT)/$(PROJECT)_parallel_run.sh > tmp && mv tmp $(PROJECT)/$(PROJECT)_parallel_run.sh
+
+	cp r_job_temp.sh $(PROJECT)/r_job_temp.sh
+	awk '{gsub(/yourprojectname/,"$(PROJECT)");}1' $(PROJECT)/r_job_temp.sh > tmp && mv tmp $(PROJECT)/r_job_temp.sh
 
 prepare:
 	mkdir -pv $(PROJECT)/build
-	mkdir -pv $(PROJECT)/configs
+	mkdir -pv $(PROJECT)/configss
+	
 	mkdir -pv $(PROJECT)/outputs
 	mkdir -pv $(PROJECT)/logs
 	mkdir -pv $(PROJECT)/jobs

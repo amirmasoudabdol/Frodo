@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -N 1
 #SBATCH -n 16
-#SBATCH -t 00:05:00
+#SBATCH -p short
 #SBATCH --constraint=avx
 #SBATCH --mail-type=BEGIN,END
 #SBATCH --mail-user=a.m.abdol@uvt.nl
@@ -9,48 +9,43 @@
 module load stopos
 module load sara-batch-resources
 
-source ${HOME}/Projects/SAMoo/prep-config-file.sh
-
-export STOPOS_POOL=esther
+export STOPOS_POOL=yourprojectname
 ncores=`sara-get-num-cores`
 
+source ${PROJECT_DIR}/prep_json_file.sh
 # -----------------------------------
 # Setting DIRs
 
-SIM_HOME_DIR=${HOME}/Projects/SAMoo/Esther_Simulation
-mkdir ${SIM_HOME_DIR}/outputs
-mkdir ${SIM_HOME_DIR}/configs
-mkdir ${SIM_HOME_DIR}/logs
-mkdir ${SIM_HOME_DIR}/jobs
+PROJECT_DIR=$(pwd)
 
-SAMoo_DIR=$HOME/Projects/SAMoo/
-SAMrr_DIR=$HOME/Projects/SAMrr/
-SAMpp_DIR=$HOME/Projects/SAMpp/
+SAMoo_DIR=${PROJECT_DIR}
+SAMrr_DIR=${PROJECT_DIR}/rscripts
+SAMpp_DIR=${PROJECT_DIR}/build
 
-SIM_TMP_DIR=${TMPDIR}/SAMoo/Esther_Simulation
-
-SAM_EXEC=${SIM_TMP_DIR}/SAMpp
 
 # -----------------------------------
 # Copying everything to the /scratch
 
-mkdir ${TMPDIR}/SAMoo
-rsync -r ${SAMoo_DIR} ${TMPDIR}/SAMoo --exclude configs \
-										--exclude outputs \
-										--exclude logs \
-										--exclude jobs \
-										--exclude dbs \
-										--exclude .git
-# rsync -r ${SAMrr_DIR} ${TMPDIR}/SAMrr --exclude .git
-mkdir ${SIM_TMP_DIR}/outputs
-mkdir ${SIM_TMP_DIR}/configs
-mkdir ${SIM_TMP_DIR}/logs
-mkdir ${SIM_TMP_DIR}/jobs
+PROJECT_TMP_DIR=${TMPDIR}/yourprojectname
+
+mkdir ${PROJECT_TMP_DIR}
+rsync -r ${PROJECT_DIR} ${PROJECT_TMP_DIR} --exclude configs \
+											--exclude outputs \
+											--exclude logs \
+											--exclude jobs \
+											--exclude dbs \
+											--exclude .git
+
+mkdir -p ${PROJECT_TMP_DIR}/outputs \
+		 ${PROJECT_TMP_DIR}/configs \
+		 ${PROJECT_TMP_DIR}/logs \
+		 ${PROJECT_TMP_DIR}/jobs \
+		 ${PROJECT_TMP_DIR}/dbs
+
+SAM_EXEC=${PROJECT_TMP_DIR}/build/SAMpp
 
 # -----------------------------------
 # Setting up and running the simulation
-
-nsims=10
 
 for ((i=1; i<=ncores; i++)) ; do
 (
@@ -64,36 +59,37 @@ for ((i=1; i<=ncores; i++)) ; do
 
 	params=($STOPOS_VALUE)
 	
-	# `prepare_config_file` is being imported from `prepare-config-file.sh`
-	CONFIG_FILE_PREFIX="$(prepare_config_file params[@] $SIM_TMP_DIR)"
-	CONFIG_FILE="${SIM_TMP_DIR}/configs/${CONFIG_FILE_PREFIX}.json"
+	# `prepare_json_file` is being imported from `prep_json_file.sh`
+	CONFIG_FILE_NAME="$(prepare_json_file params[@] ${PROJECT_TMP_DIR}/configs)"
+	CONFIG_FILE="${PROJECT_TMP_DIR}/configs/${CONFIG_FILE_NAME}.json"
 	
-	cp ${CONFIG_FILE} $SIM_HOME_DIR/configs/
-
 	# Removing the used parameter from the pool
 	stopos remove
 	
 	echo
-	echo "Running the simulation for: ${CONFIG_FILE_PREFIX}.json"
-	SIM_LOG_FILE="${SIM_TMP_DIR}/logs/${CONFIG_FILE_PREFIX}_sim.log"
-	${SAM_EXEC} --config=${CONFIG_FILE} > ${SIM_LOG_FILE}
+	echo "Running the simulation for: ${CONFIG_FILE_NAME}.json"
+	LOG_FILE="${PROJECT_TMP_DIR}/logs/${CONFIG_FILE_NAME}_sim.log"
+	
+	# Running SAM
+	${SAM_EXEC} --config=${CONFIG_FILE} > ${LOG_FILE}
+	SIM_FILE="${PROJECT_TMP_DIR}/outputs/${CONFIG_FILE_NAME}_sim.csv"
 
-	cp $SIM_LOG_FILE $SIM_HOME_DIR/logs/
-
-	# echo
+	echo # ----------------------------------------
 	echo "Copying back the output file"
-	SIM_OUT_FILE="${SIM_TMP_DIR}/outputs/${CONFIG_FILE_PREFIX}_sim.csv"
-	cp ${SIM_OUT_FILE} $SIM_HOME_DIR/outputs/
+	
+	cp ${SIM_FILE} ${PROJECT_DIR}/outputs/
+	cp ${CONFIG_FILE} ${PROJECT_DIR}/configs/
+	cp ${LOG_FILE} ${PROJECT_DIR}/logs/
+	# ---------------------------------------------
 
-
-	# echo
+	echo
 	echo "Creating a new job file"
-	R_JOB_FILE="${SIM_HOME_DIR}/jobs/${CONFIG_FILE_PREFIX}_r_job.sh"
-	${SIM_TMP_DIR}/rscript-job-temp.sh ${CONFIG_FILE_PREFIX} > ${R_JOB_FILE}
-	# cp ${R_JOB_FILE} $SIM_HOME_DIR/jobs/
+	R_JOB_FILE="${PROJECT_DIR}/jobs/${CONFIG_FILE_NAME}_r_job.sh"
+	${PROJECT_TMP_DIR}/rscript-job-temp.sh ${CONFIG_FILE_NAME} > ${R_JOB_FILE}
+	
+	cp ${R_JOB_FILE} ${PROJECT_DIR}/jobs/
 
 	sbatch ${R_JOB_FILE}
-
 
 ) &
 done
