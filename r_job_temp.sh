@@ -34,4 +34,3 @@ echo
 echo "echo \"Copying back the outputs\""
 echo "META_FILE=\"\${PROJECT_TMP_DIR}/outputs/${1}_meta.csv\""
 echo "cp \${META_FILE} \${PROJECT_DIR}/outputs/"
-echo 

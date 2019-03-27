@@ -22,7 +22,6 @@ SAMoo_DIR=${PROJECT_DIR}
 SAMrr_DIR=${PROJECT_DIR}/rscripts
 SAMpp_DIR=${PROJECT_DIR}/build
 
-
 # -----------------------------------
 # Copying everything to the /scratch
 
@@ -94,9 +93,3 @@ for ((i=1; i<=ncores; i++)) ; do
 ) &
 done
 wait
-
-# Copying eveyrhing back
-# rsync -av ${TMPDIR}/
-
-# echo "Running the Batch Meta-Analysis"
-# Rscript ~/Projects/SAMrr/post-analyzer.R outputs TRUE
