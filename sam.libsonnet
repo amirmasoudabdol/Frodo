@@ -28,8 +28,8 @@
       "alpha": testalpha
     },
     "--effect-estimators": [
-      "Cohens D",
-      "Hedges G"
+      "CohensD",
+      "HedgesG"
     ]
   },
   journal(pubbias, selectionmodel, maxpubs, journalalpha, journalside): {

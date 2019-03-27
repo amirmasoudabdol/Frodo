@@ -2,18 +2,30 @@
 
 source prep_json_file.sh
 
-SAM_EXEC=build/SAMpp
+rrDIR=rscripts
+buildDIR=build
+configsDIR=configs
+outputsDIR=outputs
+logsDIR=logs
+jobsDIR=jobs
+dbsDIR=dbs
 
 
 while IFS='' read -r line || [[ -n "$line" ]]; do
 	params=($line)
 
-	# `prepare_config_file` is being imported from `prepare-config-file.sh`
+	echo
 	echo "Preparing the config file..."
 	CONFIG_FILE_NAME="$(prepare_json_file params[@] "configs")"
 	CONFIG_FILE="configs/${CONFIG_FILE_NAME}.json"
 
+	echo
 	echo "Running the simulation..."
-	${SAM_EXEC} --config=${CONFIG_FILE}
+	${buildDIR}/SAMpp --config=${CONFIG_FILE}
+
+	echo
+	echo "Running Rscripts"
+	Rscript ${rrDIR}/post-analyzer.R ${outputsDIR}/${CONFIG_FILE_NAME}_sim.csv FALSE
+
 
 done < "$1"

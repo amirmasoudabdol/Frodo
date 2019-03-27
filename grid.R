@@ -9,7 +9,6 @@ suppressWarnings(suppressMessages(library(utils)))
 # from all combinations of the supplied vectors.
 
 # NOTES:
-# - Use 0 for FALSE, and 1 for TRUE
 # - Use the full decimal, e.g., 0.1 instead of .1 or 1.
 
 df <- expand.grid(
@@ -19,7 +18,7 @@ df <- expand.grid(
 		nsims=c(1),
 		masterseed=c(42),
 		saveoutput=c("true"),
-		outputpath=c("output/"),
+		outputpath=c("outputs/"),
 		outputprefix=c(""),
 		metaseed=c(43),
 		datastrategy=c("LinearModel"),
@@ -47,6 +46,6 @@ df <- expand.grid(
 		decisionpref=c("MinPvalue")
 		)
 
-write.table(df, file="params.pool", sep=" ", qmethod="d",
+write.table(df, file="params.pool", sep=" ",
 			  row.names = FALSE,
 			  col.names = FALSE)
