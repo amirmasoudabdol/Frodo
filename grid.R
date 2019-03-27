@@ -22,12 +22,12 @@ df <- expand.grid(
 		outputpath=c("output/"),
 		outputprefix=c(""),
 		metaseed=c(43),
-		datastrategy=c("Linear Model"),
+		datastrategy=c("LinearModel"),
 		nc=c(1),
 		nd=c(2),
 		ni=c(0),
 		nobs=c(20),
-		mu=c(0.25, 0.50, 0.75),
+		mu=c(0.25),
 		var=c(0.01),
 		cov=c(0.0),
 		loadings=c(0.1),
@@ -37,16 +37,16 @@ df <- expand.grid(
 		testside=c(1),
 		testalpha=c(0.05),
 		pubbias=c(0.95),
-		selectionmodel=c("Significant Selection"),
+		selectionmodel=c("SignificantSelection"),
 		maxpubs=c(70),
 		journalalpha=c(0.05),
 		journalside=c(1),
 		ishacker=c(0),
-		hackid=c("0"),
-		decisionstrategy=c("Patient Decision Maker"),
-		decisionpref=c("Min Pvalue")
+		hackid=c(0),
+		decisionstrategy=c("PatientDecisionMaker"),
+		decisionpref=c("MinPvalue")
 		)
 
-write.table(df, file="params.pool", sep=" ",
+write.table(df, file="params.pool", sep=" ", qmethod="d",
 			  row.names = FALSE,
 			  col.names = FALSE)

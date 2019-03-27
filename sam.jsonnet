@@ -8,9 +8,9 @@ function(debug=false, verbose=false, progress=true, nsims=1, masterseed=42, save
   
   "Simulation Parameters": 
     lib.simulation(debug, verbose, progress, nsims, masterseed, saveoutput, outputpath, outputprefix),
-  "Journal Parameters": 
-    lib.experiment(metaseed, datastrategy, nc, nd, ni, nobs, mu, var, cov, loadings, errvars, errcovs, teststrategy, testside, testalpha),
   "Experiment Parameters": 
+    lib.experiment(metaseed, datastrategy, nc, nd, ni, nobs, mu, var, cov, loadings, errvars, errcovs, teststrategy, testside, testalpha),
+  "Journal Parameters": 
     lib.journal(pubbias, selectionmodel, maxpubs, journalalpha, journalside),
   "Researcher Parameters": 
     lib.researcher(ishacker, hacks, hackid, decisionstrategy, decisionpref)

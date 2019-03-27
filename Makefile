@@ -14,7 +14,9 @@ config:
 	sed -ie 's/sam.libsonnet/$(PROJECT).libsonnet/g' $(PROJECT)/$(PROJECT).jsonnet
 	sed -ie 's/hacks.libsonnet/$(PROJECT)_hacks.libsonnet/g' $(PROJECT)/$(PROJECT).jsonnet
 
-	cp sam.sh $(PROJECT)/$(PROJECT).sh
+	cp sam_local_run.sh $(PROJECT)/$(PROJECT)_local_run.sh
+	cp sam_parallel_run.sh $(PROJECT)/$(PROJECT)_local_run.sh
+	cp grid.R $(PROJECT)/$(PROJECT)_params_grid_generator.R
 
 prepare:
 	mkdir -pv $(PROJECT)/build
@@ -38,6 +40,10 @@ clean:
 	rm -vrf $(PROJECT)/jobs/*
 	rm -vrf $(PROJECT)/dbs/*
 	rm -vrf $(PROJECT)/slurm-*.out
+	rm -rvf $(PROJECT)/*.jsonnet
+	rm -rvf $(PROJECT)/*.libsonnet
+	rm -rvf $(PROJECT)/*.R
+	rm -rvf $(PROJECT)/*.sh
 
 archive:
 	mkdir -pv $(ARCHIVEPATH)/$(ARCHIVENAME)

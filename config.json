@@ -1,12 +1,5 @@
 {
    "Experiment Parameters": {
-      "--alpha": 0.050000000000000003,
-      "--journal-selection-model": "Significant Selection",
-      "--max-pubs": 70,
-      "--pub-bias": 0.94999999999999996,
-      "--side": 1
-   },
-   "Journal Parameters": {
       "--covs": 0,
       "--data-strategy": "Linear Model",
       "--effect-estimators": [
@@ -29,6 +22,13 @@
       },
       "--vars": 0.01
    },
+   "Journal Parameters": {
+      "--alpha": 0.050000000000000003,
+      "--journal-selection-model": "Significant Selection",
+      "--max-pubs": 70,
+      "--pub-bias": 0.94999999999999996,
+      "--side": 1
+   },
    "Researcher Parameters": {
       "--decision-strategy": {
          "name": "Patient Decision Maker",
@@ -37,10 +37,14 @@
       "--is-phacker": false,
       "--p-hacking-methods": [
          [
-            { }
+            {
+               "name": "H1"
+            }
          ],
          [
-            { }
+            {
+               "name": "H2"
+            }
          ]
       ]
    },
