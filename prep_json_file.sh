@@ -8,12 +8,12 @@ prepare_json_file() {
 	uuid=$(uuidgen)
 	uuid=${uuid:0:13}
 
-	jsonnet --tla-code debug=${params[0]} \
-			--tla-code verbose=${params[1]} \
-			--tla-code progress=${params[2]} \
+	jsonnet --tla-code debug=$(eval echo ${params[0]}) \
+			--tla-code verbose=$(eval echo ${params[1]}) \
+			--tla-code progress=$(eval echo ${params[2]}) \
 			--tla-code nsims=${params[3]} \
 			--tla-code masterseed=${params[4]} \
-			--tla-code saveoutput=${params[5]} \
+			--tla-code saveoutput=$(eval echo ${params[5]}) \
 			--tla-str outputpath=$(eval echo ${params[6]}) \
 			--tla-str outputprefix=$(eval echo ${params[7]}) \
 			--tla-code metaseed=${params[8]} \
@@ -36,7 +36,7 @@ prepare_json_file() {
 			--tla-code maxpubs=${params[25]} \
 			--tla-code journalalpha=${params[26]} \
 			--tla-code journalside=${params[27]} \
-			--tla-code ishacker=${params[28]} \
+			--tla-code ishacker=$(eval echo ${params[28]}) \
 			--tla-str hackid=$(eval echo ${params[29]}) \
 			--tla-str decisionstrategy=$(eval echo ${params[30]}) \
 			--tla-str decisionpref=$(eval echo ${params[31]}) \

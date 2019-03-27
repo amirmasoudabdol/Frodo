@@ -13,12 +13,12 @@ suppressWarnings(suppressMessages(library(utils)))
 # - Use the full decimal, e.g., 0.1 instead of .1 or 1.
 
 df <- expand.grid(
-		debug=c(0),
-		verbose=c(0),
-		progress=c(1),
+		debug=c("false"),
+		verbose=c("false"),
+		progress=c("true"),
 		nsims=c(1),
 		masterseed=c(42),
-		saveoutput=c(1),
+		saveoutput=c("true"),
 		outputpath=c("output/"),
 		outputprefix=c(""),
 		metaseed=c(43),
@@ -41,7 +41,7 @@ df <- expand.grid(
 		maxpubs=c(70),
 		journalalpha=c(0.05),
 		journalside=c(1),
-		ishacker=c(0),
+		ishacker=c("false"),
 		hackid=c(0),
 		decisionstrategy=c("PatientDecisionMaker"),
 		decisionpref=c("MinPvalue")

@@ -13,8 +13,8 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
 	CONFIG_FILE_NAME="$(prepare_json_file params[@] "configs")"
 	CONFIG_FILE="configs/${CONFIG_FILE_NAME}.json"
 
-	# echo "Running the simulation..."
-	# ${SAM_EXEC} --config=CONFIG_FILE
+	echo "Running the simulation..."
+	${SAM_EXEC} --config=CONFIG_FILE
 
 
 done < "$1"

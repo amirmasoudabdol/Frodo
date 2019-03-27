@@ -33,7 +33,7 @@ prepare:
 	mkdir -pv $(PROJECT)/dbs
 
 	# Making SAM
-# 	$(MAKE) sam
+	$(MAKE) sam
 
 	# Add some scripts here to generate template files for their projects
 	$(MAKE) config
@@ -50,6 +50,9 @@ clean:
 	rm -rvf $(PROJECT)/*.libsonnet
 	rm -rvf $(PROJECT)/*.R
 	rm -rvf $(PROJECT)/*.sh
+
+remove:
+	rm -vrf $(PROJECT)
 
 archive:
 	mkdir -pv $(ARCHIVEPATH)/$(ARCHIVENAME)
