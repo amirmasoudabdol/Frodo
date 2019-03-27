@@ -30,7 +30,7 @@ rm -rf ${TMPDIR}/yourprojectname
 PROJECT_TMP_DIR=${TMPDIR}/yourprojectname
 
 mkdir ${PROJECT_TMP_DIR}
-rsync -r ${PROJECT_DIR} ${PROJECT_TMP_DIR} --exclude configs \
+rsync -r ${PROJECT_DIR}/ ${PROJECT_TMP_DIR}/ --exclude configs \
 											--exclude outputs \
 											--exclude logs \
 											--exclude jobs \
