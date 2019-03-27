@@ -12,7 +12,6 @@ module load sara-batch-resources
 export STOPOS_POOL=yourprojectname
 ncores=`sara-get-num-cores`
 
-source ${PROJECT_DIR}/prep_json_file.sh
 # -----------------------------------
 # Setting DIRs
 
@@ -21,6 +20,8 @@ PROJECT_DIR=$(pwd)
 SAMoo_DIR=${PROJECT_DIR}
 SAMrr_DIR=${PROJECT_DIR}/rscripts
 SAMpp_DIR=${PROJECT_DIR}/build
+
+source ${PROJECT_DIR}/prep_json_file.sh
 
 # -----------------------------------
 # Copying everything to the /scratch
