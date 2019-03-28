@@ -28,7 +28,7 @@ echo "cp \${PROJECT_DIR}/outputs/${1}_sim.csv \${PROJECT_TMP_DIR}/outputs/"
 echo 
 echo "echo \"Computing Meta-Analysis Metrics\""
 echo "SIM_FILE=\"\${PROJECT_TMP_DIR}/outputs/${1}_sim.csv\""
-echo "Rscript \${SIMrrDIR}/post-analyzer.R \${SIM_FILE} FALSE"
+echo "Rscript \${PROJECT_TMP_DIR}/rscripts/post-analyzer.R \${SIM_FILE} FALSE"
 echo "echo"
 echo
 echo "echo \"Copying back the outputs\""
