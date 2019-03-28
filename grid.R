@@ -16,7 +16,7 @@ df <- expand.grid(
 		verbose=c("false"),
 		progress=c("true"),
 		nsims=c(1),
-		masterseed=c("random"),
+		masterseed=c(0),
 		saveoutput=c("true"),
 		outputpath=c("outputs/"),
 		outputprefix=c(""),
