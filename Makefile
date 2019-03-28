@@ -61,7 +61,7 @@ config:
 
 prepare:
 	mkdir -pv $(PROJECT)/build
-	mkdir -pv $(PROJECT)/configss
+	mkdir -pv $(PROJECT)/configs
 	
 	mkdir -pv $(PROJECT)/outputs
 	mkdir -pv $(PROJECT)/logs
