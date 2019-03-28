@@ -85,12 +85,12 @@ for ((i=1; i<=ncores; i++)) ; do
 
 	echo
 	echo "Creating a new job file"
-	R_JOB_FILE="${PROJECT_DIR}/jobs/${CONFIG_FILE_NAME}_r_job.sh"
-	${PROJECT_TMP_DIR}/rscript-job-temp.sh ${CONFIG_FILE_NAME} > ${R_JOB_FILE}
+	R_JOB_FILE="${PROJECT_TMP_DIR}/jobs/${CONFIG_FILE_NAME}_r_job.sh"
+	${PROJECT_TMP_DIR}/r_job_temp.sh ${CONFIG_FILE_NAME} > ${R_JOB_FILE}
 	
 	cp ${R_JOB_FILE} ${PROJECT_DIR}/jobs/
 
-	sbatch ${R_JOB_FILE}
+	# sbatch ${R_JOB_FILE}
 
 ) &
 done
