@@ -24,7 +24,7 @@ echo "rsync -r \${PROJECT_DIR} \${PROJECT_TMP_DIR} --exclude configs --exclude o
 echo "mkdir -p \${PROJECT_TMP_DIR}/configs \${PROJECT_TMP_DIR}/outputs"
 echo 
 echo "echo \"Copying the simulation output file to the \${TMPDIR}\""
-echo "cp \${PROJECT_DIR}/outputs/${1}_sim.csv \${PROJECT_TMP_DIR}/outputs/"
+echo "cp -v \${PROJECT_DIR}/outputs/${1}_sim.csv \${PROJECT_TMP_DIR}/outputs/"
 echo 
 echo "echo \"Computing Meta-Analysis Metrics\""
 echo "SIM_FILE=\"\${PROJECT_TMP_DIR}/outputs/${1}_sim.csv\""
@@ -33,4 +33,4 @@ echo "echo"
 echo
 echo "echo \"Copying back the outputs\""
 echo "META_FILE=\"\${PROJECT_TMP_DIR}/outputs/${1}_meta.csv\""
-echo "cp \${META_FILE} \${PROJECT_DIR}/outputs/"
+echo "cp -v \${META_FILE} \${PROJECT_DIR}/outputs/"

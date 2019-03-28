@@ -78,9 +78,9 @@ for ((i=1; i<=ncores; i++)) ; do
 	echo # ----------------------------------------
 	echo "Copying back the output file"
 	
-	cp ${SIM_FILE} ${PROJECT_DIR}/outputs/
-	cp ${CONFIG_FILE} ${PROJECT_DIR}/configs/
-	cp ${LOG_FILE} ${PROJECT_DIR}/logs/
+	cp -v ${SIM_FILE} ${PROJECT_DIR}/outputs/
+	cp -v ${CONFIG_FILE} ${PROJECT_DIR}/configs/
+	cp -v ${LOG_FILE} ${PROJECT_DIR}/logs/
 	# ---------------------------------------------
 
 	echo
@@ -88,7 +88,7 @@ for ((i=1; i<=ncores; i++)) ; do
 	R_JOB_FILE="${PROJECT_TMP_DIR}/jobs/${CONFIG_FILE_NAME}_r_job.sh"
 	${PROJECT_TMP_DIR}/r_job_temp.sh ${CONFIG_FILE_NAME} > ${R_JOB_FILE}
 	
-	cp ${R_JOB_FILE} ${PROJECT_DIR}/jobs/
+	cp -v ${R_JOB_FILE} ${PROJECT_DIR}/jobs/
 
 	# sbatch ${R_JOB_FILE}
 
