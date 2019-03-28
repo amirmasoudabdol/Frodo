@@ -26,6 +26,7 @@ help:
 
 
 sam:
+	# TODO: Move SAM to the project directory as well
 	mkdir -pv $(PROJECT)/build
 	cmake -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -H$(HOME)/Projects/SAMpp -B$(PROJECT)/build 
 	make -C $(PROJECT)/build
@@ -91,7 +92,7 @@ clean:
 	rm -vrf $(PROJECT)/configs/*
 	rm -vrf $(PROJECT)/outputs/*
 	rm -vrf $(PROJECT)/logs/*
-	rm -vrf $(PROJECT)/jobs/
+	rm -vrf $(PROJECT)/jobs/*
 
 remove:
 	rm -vrf $(PROJECT)
