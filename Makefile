@@ -11,7 +11,7 @@ rrDIR=$(HOME)/Projects/SAMrr
 .PHONY: help sam config
 
 help:  ## Display this help
-	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target> PROJECT=<yourprojectname>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target> PROJECT=<yourprojectname> ARCHIVEPATH=<yourarchivedirectory>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
 ##@ Build
 
@@ -67,6 +67,13 @@ sam: ## Build SAMpp executable. Makefile will look for ../SAMpp directory first
 
 ##@ Cleanup
 
+
+clean: ## Remove all output files, i.e., configs, outputs, logs, jobs
+	rm -vrf projects/$(PROJECT)/configs/*
+	rm -vrf projects/$(PROJECT)/outputs/*
+	rm -vrf projects/$(PROJECT)/logs/*
+	rm -vrf projects/$(PROJECT)/jobs/*
+
 veryclean: ## Remove all project files
 	rm -vrf projects/$(PROJECT)/build/*
 	rm -vrf projects/$(PROJECT)/configs/*
@@ -81,22 +88,11 @@ veryclean: ## Remove all project files
 	rm -rvf projects/$(PROJECT)/*.R
 	rm -rvf projects/$(PROJECT)/*.sh
 
-clean: ## Remove all output files, i.e., configs, outputs, logs, jobs
-	rm -vrf projects/$(PROJECT)/configs/*
-	rm -vrf projects/$(PROJECT)/outputs/*
-	rm -vrf projects/$(PROJECT)/logs/*
-	rm -vrf projects/$(PROJECT)/jobs/*
-
 remove: ## Delete the entire project directory
-	rm -vrf $(PROJECT)
+	rm -vrf projects/$(PROJECT)
 
 ##@ Archiving
 
-archive: ## Copy the entire project to the given destination <ARCHIVEPATH>
-	mkdir -pv $(ARCHIVEPATH)/$(ARCHIVENAME)
-	mv -v projects/$(PROJECT)/build $(ARCHIVEPATH)/$(ARCHIVENAME)
-	mv -v projects/$(PROJECT)/configs $(ARCHIVEPATH)/$(ARCHIVENAME)
-	mv -v projects/$(PROJECT)/outputs $(ARCHIVEPATH)/$(ARCHIVENAME)
-	mv -v projects/$(PROJECT)/logs $(ARCHIVEPATH)/$(ARCHIVENAME)
-	mv -v projects/$(PROJECT)/jobs $(ARCHIVEPATH)/$(ARCHIVENAME)
-	mv -v projects/$(PROJECT)/dbs $(ARCHIVEPATH)/$(ARCHIVENAME)
+archive: ## Copy the entire project to the given destination. You must provide both <PROJECT> <ARCHIVEPATH> parameters
+	mkdir -pv $(ARCHIVEPATH)/$(PROJECT)
+	cp -rv projects/$(PROJECT) $(ARCHIVEPATH)/$(PROJECT)
