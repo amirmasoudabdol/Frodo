@@ -1,4 +1,5 @@
-#!/bin/bash
+.DEFAULT_GOAL:=help
+SHELL:=/bin/bash
 
 # This is a utility Makefile
 
@@ -7,31 +8,29 @@ ppDIR=$(HOME)/Projects/SAMpp
 ooDIR=$(HOME)/Projects/SAMoo
 rrDIR=$(HOME)/Projects/SAMrr
 
-help:
-	@echo "Options: "
-	@echo " - \`prepare\`: Prepare a project by running the following command after each other."
-	@echo "   - \`config\`\tConfiguring necessary scripts and templates"
-	@echo "   - \`sam\`\tBuild SAM's execcutable and place it at <project_yourprojectname>/build/"
-	@echo " - \`clean\`\tClean the follwoing folders, outputs/, logs/, jobs/, configs/"
-	@echo " - \`veryclean\`\tRemove almost everything inside the project folder."
-	@echo " - \`remove\`\tRemove the entire project folder."
-	@echo " - \`archive\`\tSave a copy of the project to another destination, set the ARCHIVEPATH variable in the command line."
-	@echo ""
-	@echo "Notes:"
-	@echo " - Add the \`project_\` at the start of your project name."
-	@echo ""
-	@echo "Example:"
-	@echo ""
-	@echo "  > make <command> PROJECT=<project_yourprojectname>"
+.PHONY: help sam config
 
+help:  ## Display this help
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target> PROJECT=<yourprojectname>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
-sam:
-	# TODO: Move SAM to the project directory as well
+##@ Build
+
+prepare: ## Create a new project by running <config> and <sam>
 	mkdir -pv $(PROJECT)/build
-	cmake -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -H$(HOME)/Projects/SAMpp -B$(PROJECT)/build 
-	make -C $(PROJECT)/build
+	mkdir -pv $(PROJECT)/configs
+	
+	mkdir -pv $(PROJECT)/outputs
+	mkdir -pv $(PROJECT)/logs
+	mkdir -pv $(PROJECT)/jobs
+	mkdir -pv $(PROJECT)/dbs
 
-config:
+	# Add some scripts here to generate template files for their projects
+	$(MAKE) config
+
+	# Making SAM
+	$(MAKE) sam
+
+config: ## Building necessary files and folders for a new project
 	cp sam.jsonnet $(PROJECT)/$(PROJECT).jsonnet
 	awk '{gsub(/sam.libsonnet/,"$(PROJECT).libsonnet");}1' $(PROJECT)/$(PROJECT).jsonnet > tmp && mv tmp $(PROJECT)/$(PROJECT).jsonnet
 	awk '{gsub(/hacks.libsonnet/,"$(PROJECT)_hacks.libsonnet");}1' $(PROJECT)/$(PROJECT).jsonnet > tmp && mv tmp $(PROJECT)/$(PROJECT).jsonnet
@@ -59,22 +58,16 @@ config:
 	awk '{gsub(/yourprojectname/,"$(PROJECT)");}1' $(PROJECT)/r_job_temp.sh > tmp && mv tmp $(PROJECT)/r_job_temp.sh
 	chmod +x $(PROJECT)/r_job_temp.sh
 
-prepare:
+sam: ## Build SAMpp executable. Makefile will look for ../SAMpp directory first
 	mkdir -pv $(PROJECT)/build
-	mkdir -pv $(PROJECT)/configs
-	
-	mkdir -pv $(PROJECT)/outputs
-	mkdir -pv $(PROJECT)/logs
-	mkdir -pv $(PROJECT)/jobs
-	mkdir -pv $(PROJECT)/dbs
+	cmake -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -H$(HOME)/Projects/SAMpp -B$(PROJECT)/build 
+	make -C $(PROJECT)/build
+	# TODO: Move SAM to the project directory as well
 
-	# Add some scripts here to generate template files for their projects
-	$(MAKE) config
 
-	# Making SAM
-	$(MAKE) sam
+##@ Cleanup
 
-veryclean:
+veryclean: ## Remove all project files
 	rm -vrf $(PROJECT)/build/*
 	rm -vrf $(PROJECT)/configs/*
 	rm -vrf $(PROJECT)/outputs/*
@@ -88,16 +81,18 @@ veryclean:
 	rm -rvf $(PROJECT)/*.R
 	rm -rvf $(PROJECT)/*.sh
 
-clean:
+clean: ## Remove all output files, i.e., configs, outputs, logs, jobs
 	rm -vrf $(PROJECT)/configs/*
 	rm -vrf $(PROJECT)/outputs/*
 	rm -vrf $(PROJECT)/logs/*
 	rm -vrf $(PROJECT)/jobs/*
 
-remove:
+remove: ## Delete the entire project directory
 	rm -vrf $(PROJECT)
 
-archive:
+##@ Archiving
+
+archive: ## Copy the entire project to the given destination <ARCHIVEPATH>
 	mkdir -pv $(ARCHIVEPATH)/$(ARCHIVENAME)
 	mv -v $(PROJECT)/build $(ARCHIVEPATH)/$(ARCHIVENAME)
 	mv -v $(PROJECT)/configs $(ARCHIVEPATH)/$(ARCHIVENAME)
