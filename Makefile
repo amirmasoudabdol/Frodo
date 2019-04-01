@@ -58,6 +58,13 @@ config: ## Building necessary files and folders for a new project
 	awk '{gsub(/yourprojectname/,"$(PROJECT)");}1' projects/$(PROJECT)/r_job_temp.sh > tmp && mv tmp projects/$(PROJECT)/r_job_temp.sh
 	chmod +x projects/$(PROJECT)/r_job_temp.sh
 
+	cp to_sqlite.sh projects/$(PROJECT)/$(PROJECT)_to_sqlite.sh
+	awk '{gsub(/yourprojectname/,"$(PROJECT)");}1' projects/$(PROJECT)/$(PROJECT)_to_sqlite.sh > tmp && mv tmp projects/$(PROJECT)/$(PROJECT)_to_sqlite.sh
+	chmod +x projects/$(PROJECT)/$(PROJECT)_to_sqlite.sh
+
+	cp tables.sql projects/$(PROJECT)/tables.sql
+
+
 sam: ## Build SAMpp executable. Makefile will look for ../SAMpp directory first
 	mkdir -pv projects/$(PROJECT)/build
 	cmake -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -H$(HOME)/Projects/SAMpp -Bprojects/$(PROJECT)/build 
