@@ -14,7 +14,6 @@ prepare_json_file() {
 			--tla-code nsims=${params[3]} \
 			--tla-code masterseed=${params[4]} \
 			--tla-code saveoutput=$(eval echo ${params[5]}) \
-			--tla-str outputpath=$(eval echo ${params[6]}) \
 			--tla-str outputprefix=${uuid}$(eval echo ${params[7]}) \
 			--tla-code metaseed=${params[8]} \
 			--tla-str datastrategy=$(eval echo ${params[9]}) \

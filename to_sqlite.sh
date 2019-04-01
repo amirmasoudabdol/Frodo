@@ -13,14 +13,14 @@ for file in ${PROJECT_DIR}/outputs/*_sim.csv; do
 	echo $fileprefix
 
 	csvsql --db sqlite:///${PROJECT_DIR}/dbs/yourprojectname.db \
-											  --insert ${PROJECT_DIR}/outputs/${fileprefix}_sim.csv \
-											  --table simdata \
-											  --create-if-not-exists \
-											  --linenumbers
+   		   --insert ${PROJECT_DIR}/outputs/${fileprefix}_sim.csv \
+   		   --table simdata \
+   		   --create-if-not-exists \
+   		   --linenumbers
 
 	csvsql --db sqlite:///${PROJECT_DIR}/dbs/yourprojectname.db \
-											  --insert ${PROJECT_DIR}/outputs/${fileprefix}_meta.csv \
-											  --table metadata \
-											  --create-if-not-exists \
-											  --linenumbers
+   		   --insert ${PROJECT_DIR}/outputs/${fileprefix}_meta.csv \
+   		   --table metadata \
+   		   --create-if-not-exists \
+   		   --linenumbers
 done

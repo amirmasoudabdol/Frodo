@@ -1,10 +1,10 @@
 {
    "Experiment Parameters": {
       "--covs": 0,
-      "--data-strategy": "Linear Model",
+      "--data-strategy": "LinearModel",
       "--effect-estimators": [
-         "Cohens D",
-         "Hedges G"
+         "CohensD",
+         "HedgesG"
       ],
       "--err-covs": 0,
       "--err-vars": 0,
@@ -24,15 +24,15 @@
    },
    "Journal Parameters": {
       "--alpha": 0.050000000000000003,
-      "--journal-selection-model": "Significant Selection",
+      "--journal-selection-model": "SignificantSelection",
       "--max-pubs": 70,
       "--pub-bias": 0.94999999999999996,
       "--side": 1
    },
    "Researcher Parameters": {
       "--decision-strategy": {
-         "name": "Patient Decision Maker",
-         "preference": "Min Pvalue"
+         "name": "PatientDecisionMaker",
+         "preference": "MinPvalue"
       },
       "--is-phacker": false,
       "--p-hacking-methods": [

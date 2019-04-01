@@ -1,12 +1,12 @@
 {
-  simulation(debug, verbose, progress, nsims, masterseed, saveoutput, outputpath, outputprefix): {
+  simulation(debug, verbose, progress, nsims, masterseed, saveoutput, outputprefix): {
     "--debug": debug,
     "--verbose": verbose,
     "--progress": progress,
     "--n-sims": nsims,
     "--master-seed": masterseed,
     "--save-output": saveoutput,
-    "--output-path": outputpath,
+    "--output-path": "../outputs/",
     "--output-prefix": outputprefix
   },
   experiment(metaseed, datastrategy, nc, nd, ni, nobs, mu, var, cov, loadings, errvars, errcovs, teststrategy, testside, testalpha): {

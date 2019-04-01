@@ -12,6 +12,7 @@ CREATE TABLE simdata (
 	pvalue REAL NULL,
 	CohensD REAL NULL,
 	HedgesG REAL NULL,
+	PearsonR REAL NULL,
 	side INTEGER NULL
 );
 
