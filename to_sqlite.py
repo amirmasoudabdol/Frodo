@@ -26,13 +26,15 @@ def extract_params(configfile):
 			 "ResearcherParameters_",
 			 "SimulationParameters_"]
 
+	new_filtered_dict = {}
 	for k in filtered_dict.keys():
 		newkey = k
 		for name in names:
 			newkey = newkey.replace(name, "")
-		filtered_dict[newkey] = filtered_dict.pop(k)
+		newkey = newkey.replace("-","_")
+		new_filtered_dict[newkey] = filtered_dict[k]
 
-	return filtered_dict
+	return new_filtered_dict
 
 def main():
 	filenames = glob.glob("outputs/*_sim.csv")
