@@ -19,7 +19,7 @@ prepare_json_file() {
 			--tla-code nc=${params[8]} \
 			--tla-code nd=${params[9]} \
 			--tla-code ni=${params[10]} \
-			--tla-code nobs=${params[11]} \
+			--tla-code nobs=$(eval echo ${params[11]}) \
 			--tla-code mu=${params[12]} \
 			--tla-code var=${params[13]} \
 			--tla-code cov=${params[14]} \
