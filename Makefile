@@ -62,6 +62,10 @@ config: ## Building necessary files and folders for a new project
 	awk '{gsub(/yourprojectname/,"$(PROJECT)");}1' projects/$(PROJECT)/$(PROJECT)_to_sqlite.sh > tmp && mv tmp projects/$(PROJECT)/$(PROJECT)_to_sqlite.sh
 	chmod +x projects/$(PROJECT)/$(PROJECT)_to_sqlite.sh
 
+	cp to_sqlite.py projects/$(PROJECT)/$(PROJECT)_to_sqlite.py
+	awk '{gsub(/yourprojectname/,"$(PROJECT)");}1' projects/$(PROJECT)/$(PROJECT)_to_sqlite.py > tmp && mv tmp projects/$(PROJECT)/$(PROJECT)_to_sqlite.py
+	chmod +x projects/$(PROJECT)/$(PROJECT)_to_sqlite.py
+
 	cp tables.sql projects/$(PROJECT)/tables.sql
 
 

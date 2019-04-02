@@ -1,4 +1,4 @@
-CREATE TABLE simdata (
+CREATE TABLE sim (
 	simid INTEGER NULL,
 	pid INTEGER NULL,
 	tnobs INTEGER NULL,
@@ -16,7 +16,7 @@ CREATE TABLE simdata (
 	side INTEGER NULL
 );
 
-CREATE TABLE metadata (
+CREATE TABLE meta (
 	simid INTEGER NULL,
 	meta_b REAL NULL,
 	meta_se REAL NULL,
@@ -56,3 +56,10 @@ CREATE TABLE metadata (
 	ish REAL NULL,
 	h REAL NULL
 );
+
+PRAGMA main.page_size = 4096;
+PRAGMA main.cache_size=10000;
+PRAGMA main.locking_mode=EXCLUSIVE;
+PRAGMA main.synchronous=NORMAL;
+PRAGMA main.journal_mode=WAL;
+PRAGMA main.cache_size=5000;

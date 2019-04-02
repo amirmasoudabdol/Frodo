@@ -31,11 +31,11 @@ PROJECT_TMP_DIR=${TMPDIR}/yourprojectname
 
 mkdir ${PROJECT_TMP_DIR}
 rsync -r ${PROJECT_DIR}/ ${PROJECT_TMP_DIR}/ --exclude configs \
-											--exclude outputs \
-											--exclude logs \
-											--exclude jobs \
-											--exclude dbs \
-											--exclude .git
+											 --exclude outputs \
+											 --exclude logs \
+											 --exclude jobs \
+											 --exclude dbs \
+											 --exclude .git
 
 mkdir -p ${PROJECT_TMP_DIR}/outputs \
 		 ${PROJECT_TMP_DIR}/configs \
