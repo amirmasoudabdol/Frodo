@@ -1,11 +1,10 @@
 {
-  simulation(debug, verbose, progress, nsims, masterseed, saveoutput, outputprefix): {
+  simulation(debug, verbose, progress, nsims, masterseed, outputprefix): {
     "debug": debug,
     "verbose": verbose,
     "progress": progress,
     "n-sims": nsims,
     "master-seed": masterseed,
-    "save-output": saveoutput,
     "output-path": "../outputs/",
     "output-prefix": outputprefix
   },

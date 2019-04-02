@@ -55,7 +55,6 @@
       "output-path": "output/",
       "output-prefix": "",
       "progress": true,
-      "save-output": true,
       "verbose": false
    }
 }

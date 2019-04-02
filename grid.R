@@ -17,7 +17,6 @@ df <- expand.grid(
 		progress=c("true"),
 		nsims=c(1),
 		masterseed=c(0),
-		saveoutput=c("true"),
 		outputprefix=c(""),
 		metaseed=c(43),
 		datastrategy=c("LinearModel"),
