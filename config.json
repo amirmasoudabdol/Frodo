@@ -1,41 +1,41 @@
 {
    "ExperimentParameters": {
-      "--covs": 0,
-      "--data-strategy": "LinearModel",
-      "--effect-estimators": [
+      "covs": 0,
+      "data-strategy": "LinearModel",
+      "effect-estimators": [
          "CohensD",
          "HedgesG"
       ],
-      "--err-covs": 0,
-      "--err-vars": 0,
-      "--loadings": 0.10000000000000001,
-      "--means": 0.123,
-      "--meta-seed": 43,
-      "--n-conditions": 1,
-      "--n-dep-vars": 2,
-      "--n-items": 0,
-      "--n-obs": 20,
-      "--test-strategy": {
+      "err-covs": 0,
+      "err-vars": 0,
+      "loadings": 0.10000000000000001,
+      "means": 0.123,
+      "meta-seed": 43,
+      "n-conditions": 1,
+      "n-dep-vars": 2,
+      "n-items": 0,
+      "n-obs": 20,
+      "test-strategy": {
          "alpha": 0.050000000000000003,
          "side": 1,
          "type": "TTest"
       },
-      "--vars": 0.01
+      "vars": 0.01
    },
    "JournalParameters": {
-      "--alpha": 0.050000000000000003,
-      "--journal-selection-model": "SignificantSelection",
-      "--max-pubs": 70,
-      "--pub-bias": 0.94999999999999996,
-      "--side": 1
+      "alpha": 0.050000000000000003,
+      "journal-selection-model": "SignificantSelection",
+      "max-pubs": 70,
+      "pub-bias": 0.94999999999999996,
+      "side": 1
    },
    "ResearcherParameters": {
-      "--decision-strategy": {
+      "decision-strategy": {
          "name": "PatientDecisionMaker",
          "preference": "MinPvalue"
       },
-      "--is-phacker": false,
-      "--p-hacking-methods": [
+      "is-phacker": false,
+      "p-hacking-methods": [
          [
             {
                "name": "H1"
@@ -49,13 +49,13 @@
       ]
    },
    "SimulationParameters": {
-      "--debug": false,
-      "--master-seed": 42,
-      "--n-sims": 1,
-      "--output-path": "output/",
-      "--output-prefix": "",
-      "--progress": true,
-      "--save-output": true,
-      "--verbose": false
+      "debug": false,
+      "master-seed": 42,
+      "n-sims": 1,
+      "output-path": "output/",
+      "output-prefix": "",
+      "progress": true,
+      "save-output": true,
+      "verbose": false
    }
 }
