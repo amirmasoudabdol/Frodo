@@ -6,12 +6,12 @@ function(debug=false, verbose=false, progress=true, nsims=1, masterseed=42, save
           pubbias=0.95, selectionmodel="SignificantSelection", maxpubs=70, journalalpha=0.05, journalside=1,
           ishacker=false, hackid="0", decisionstrategy="PatientDecisionMaker", decisionpref="MinPvalue") {
   
-  "Simulation Parameters": 
+  "SimulationParameters": 
     lib.simulation(debug, verbose, progress, nsims, masterseed, saveoutput, outputprefix),
-  "Experiment Parameters": 
+  "ExperimentParameters": 
     lib.experiment(metaseed, datastrategy, nc, nd, ni, nobs, mu, var, cov, loadings, errvars, errcovs, teststrategy, testside, testalpha),
-  "Journal Parameters": 
+  "JournalParameters": 
     lib.journal(pubbias, selectionmodel, maxpubs, journalalpha, journalside),
-  "Researcher Parameters": 
+  "ResearcherParameters": 
     lib.researcher(ishacker, hacks, hackid, decisionstrategy, decisionpref)
 }
