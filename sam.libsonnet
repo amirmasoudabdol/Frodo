@@ -8,8 +8,7 @@
     "output-path": "../outputs/",
     "output-prefix": outputprefix
   },
-  experiment(metaseed, datastrategy, nc, nd, ni, nobs, mu, var, cov, loadings, errvars, errcovs, teststrategy, testside, testalpha): {
-    "meta-seed": metaseed,
+  experiment(datastrategy, nc, nd, ni, nobs, mu, var, cov, loadings, errvars, errcovs, teststrategy, testside, testalpha): {
     "data-strategy": datastrategy,
     "n-conditions": nc,
     "n-dep-vars": nd,

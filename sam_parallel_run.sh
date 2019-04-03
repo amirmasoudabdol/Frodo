@@ -72,7 +72,7 @@ for ((i=1; i<=ncores; i++)) ; do
 	LOG_FILE="${PROJECT_TMP_DIR}/logs/${CONFIG_FILE_NAME}_sim.log"
 	
 	# Running SAM
-	${SAM_EXEC} --config=${CONFIG_FILE} --output-path=${PROJECT_TMP_DIR}/outputs/ > ${LOG_FILE}
+	${SAM_EXEC} --config=${CONFIG_FILE} --output-path=${PROJECT_TMP_DIR}/outputs/ > ${LOG_FILE} --update-config
 	SIM_FILE="${PROJECT_TMP_DIR}/outputs/${CONFIG_FILE_NAME}_sim.csv"
 
 	echo # ----------------------------------------

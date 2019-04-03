@@ -18,7 +18,6 @@ df <- expand.grid(
 		nsims=c(1),
 		masterseed=c("random"),
 		outputprefix=c(""),
-		metaseed=c(43),
 		datastrategy=c("LinearModel"),
 		nc=c(1),
 		nd=c(2),

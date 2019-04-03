@@ -6,7 +6,6 @@ jsonnet --tla-code debug=false \
 		--tla-code nsims=1 \
 		--tla-code masterseed=42 \
 		--tla-str outputprefix="" \
-		--tla-code metaseed=43 \
 		--tla-str datastrategy="Linear Model" \
 		--tla-code nc=1 \
 		--tla-code nd=2 \
