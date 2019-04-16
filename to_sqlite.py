@@ -6,6 +6,9 @@ from tqdm import tqdm
 import pandas as pd
 from sqlalchemy import create_engine
 from flatten_json import flatten
+from string import digits
+
+remove_digits = str.maketrans('', '', digits)
 
 
 def extract_params(configfile):
@@ -32,6 +35,7 @@ def extract_params(configfile):
 		for name in names:
 			newkey = newkey.replace(name, "")
 		newkey = newkey.replace("-","_")
+		newkey = newkey.translate(remove_digits)
 		new_filtered_dict[newkey] = filtered_dict[k]
 
 	return new_filtered_dict
@@ -39,7 +43,7 @@ def extract_params(configfile):
 def main():
 	filenames = glob.glob("outputs/*_sim.csv")
 
-	engine = create_engine("sqlite:///dbs/yourprojectname.db")
+	engine = create_engine("sqlite:///dbs/ostest.db")
 
 	print("Prepareing the database...")
 
