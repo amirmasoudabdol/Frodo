@@ -21,7 +21,7 @@
     "err-vars": errvars,
     "err-covs": errcovs,
     "test-strategy": {
-      "type": teststrategy,
+      "name": teststrategy,
       "side": testside,
       "alpha": testalpha
     },
@@ -39,7 +39,7 @@
   },
   researcher(ishacker, hacks, hackid, decisionstrategy, decisionpref): {
     "is-phacker": ishacker,
-    "p-hacking-methods": hacks[hackid],
+    "hacking-strategies": hacks[hackid],
     "decision-strategy": {
       "name": decisionstrategy,
       "preference": decisionpref

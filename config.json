@@ -17,7 +17,7 @@
       "test-strategy": {
          "alpha": 0.050000000000000003,
          "side": 1,
-         "type": "TTest"
+         "name": "TTest"
       },
       "vars": 0.01
    },
@@ -34,7 +34,7 @@
          "preference": "MinPvalue"
       },
       "is-phacker": false,
-      "p-hacking-methods": [
+      "hacking-strategies": [
          [
             {
                "name": "H1"
