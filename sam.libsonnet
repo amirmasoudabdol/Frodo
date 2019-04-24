@@ -31,11 +31,13 @@
     ]
   },
   journal(pubbias, selectionmodel, maxpubs, journalalpha, journalside): {
-    "pub-bias": pubbias,
-    "journal-selection-model": selectionmodel,
     "max-pubs": maxpubs,
-    "alpha": journalalpha,
-    "side": journalside
+    "selection-strategy": {
+      "name": selectionmodel,
+      "side": journalside,
+      "alpha": journalalpha,
+      "pub-bias": pubbias
+    }
   },
   researcher(ishacker, hacks, hackid, decisionstrategy, decisionpref): {
     "is-phacker": ishacker,
