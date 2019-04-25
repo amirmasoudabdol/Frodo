@@ -30,7 +30,7 @@ df <- expand.grid(
 		errvars=c(0.0),
 		errcovs=c(0.0),
 		teststrategy=c("TTest"),
-		testside=c(1),
+		testside=c("TwoSide"),
 		testalpha=c(0.05),
 		pubbias=c(0.95),
 		selectionmodel=c("SignificantSelection"),

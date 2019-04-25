@@ -71,10 +71,8 @@ config: ## Building necessary files and folders for a new project
 
 sam: ## Build SAMrun executable. Makefile will look for ../SAMrun directory first
 	mkdir -pv projects/$(project)/build
-	cmake -DENABLE_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -H$(HOME)/Projects/SAMrun -Bprojects/$(project)/build 
-	make -C projects/$(project)/build
-	# TODO: Move SAM to the project directory as well
-
+	cmake -DCMAKE_BUILD_TYPE=Release -H$(HOME)/Projects/SAMrun -Bprojects/$(project)/build 
+	make -j8 -C projects/$(project)/build
 
 ##@ Cleanup
 
