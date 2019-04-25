@@ -3,7 +3,7 @@ SHELL:=/bin/bash
 
 # This is a utility Makefile
 
-ARCHIVEPATH=$(HOME)/archive
+archivepath=$(HOME)/archive
 ppDIR=$(HOME)/Projects/SAMpp
 ooDIR=$(HOME)/Projects/SAMoo
 rrDIR=$(HOME)/Projects/SAMrr
@@ -11,7 +11,7 @@ rrDIR=$(HOME)/Projects/SAMrr
 .PHONY: help sam config
 
 help:  ## Display this help
-	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target> project=<yourprojectname> ARCHIVEPATH=<yourarchivedirectory>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target> project=<yourprojectname> archivepath=<yourarchivedirectory>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
 ##@ Build
 
@@ -102,6 +102,6 @@ remove: ## Delete the entire project directory
 
 ##@ Archiving
 
-archive: ## Copy the entire project to the given destination. You must provide both <PROJECT> <ARCHIVEPATH> parameters
-	mkdir -pv $(ARCHIVEPATH)/$(project)
-	cp -rv projects/$(project) $(ARCHIVEPATH)/$(project)
+archive: ## Copy the entire project to the given destination. You must provide both <PROJECT> <archivepath> parameters
+	mkdir -pv $(archivepath)/$(project)
+	cp -rv projects/$(project) $(archivepath)/$(project)
