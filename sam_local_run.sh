@@ -14,7 +14,7 @@ while IFS='' read -r line || [[ -n "$line" ]]; do
 
 	echo
 	echo "Running the simulation..."
-	${PROJECT_DIR}/build/SAMrun --config=${CONFIG_FILE} --output-path=${PROJECT_DIR}/outputs/ --update-config
+	${PROJECT_DIR}/build/SAMrun --config=${CONFIG_FILE} --output-prefix=${CONFIG_FILE_NAME} --output-path=${PROJECT_DIR}/outputs/ --update-config
 	SIM_FILE="${PROJECT_DIR}/outputs/${CONFIG_FILE_NAME}_sim.csv"
 
 	echo
