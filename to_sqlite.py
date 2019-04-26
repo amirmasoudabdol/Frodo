@@ -49,7 +49,7 @@ def main():
 	param_names = extract_keys(glob.glob("configs/*.json"))
 
 	print("Creating the database...")
-	engine = create_engine("sqlite:///dbs/ostest.db")
+	engine = create_engine("sqlite:///dbs/yourprojectname.db")
 
 	for i in tqdm(range(len(filenames))):
 		fbase = os.path.basename(filenames[i])
