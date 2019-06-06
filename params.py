@@ -13,8 +13,7 @@ params = {
         ,
         "output_path": ["../outputs/"]
         ,
-        # If "auto", SAM will generate unique ID for each file
-        "output_prefix": ["auto"]
+        "output_prefix": [""]
         ,
     # ExperimentParameters
         "covs": [0.0],
@@ -72,10 +71,8 @@ params = {
     # ResearcherParameters
         "decision_strategy": [
             {
-                "name": "D1"
-            },
-            {
-                "name": "D2"
+            "name": "ImpatientDecisionMaker",
+            "preference": "MinPvalue"
             }
         ]
         ,
@@ -85,23 +82,27 @@ params = {
             [ # Set 1
                 [ # Group 1
                     {
-                        "name": "S1; G1; M1"
-                    },
-                    {
-                        "name": "S1; G1; M2"
+                        "level": "dv",
+                        "max_attempts": 10,
+                        "n_attempts": 3,
+                        "name": "OptionalStopping",
+                        "num": 10
                     }
-                ],
-                [
-                    # Group 2
-                    {"name": "S1; G2: M1"}
                 ]
-            ],
+                # ,
+                # [
+                #     # Group 2
+                #     {"name": "S1; G2: M1"}
+                # ]
+            ]
+            ,
             [ # Set 2
-                [ # 
-                    {
-                        "name": "S2; G1; M1"
-                    }
-                ]
+                # [ # 
+                #     {
+                #         "name": "S2; G1; M1"
+                #     }
+                # ]
             ]
         ]
+        
 }

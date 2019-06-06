@@ -66,6 +66,17 @@ config: ## Building necessary files and folders for a new project
 	awk '{gsub(/yourprojectname/,"$(project)");}1' projects/$(project)/$(project)_to_sqlite.py > tmp && mv tmp projects/$(project)/$(project)_to_sqlite.py
 	chmod +x projects/$(project)/$(project)_to_sqlite.py
 
+	# Configuration File and Scripts
+	cp config_template.json projects/$(project)/$(project)_config_template.json
+	awk '{gsub(/yourprojectname/,"$(project)");}1' projects/$(project)/$(project)_config_template.json > tmp && mv tmp projects/$(project)/$(project)_config_template.json
+
+	cp params.py projects/$(project)/$(project)_params.py
+	awk '{gsub(/yourprojectname/,"$(project)");}1' projects/$(project)/$(project)_params.py > tmp && mv tmp projects/$(project)/$(project)_params.py
+
+	cp prepare_config_files.py projects/$(project)/$(project)_prepare_config_files.py
+	awk '{gsub(/yourprojectname/,"$(project)");}1' projects/$(project)/$(project)_prepare_config_files.py > tmp && mv tmp projects/$(project)/$(project)_prepare_config_files.py
+	chmod +x projects/$(project)/$(project)_prepare_config_files.py
+
 	cp tables.sql projects/$(project)/tables.sql
 
 
