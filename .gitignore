@@ -8,6 +8,7 @@
 /*/dbs
 
 projects/*
+__pycache__
 
 params.pool
 
