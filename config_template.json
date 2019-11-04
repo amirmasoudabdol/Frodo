@@ -1,51 +1,54 @@
 {
     "ExperimentParameters": {
-        "covs": 0.0,
         "data_strategy": {
-            "name": "LinearModel"
+            "_name": "LinearModel",
+            "covs": 0.0,
+            "means": [
+                0,
+                0.2
+            ],
+            "vars": 0.1
         },
         "effect_estimators": {
-            "name": "CohensD"
+            "_name": "CohensD"
         },
-        "err_covs": 0.001,
-        "err_means": 0.0,
-        "err_vars": 0.01,
-        "loadings": 0.7,
-        "means": 0.5,
-        "n_conditions": 3,
-        "n_dep_vars": 3,
-        "n_items": 3,
-        "n_obs": 10,
+        "n_conditions": 2,
+        "n_dep_vars": 1,
+        "n_obs": 100,
         "test_strategy": {
+            "_name": "TTest",
             "alpha": 0.05,
-            "name": "TTest",
             "side": "TwoSided"
-        },
-        "vars": 1
+        }
     },
     "JournalParameters": {
         "max_pubs": 20,
         "selection_strategy": {
+            "_name": "FreeSelection",
             "alpha": 0.05,
-            "name": "SignificantSelection",
             "pub_bias": 0.95,
-            "selection_seed": 565444343,
             "side": 0
         }
     },
     "ResearcherParameters": {
         "decision_strategy": {
-            "name": "ImpatientDecisionMaker",
+            "_name": "PatientDecisionMaker",
             "preference": "MinPvalue"
         },
         "hacking_strategies": [
             [
                 {
+                    "_name": "SDOutlierRemoval",
                     "level": "dv",
                     "max_attempts": 10,
-                    "n_attempts": 3,
-                    "name": "OptionalStopping",
-                    "num": 10
+                    "min_observations": 20,
+                    "mode": "Recursive",
+                    "multipliers": [
+                        1
+                    ],
+                    "n_attempts": 4,
+                    "num": 2,
+                    "order": "max first"
                 }
             ]
         ],
