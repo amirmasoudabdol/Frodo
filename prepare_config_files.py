@@ -6,14 +6,14 @@ import numpy as np
 params_info = {
     "n_sims": [1],
     "debug": [False],
-    "progress": [True],
+    "progress": [False],
     "verbose": [False],
-    "n_items": [5, 10, 20, 40],
-    "difficulties": [0, 1.5, 3],
-    "abilities": [[0, 0.2], [0, 0.4]],
-    "n_categories": [1, 4],
-    "n_obs": [20, 40, 80, 150, 500],
-    "k": list(np.linspace(2, 4, 20)),
+    "n_items": [5],
+    "difficulties": [[0]],
+    "abilities": [[0, 0.2]],
+    "n_categories": [1],
+    "n_obs": [20],
+    "k": [2],
     "seed": ["random"]
     }
 

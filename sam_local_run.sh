@@ -2,14 +2,17 @@
 
 PROJECT_DIR=$(pwd)
 
+echo
+echo "Running the simulation..."
+
 for CONFIG_FILE in "configs/"*.json; do
 
 	# Extracting the UUID, i.e., filename without extension
 	FILE_NAME=$(basename ${CONFIG_FILE})
 	CONFIG_FILE_NAME="${FILE_NAME%%.*}"
 
-	echo
-	echo "Running the simulation..."
+	echo "${CONFIG_FILE}"
+
 	"${PROJECT_DIR}"/build/SAMrun --config="${CONFIG_FILE}" \
 								--output-path="${PROJECT_DIR}/outputs/" \
 								--output-prefix="${CONFIG_FILE_NAME}" \
