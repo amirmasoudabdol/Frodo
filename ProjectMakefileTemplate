@@ -10,7 +10,7 @@ sampath=build/
 .PHONY: help
 
 help:  ## Display this help
-	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target> project=<yourprojectname> archivepath=<yourarchivedirectory>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target> \033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
 
 ##@ Build
@@ -28,12 +28,12 @@ configure: ## Preparing config files for SAM
 
 	python3 yourprojectname_prepare_config_files.py
 
-clean: ## Remove all output files, i.e., configs, outputs, logs, jobs
+clean: ## Remove most project specific files, configs, jobs, logs, etc.
 	rm -vrf configs/*
 	rm -vrf logs/*
 	rm -vrf jobs/*
 
-veryclean: clean ## Remove all project files
+veryclean: clean ## Remove all project files, including outputs 
 	rm -vrf build/*
 	rm -vrf outputs/*
 	rm -vrf dbs/*
