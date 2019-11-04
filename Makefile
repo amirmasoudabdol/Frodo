@@ -31,19 +31,6 @@ prepare: ## Create a new project by running <config> and <sam>
 	$(MAKE) sam
 
 config: ## Building necessary files and folders for a new project
-	cp sam.jsonnet projects/$(project)/$(project).jsonnet
-	awk '{gsub(/sam.libsonnet/,"$(project).libsonnet");}1' projects/$(project)/$(project).jsonnet > tmp && mv tmp projects/$(project)/$(project).jsonnet
-	awk '{gsub(/hacks.libsonnet/,"$(project)_hacks.libsonnet");}1' projects/$(project)/$(project).jsonnet > tmp && mv tmp projects/$(project)/$(project).jsonnet
-
-	cp sam.libsonnet projects/$(project)/$(project).libsonnet
-	cp hacks.libsonnet projects/$(project)/$(project)_hacks.libsonnet
-
-	cp prep_json_file.sh projects/$(project)/prep_json_file.sh
-	awk '{gsub(/sam.jsonnet/,"$(project).jsonnet");}1' projects/$(project)/prep_json_file.sh > tmp && mv tmp projects/$(project)/prep_json_file.sh
-	chmod +x projects/$(project)/prep_json_file.sh
-
-	cp grid.R projects/$(project)/$(project)_params_grid_generator.R
-	chmod +x projects/$(project)/$(project)_params_grid_generator.R
 	
 	rsync -r $(rrDIR)/* projects/$(project)/rscripts/ --exclude .git
 
@@ -103,8 +90,7 @@ veryclean: ## Remove all project files
 	rm -vrf projects/$(project)/dbs/*
 	rm -vrf projects/$(project)/rscripts/*
 	rm -vrf projects/$(project)/slurm-*.out
-	rm -rvf projects/$(project)/*.jsonnet
-	rm -rvf projects/$(project)/*.libsonnet
+	rm -rvf projects/$(project)/*.json
 	rm -rvf projects/$(project)/*.R
 	rm -rvf projects/$(project)/*.sh
 
