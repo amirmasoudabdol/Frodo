@@ -64,6 +64,10 @@ config: ## Building necessary files and folders for a new project
 	awk '{gsub(/yourprojectname/,"$(project)");}1' projects/$(project)/$(project)_prepare_config_files.py > tmp && mv tmp projects/$(project)/$(project)_prepare_config_files.py
 	chmod +x projects/$(project)/$(project)_prepare_config_files.py
 
+	# Prepare the Project Makefile
+	cp ProjectMakefileTemplate projects/$(project)/Makefile
+	awk '{gsub(/yourprojectname/,"$(project)");}1' projects/$(project)/Makefile > tmp && mv tmp projects/$(project)/Makefile
+
 	cp tables.sql projects/$(project)/tables.sql
 
 
@@ -77,16 +81,12 @@ sam: ## Build SAMrun executable. Makefile will look for ../SAMrun directory firs
 
 clean: ## Remove all output files, i.e., configs, outputs, logs, jobs
 	rm -vrf projects/$(project)/configs/*
-	rm -vrf projects/$(project)/outputs/*
 	rm -vrf projects/$(project)/logs/*
 	rm -vrf projects/$(project)/jobs/*
 
-veryclean: ## Remove all project files
+veryclean: clean ## Remove all project files
 	rm -vrf projects/$(project)/build/*
-	rm -vrf projects/$(project)/configs/*
 	rm -vrf projects/$(project)/outputs/*
-	rm -vrf projects/$(project)/logs/*
-	rm -vrf projects/$(project)/jobs/*
 	rm -vrf projects/$(project)/dbs/*
 	rm -vrf projects/$(project)/rscripts/*
 	rm -vrf projects/$(project)/slurm-*.out

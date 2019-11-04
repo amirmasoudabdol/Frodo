@@ -1,0 +1,39 @@
+.DEFAULT_GOAL:=help
+SHELL:=/bin/bash
+
+# This Makefile handles some of the common tasks in your project
+
+outputpath=outputs/
+configpath=configs/
+sampath=build/
+
+.PHONY: help
+
+help:  ## Display this help
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target> project=<yourprojectname> archivepath=<yourarchivedirectory>\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+
+
+##@ Build
+
+rebuild:
+	# TODO: Run the `cmake` first
+	make -j8 -C build/
+
+
+configure: ## Preparing config files for SAM
+	mkdir -pv outputs
+	mkdir -pv logs
+	mkdir -pv jobs
+	mkdir -pv dbs
+
+	python3 yourprojectname_prepare_config_files.py
+
+clean: ## Remove all output files, i.e., configs, outputs, logs, jobs
+	rm -vrf configs/*
+	rm -vrf logs/*
+	rm -vrf jobs/*
+
+veryclean: clean ## Remove all project files
+	rm -vrf build/*
+	rm -vrf outputs/*
+	rm -vrf dbs/*
