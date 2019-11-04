@@ -5,7 +5,8 @@ PROJECT_DIR=$(pwd)
 for CONFIG_FILE in "configs/"*.json; do
 
 	# Extracting the UUID, i.e., filename without extension
-	CONFIG_FILE_NAME="${CONFIG_FILE%%.*}"
+	FILE_NAME=$(basename ${CONFIG_FILE})
+	CONFIG_FILE_NAME="${FILE_NAME%%.*}"
 
 	echo
 	echo "Running the simulation..."
