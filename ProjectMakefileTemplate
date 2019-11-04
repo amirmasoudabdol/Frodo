@@ -31,6 +31,9 @@ configure: ## Preparing config files for SAM
 database: ## Aggregate output files into a SQLite database
 	python3 yourprojectname_to_sqlite.sh
 
+run.locally:
+	./yourprojectname_local_run.sh
+
 clean: ## Remove most project specific files, configs, jobs, logs, etc.
 	rm -vrf configs/*
 	rm -vrf logs/*
