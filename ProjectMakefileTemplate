@@ -21,10 +21,10 @@ rebuild:
 
 
 parameters: ## Preparing config files for SAM
+	mkdir -pv configs
 	mkdir -pv outputs
 	mkdir -pv logs
 	mkdir -pv jobs
-	mkdir -pv dbs
 
 	python3 yourprojectname_prepare_config_files.py
 
