@@ -20,7 +20,7 @@ rebuild:
 	make -j8 -C build/
 
 
-configure: ## Preparing config files for SAM
+parameters: ## Preparing config files for SAM
 	mkdir -pv outputs
 	mkdir -pv logs
 	mkdir -pv jobs
