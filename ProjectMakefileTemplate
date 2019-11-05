@@ -35,11 +35,19 @@ run.locally:
 	./yourprojectname_local_run.sh
 
 clean: ## Remove most project specific files, configs, jobs, logs, etc.
-	rm -vrf configs/*
-	rm -vrf logs/*
-	rm -vrf jobs/*
+	rm -vrf configs
+	rm -vrf logs
+	rm -vrf jobs
+
+	mkdir -pv configs
+	mkdir -pv logs
+	mkdir -pv jobs
 
 veryclean: clean ## Remove all project files, including outputs 
 	rm -vrf build/*
 	rm -vrf outputs/*
 	rm -vrf dbs/*
+
+	mkdir -pv build
+	mkdir -pv outputs
+	mkdir -pv dbs
