@@ -34,8 +34,8 @@ config: ## Building necessary files and folders for a new project
 	
 	rsync -r $(rrDIR)/* projects/$(project)/rscripts/ --exclude .git
 
-	cp sam_local_run.sh projects/$(project)/$(project)_local_run.sh
-	chmod +x projects/$(project)/$(project)_local_run.sh
+	cp sam_local_seq_run.sh projects/$(project)/$(project)_local_seq_run.sh
+	chmod +x projects/$(project)/$(project)_local_seq_run.sh
 	
 	cp sam_parallel_run.sh projects/$(project)/$(project)_parallel_run.sh
 	awk '{gsub(/yourprojectname/,"$(project)");}1' projects/$(project)/$(project)_parallel_run.sh > tmp && mv tmp projects/$(project)/$(project)_parallel_run.sh
