@@ -8,6 +8,13 @@ configpath=configs/
 sampath=build/
 currentdatetime:="$(shell date '+%Y-%m-%d_%H-%M%p')"
 
+name=""
+ifeq ($(name),"")
+	archivefolder=$(currentdatetime)
+else
+	archivefolder=$(name)
+endif
+
 .PHONY: help
 
 help:  ## Display this help
@@ -41,9 +48,9 @@ run-par-local: ## Running the simulation in parallel on the local machine
 run-par-lisa: ## Running the simulation in parallel on the Lisa cluster
 	@echo "Need to be updated..."
 
-archive: ## Archiving the entire project directory to ../yourprojectname_analysis/archive/CUREENT_DATE_TIME
-	mkdir -pv ../yourprojectname_analysis/archive/$(currentdatetime)
-	cp -rv * ../yourprojectname_analysis/archive/$(currentdatetime)
+archive: ## Archiving the entire project directory to ../yourprojectname_analysis/archive/CUREENT_DATE_TIME or ../yourprojectname_analysis/archive/name
+	mkdir -pv ../yourprojectname_analysis/archive/$(archivefolder)
+	cp -rv * ../yourprojectname_analysis/archive/$(archivefolder)
 
 clean: ## Remove most project specific files, configs, jobs, logs, etc.
 	rm -vrf configs
