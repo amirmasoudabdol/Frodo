@@ -12,6 +12,11 @@ __pycache__
 
 params.pool
 
+
+# Jupyter notebook
+.ipynb_checkpoints/
+*.ipynb
+
 # ------------------------ macOS ---------------------
 # General
 .DS_Store
