@@ -24,6 +24,10 @@ prepare: ## Create a new project by running <config> and <sam>
 	mkdir -pv projects/$(project)/jobs
 	mkdir -pv projects/$(project)/dbs
 
+	# Creating a separate directory for storing temporary file as well as analysis
+	# Removing the project doesn't remove this folder.
+	mkdir -pv projects/$(project)_analysis
+
 	# Add some scripts here to generate template files for their projects
 	$(MAKE) config
 

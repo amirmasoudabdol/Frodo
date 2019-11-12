@@ -6,6 +6,7 @@ SHELL:=/bin/bash
 outputpath=outputs/
 configpath=configs/
 sampath=build/
+currentdatetime:="$(shell date '+%Y-%m-%d_%H-%M%p')"
 
 .PHONY: help
 
@@ -36,6 +37,10 @@ run.seq.local:
 
 run.par.local:
 	./yourprojectname_local_par_run.sh
+
+archive:
+	mkdir -pv ../yourprojectname_analysis/archive/$(currentdatetime)
+	cp -rv * ../yourprojectname_analysis/archive/$(currentdatetime)
 
 clean: ## Remove most project specific files, configs, jobs, logs, etc.
 	rm -vrf configs
