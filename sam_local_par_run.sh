@@ -26,6 +26,8 @@ for ((i=0; i<=niters; i++)) ; do
 
 	FILES=$(sed -n ${span} < configfilenames.pool)
 
+	echo "Running $slinen to $nlinen"
+
 	for CONFIG_FILE in $FILES; do
 	(
 		# Extracting the UUID, i.e., filename without extension
@@ -45,8 +47,12 @@ for ((i=0; i<=niters; i++)) ; do
 		# echo "Running Rscripts"
 		# Rscript ${PROJECT_DIR}/rscripts/post-analyzer.R ${SIM_FILE} FALSE
 
+		echo -e "- \c"
+
 	) &
 	done
 	wait
+
+	echo
 
 done

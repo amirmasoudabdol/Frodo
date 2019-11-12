@@ -48,7 +48,7 @@ def main():
                 "n_items": params["n_items"],
                 "_name": "GradedResponseModel"
               },
-              "effect_estimators": {
+              "effect_strategy": {
                   "_name": "CohensD"
               },
               "n_conditions": 2,

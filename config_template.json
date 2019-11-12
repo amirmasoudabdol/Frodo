@@ -9,7 +9,7 @@
             ],
             "vars": 0.1
         },
-        "effect_estimators": {
+        "effect_strategy": {
             "_name": "CohensD"
         },
         "n_conditions": 2,

@@ -23,7 +23,7 @@ params = {
             }
         ]
         ,
-        "effect_estimators": [
+        "effect_strategy": [
             {
                 "name": "CohensD"
             }
