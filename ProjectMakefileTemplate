@@ -38,6 +38,9 @@ run-seq-local: ## Running the simulation sequentially on the local machine
 run-par-local: ## Running the simulation in parallel on the local machine
 	./yourprojectname_local_par_run.sh
 
+run-par-lisa: ## Running the simulation in parallel on the Lisa cluster
+	@echo "Need to be updated..."
+
 archive: ## Archiving the entire project directory to ../yourprojectname_analysis/archive/CUREENT_DATE_TIME
 	mkdir -pv ../yourprojectname_analysis/archive/$(currentdatetime)
 	cp -rv * ../yourprojectname_analysis/archive/$(currentdatetime)
