@@ -32,10 +32,10 @@ parameters: ## Preparing config files for SAM
 database: ## Aggregate output files into a SQLite database
 	python3 yourprojectname_to_sqlite.py $(from)
 
-run.seq.local: ## Running the simulation sequentially on the local machine
+run-seq-local: ## Running the simulation sequentially on the local machine
 	./yourprojectname_local_seq_run.sh
 
-run.par.local: ## Running the simulation in parallel on the local machine
+run-par-local: ## Running the simulation in parallel on the local machine
 	./yourprojectname_local_par_run.sh
 
 archive: ## Archiving the entire project directory to ../yourprojectname_analysis/archive/CUREENT_DATE_TIME
