@@ -2,14 +2,13 @@
 #SBATCH -N 1
 #SBATCH -n 16
 #SBATCH -p short
-#SBATCH --constraint=avx
 #SBATCH --mail-type=BEGIN,END
 #SBATCH --mail-user=a.m.abdol@uvt.nl
 
 module load stopos
 module load sara-batch-resources
 
-export STOPOS_POOL=yourprojectname
+export STOPOS_POOL=yourprojectname_pool
 ncores=`sara-get-num-cores`
 
 # -----------------------------------
@@ -20,8 +19,6 @@ PROJECT_DIR=$(pwd)
 SAMoo_DIR=${PROJECT_DIR}
 SAMrr_DIR=${PROJECT_DIR}/rscripts
 SAMpp_DIR=${PROJECT_DIR}/build
-
-source ${PROJECT_DIR}/prep_json_file.sh
 
 # -----------------------------------
 # Copying everything to the /scratch
@@ -58,37 +55,36 @@ for ((i=1; i<=ncores; i++)) ; do
 		break
 	fi
 
-	params=($STOPOS_VALUE)
-	
-	# `prepare_json_file` is being imported from `prep_json_file.sh`
-	CONFIG_FILE_NAME="$(prepare_json_file params[@] ${PROJECT_TMP_DIR}/configs)"
-	CONFIG_FILE="${PROJECT_TMP_DIR}/configs/${CONFIG_FILE_NAME}.json"
+	CONFIG_FILE=($STOPOS_VALUE)
+	CONFIG_FILE="${PROJECT_DIR}/configs/${CONFIG_FILE_NAME}.json"
 	
 	# Removing the used parameter from the pool
 	stopos remove
 	
 	echo
 	echo "Running the simulation for: ${CONFIG_FILE_NAME}.json"
-	LOG_FILE="${PROJECT_TMP_DIR}/logs/${CONFIG_FILE_NAME}_sim.log"
+	LOG_FILE="${PROJECT_TMP_DIR}/logs/${CONFIG_FILE_NAME}.log"
 	
 	# Running SAM
-	${SAM_EXEC} --config=${CONFIG_FILE}  --update-config --output-prefix=${CONFIG_FILE_NAME} --output-path=${PROJECT_TMP_DIR}/outputs/ > ${LOG_FILE}
-	SIM_FILE="${PROJECT_TMP_DIR}/outputs/${CONFIG_FILE_NAME}_sim.csv"
+	${SAM_EXEC} --config=${CONFIG_FILE} --output-path=${PROJECT_TMP_DIR}/outputs/ > ${LOG_FILE}
+
+	# Masking all possible output files
+	OUTPUT_FILES="${PROJECT_TMP_DIR}/outputs/${CONFIG_FILE_NAME}_*.csv"
 
 	echo # ----------------------------------------
 	echo "Copying back the output file"
 	
-	cp -v ${SIM_FILE} ${PROJECT_DIR}/outputs/
+	cp -v ${OUTPUT_FILES} ${PROJECT_DIR}/outputs/
 	cp -v ${CONFIG_FILE} ${PROJECT_DIR}/configs/
 	cp -v ${LOG_FILE} ${PROJECT_DIR}/logs/
 	# ---------------------------------------------
 
-	echo
-	echo "Creating a new job file"
-	R_JOB_FILE="${PROJECT_TMP_DIR}/jobs/${CONFIG_FILE_NAME}_r_job.sh"
-	${PROJECT_TMP_DIR}/r_job_temp.sh ${CONFIG_FILE_NAME} > ${R_JOB_FILE}
+	# echo
+	# echo "Creating a new job file"
+	# R_JOB_FILE="${PROJECT_TMP_DIR}/jobs/${CONFIG_FILE_NAME}_r_job.sh"
+	# ${PROJECT_TMP_DIR}/r_job_temp.sh ${CONFIG_FILE_NAME} > ${R_JOB_FILE}
 	
-	cp -v ${R_JOB_FILE} ${PROJECT_DIR}/jobs/
+	# cp -v ${R_JOB_FILE} ${PROJECT_DIR}/jobs/
 
 	# sbatch ${R_JOB_FILE}
 
