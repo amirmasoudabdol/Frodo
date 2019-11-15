@@ -46,13 +46,18 @@ def extract_keys(fnames):
 def main():
 
 	from_ = sys.argv[1]
+	# to_ = sys.args[2]
 
 	filenames = glob.glob("outputs/*_%s.csv" % from_)
 
 	param_names = extract_keys(glob.glob("configs/*.json"))
 
+	# if (to_ == ""):
 	print("Creating the database...")
-	engine = create_engine("sqlite:///dbs/yourprojectname_%s.db" % from_)
+	engine = create_engine("sqlite:///dbs/yourprojectname.db")
+	# else
+	# 	print("Connecting to %s" % to_)
+	# 	engine = create_engine("sqlite:///%s" % to_)
 
 	for i in tqdm(range(len(filenames))):
 		fbase = os.path.basename(filenames[i])
@@ -61,7 +66,7 @@ def main():
 		params = extract_params("configs/" + fprefix + ".json", param_names)
 
 		df = pd.read_csv("outputs/" + fprefix + ("_%s.csv" % from_))
-		df.assign(**params).to_sql('sim', con = engine, if_exists='append', index=False)
+		df.assign(**params).to_sql(from_, con = engine, if_exists='append', index=False)
 
 if __name__ == '__main__':
 	main()
