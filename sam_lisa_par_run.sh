@@ -17,7 +17,7 @@ ncores=`sara-get-num-cores`
 
 PROJECT_DIR=$(pwd)
 
-SAMoo_DIR=${PROJECT_DIR}
+SAMoo_DIR=${PROJECT_DIR}/projects/yourprojectname
 SAMrr_DIR=${PROJECT_DIR}/rscripts
 SAMpp_DIR=${PROJECT_DIR}/build
 
@@ -56,11 +56,11 @@ for ((i=1; i<=ncores; i++)) ; do
 		break
 	fi
 
-	CONFIG_FILE=($STOPOS_VALUE)
+	CONFIG_FILE_NAME=($STOPOS_VALUE)
 	CONFIG_FILE="${PROJECT_DIR}/configs/${CONFIG_FILE_NAME}.json"
 	
 	# Removing the used parameter from the pool
-	stopos remove
+	stopos remove -p yourprojectname_pool
 	
 	echo
 	echo "Running the simulation for: ${CONFIG_FILE_NAME}.json"
