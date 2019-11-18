@@ -5,6 +5,7 @@
 #SBATCH --mail-type=BEGIN,END
 #SBATCH --mail-user=a.m.abdol@uvt.nl
 
+module load pre2019
 module load stopos
 module load sara-batch-resources
 
