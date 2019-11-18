@@ -49,7 +49,7 @@ SAM_EXEC=${PROJECT_TMP_DIR}/build/SAMrun
 for ((i=1; i<=ncores; i++)) ; do
 (
 	# Getting the next parameters from the pool
-	stopos next
+	stopos next -p yourprojectname_pool
 
 	# Checking if the parameters pool is empty
 	if [ "$STOPOS_RC" != "OK" ]; then
