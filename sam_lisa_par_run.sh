@@ -68,7 +68,9 @@ for ((i=1; i<=ncores; i++)) ; do
 	LOG_FILE="${PROJECT_TMP_DIR}/logs/${CONFIG_FILE_NAME}.log"
 	
 	# Running SAM
-	${SAM_EXEC} --config=${CONFIG_FILE} --output-path=${PROJECT_TMP_DIR}/outputs/ > ${LOG_FILE}
+	${SAM_EXEC} --config="${CONFIG_FILE}" \
+	 			--output-path="${PROJECT_TMP_DIR}/outputs/" \
+	 			--output-prefix="${CONFIG_FILE_NAME}" > ${LOG_FILE}
 
 	# Masking all possible output files
 	OUTPUT_FILES="${PROJECT_TMP_DIR}/outputs/${CONFIG_FILE_NAME}_*.csv"
@@ -77,7 +79,7 @@ for ((i=1; i<=ncores; i++)) ; do
 	echo "Copying back the output file"
 	
 	cp -v ${OUTPUT_FILES} ${PROJECT_DIR}/outputs/
-	cp -v ${CONFIG_FILE} ${PROJECT_DIR}/configs/
+	# cp -v ${CONFIG_FILE} ${PROJECT_DIR}/configs/
 	cp -v ${LOG_FILE} ${PROJECT_DIR}/logs/
 	# ---------------------------------------------
 
