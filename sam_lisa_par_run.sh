@@ -56,7 +56,8 @@ for ((i=1; i<=ncores; i++)) ; do
 		break
 	fi
 
-	CONFIG_FILE_NAME=($STOPOS_VALUE)
+	ENTRY=($STOPOS_VALUE)
+	CONFIG_FILE_NAME=${ENTRY%.json}
 	CONFIG_FILE="${PROJECT_DIR}/configs/${CONFIG_FILE_NAME}.json"
 	
 	# Removing the used parameter from the pool
