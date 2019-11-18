@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -N 1
 #SBATCH -n 16
-#SBATCH -p short
+#SBATCH -t 00:15:00
 #SBATCH --mail-type=BEGIN,END
 #SBATCH --mail-user=a.m.abdol@uvt.nl
 
