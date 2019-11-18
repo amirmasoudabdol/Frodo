@@ -20,6 +20,7 @@ params_info = {
     "save_pubs": [False],
     "save_sims": [False],
     "save_stats": [True],
+    "save_rejected": [False],
     "output_path": ["../outputs/"],
     "output_prefix": [""],
     "max_pubs": [10],
@@ -115,7 +116,8 @@ def main():
               "verbose": params["verbose"],
               "save_pubs": params["save_pubs"],
               "save_sims": params["save_sims"],
-              "save_stats": params["save_stats"]
+              "save_stats": params["save_stats"],
+              "save_rejected": params["save_rejected"]
           }
       }
 

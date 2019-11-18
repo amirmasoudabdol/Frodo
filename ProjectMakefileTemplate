@@ -17,7 +17,7 @@ endif
 
 # Calculating the number of cores needed for running the job on Lisa
 n_configs=$$(wc -l < configfilenames.pool)
-n_nodes=$(shell echo $$(( $(n_configs)/16 )) )
+n_nodes=$(shell echo $$(( $(n_configs)/16 + 1 )) )
 
 .PHONY: help
 
