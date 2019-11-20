@@ -19,6 +19,15 @@ def replace_key(old_dict, old, new):
 
 
 def extract_params(configfile, param_names):
+	"""
+	\brief 		Extracting and setting parameters according 
+	to a given JSON file
+
+	\param 	configfile	SAM's JSON config file
+	\param 	param_names	Unique list of parameter names
+
+	\return     A flatten dictionary with 
+	"""
 	config = json.load(open(configfile, 'r'))
 
 	flatten_config = flatten(config)
@@ -34,6 +43,13 @@ def extract_params(configfile, param_names):
 	return new_filtered_dict
 
 def extract_keys(fnames):
+	"""
+	\brief      Collecting all unique keys from all configuration filess
+	
+	\param      fnames  list of all configurations files
+	
+	\return     A unique set of keyss
+	"""
 	params = set()
 	for fn in fnames:
 		j = json.load(open(fn, 'r'))
@@ -46,18 +62,13 @@ def extract_keys(fnames):
 def main():
 
 	from_ = sys.argv[1]
-	# to_ = sys.args[2]
 
 	filenames = glob.glob("outputs/*_%s.csv" % from_)
 
 	param_names = extract_keys(glob.glob("configs/*.json"))
 
-	# if (to_ == ""):
 	print("Creating the database...")
 	engine = create_engine("sqlite:///dbs/yourprojectname.db")
-	# else
-	# 	print("Connecting to %s" % to_)
-	# 	engine = create_engine("sqlite:///%s" % to_)
 
 	for i in tqdm(range(len(filenames))):
 		fbase = os.path.basename(filenames[i])
