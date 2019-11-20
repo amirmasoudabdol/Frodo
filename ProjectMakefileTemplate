@@ -22,6 +22,10 @@ n_nodes=$(shell echo $$(( $(n_configs)/16 + 1 )) )
 .PHONY: help
 
 help:  ## Display this help
+	@echo "You can control your project using this Makefile. There are several"
+	@echo "commands are available for running your simulation locally or on a "
+	@echo "cluster. It's also possible to run the simulation sequentially or in"
+	@echo "parallel on your local machine."
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target> \033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
 
@@ -62,7 +66,7 @@ archive: ## Archiving the entire project directory to ../yourprojectname_analysi
 	mkdir -pv ../yourprojectname_analysis/archive/$(archivefolder)
 	cp -rv * ../yourprojectname_analysis/archive/$(archivefolder)
 
-compress:
+compress: ## Compress the outputs/*, logs/* and configs/*
 	find outputs -name '*_pubs.csv' -print | zip pubs.zip -@
 	find outputs -name '*_stats.csv' -print | zip stats.zip -@
 	find configs -name '*.json' -print | zip configs.zip -@
@@ -72,6 +76,7 @@ clean: ## Remove most project specific files, configs, jobs, logs, etc.
 	rm -vrf configs
 	rm -vrf logs
 	rm -vrf jobs
+	
 	rm configfilenames.pool
 
 	mkdir -pv configs
