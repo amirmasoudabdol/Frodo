@@ -62,6 +62,12 @@ archive: ## Archiving the entire project directory to ../yourprojectname_analysi
 	mkdir -pv ../yourprojectname_analysis/archive/$(archivefolder)
 	cp -rv * ../yourprojectname_analysis/archive/$(archivefolder)
 
+compress:
+	find outputs -name '*_pubs.csv' -print | zip pubs.zip -@
+	find outputs -name '*_stats.csv' -print | zip stats.zip -@
+	find configs -name '*.json' -print | zip configs.zip -@
+	find logs -name '*.log' -print | zip logs.zip -@
+
 clean: ## Remove most project specific files, configs, jobs, logs, etc.
 	rm -vrf configs
 	rm -vrf logs
@@ -73,10 +79,8 @@ clean: ## Remove most project specific files, configs, jobs, logs, etc.
 	mkdir -pv jobs
 
 veryclean: clean ## Remove all project files, including outputs 
-	rm -vrf build/*
 	rm -vrf outputs/*
 	rm -vrf dbs/*
 
-	mkdir -pv build
 	mkdir -pv outputs
 	mkdir -pv dbs
