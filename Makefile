@@ -78,6 +78,10 @@ config: ## Building necessary files and folders for a new project
 	awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/$(project)_to_sqlite.py > tmp && mv tmp $(path)/$(project)/$(project)_to_sqlite.py
 	chmod +x $(path)/$(project)/$(project)_to_sqlite.py
 
+	cp to_csv.py $(path)/$(project)/$(project)_to_csv.py
+	awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/$(project)_to_csv.py > tmp && mv tmp $(path)/$(project)/$(project)_to_csv.py
+	chmod +x $(path)/$(project)/$(project)_to_csv.py
+
 	# Configuration File and Scripts
 	cp config_template.json $(path)/$(project)/$(project)_config_template.json
 	awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/$(project)_config_template.json > tmp && mv tmp $(path)/$(project)/$(project)_config_template.json
