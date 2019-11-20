@@ -67,16 +67,15 @@ archive: ## Archiving the entire project directory to ../yourprojectname_analysi
 	cp -rv * ../yourprojectname_analysis/archive/$(archivefolder)
 
 compress: ## Compress the outputs/*, logs/* and configs/*
-	find outputs -name '*_pubs.csv' -print | zip pubs.zip -@
-	find outputs -name '*_stats.csv' -print | zip stats.zip -@
-	find configs -name '*.json' -print | zip configs.zip -@
-	find logs -name '*.log' -print | zip logs.zip -@
+	zip -r outputs.zip outputs/
+	zip -r configs.zip configs/
+	zip -r logs.zip logs/
 
 clean: ## Remove most project specific files, configs, jobs, logs, etc.
 	rm -vrf configs
 	rm -vrf logs
 	rm -vrf jobs
-	
+
 	rm configfilenames.pool
 
 	mkdir -pv configs
