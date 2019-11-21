@@ -3,7 +3,8 @@ SHELL:=/bin/bash
 
 # This is a utility Makefile
 
-ppDIR=$(HOME)/Projects/SAMpp
+SAMpp_DIR=$(HOME)/Projects/SAMpp
+mvrandom_DIR=$(HOME)/Projects/mvrandom
 ooDIR=$(HOME)/Projects/SAMoo
 rrDIR=$(HOME)/Projects/SAMrr
 
@@ -96,9 +97,14 @@ config: ## Building necessary files and folders for a new project
 
 
 sam: ## Build SAMrun executable. Makefile will look for ../SAMrun directory first
-	mkdir -pv $(path)/$(project)/build
-	cmake -DCMAKE_BUILD_TYPE=Release -H$(HOME)/Projects/SAMrun -B$(path)/$(project)/build 
-	cmake --build $(path)/$(project)/build --parallel 10
+	mkdir -pv $(path)/$(project)/SAM
+	rsync -r ${SAMpp_DIR}/ $(path)/$(project)/SAM/SAMpp/ --exclude .git --exclude build
+	rsync -r ${mvrandom_DIR}/ $(path)/$(project)/SAM/mvrandom/ --exclude .git
+
+	mkdir $(path)/$(project)/SAM/SAMpp/build
+	cmake -DCMAKE_BUILD_TYPE=Release -H$(path)/$(project)/SAM/SAMpp -B$(path)/$(project)/SAM/SAMpp/build
+	cmake --build $(path)/$(project)/SAM/SAMpp/build --parallel 10
+	mv $(path)/$(project)/SAM/SAMpp/build/SAMrun $(path)/$(project)/
 
 ##@ Cleanup
 

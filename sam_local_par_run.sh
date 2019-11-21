@@ -37,7 +37,7 @@ for ((i=0; i<=niters; i++)) ; do
 
 		echo "${CONFIG_FILE}"
 
-		"${PROJECT_DIR}"/build/SAMrun --config="${CONFIG_FILE}" \
+		"${PROJECT_DIR}"/SAMrun --config="${CONFIG_FILE}" \
 									--output-path="${PROJECT_DIR}/outputs/" \
 									--output-prefix="${CONFIG_FILE_NAME}" \
 									--update-config

@@ -41,7 +41,7 @@ mkdir -p ${PROJECT_TMP_DIR}/outputs \
 		 ${PROJECT_TMP_DIR}/jobs \
 		 ${PROJECT_TMP_DIR}/dbs
 
-SAM_EXEC=${PROJECT_TMP_DIR}/build/SAMrun
+SAM_EXEC=${PROJECT_TMP_DIR}/SAMrun
 
 # -----------------------------------
 # Setting up and running the simulation

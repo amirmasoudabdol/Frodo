@@ -68,6 +68,7 @@ archive: ## Archiving the entire project directory to ../yourprojectname_analysi
 	cp -rv * ../yourprojectname_analysis/archive/$(archivefolder)
 
 compress: ## Compress the outputs/*, logs/* and configs/*
+	zip -r sam.zip SAM/
 	zip -r outputs.zip outputs/
 	zip -r configs.zip configs/
 	zip -r logs.zip logs/
