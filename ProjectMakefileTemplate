@@ -67,9 +67,12 @@ run-par-lisa: ## Running the simulation in parallel on the Lisa cluster
 	@echo "Requesting $(n_nodes) nodes..."
 	sbatch -a 1-$(n_nodes) yourprojectname_lisa_par_run.sh
 
-archive: ## Archiving the entire project directory to ../yourprojectname_analysis/archive/CUREENT_DATE_TIME or ../yourprojectname_analysis/archive/name
-	mkdir -pv ../yourprojectname_analysis/archive/$(archivefolder)
-	cp -rv * ../yourprojectname_analysis/archive/$(archivefolder)
+archive: ## Archiving the entire project directory to ../yourprojectname_analysis/archive/CUREENT_DATE_TIME or ../yourprojectname_analysis/archive/<name>
+	mkdir -pv ../yourprojectname_analysis/$(archivefolder)
+	cp -rv * ../yourprojectname_analysis/$(archivefolder)
+
+package:
+	@echo "This will zip everything, and put it somewhere, and delete the project"
 
 compress: ## Compress the outputs/*, logs/* and configs/*
 	zip -r sam.zip SAM/
