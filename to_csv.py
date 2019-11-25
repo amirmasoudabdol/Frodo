@@ -75,9 +75,9 @@ def prepare_df(fname):
 
 def main():
 
-	pool = multiprocessing.Pool(multiprocessing.cpu_count() - 1)
-
-	tqdm(pool.map(prepare_df, filenames), total=len(filenames))
+	with multiprocessing.Pool(multiprocessing.cpu_count() - 1) as pool:
+		for _ in tqdm(pool.imap(prepare_df, filenames), total=len(filenames)):
+			pass
 
 
 if __name__ == '__main__':
