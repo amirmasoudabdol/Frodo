@@ -49,7 +49,7 @@ prepare: ## Create a new project by running <config> and <sam>
 
 	# Creating a separate directory for storing temporary file as well as analysis
 	# Removing the project doesn't remove this folder.
-	mkdir -pv $(path)/$(project)_analysis
+	# mkdir -pv $(path)/$(project)_analysis
 
 	# Add some scripts here to generate template files for their projects
 	$(MAKE) config
