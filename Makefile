@@ -96,7 +96,7 @@ config: ## Building necessary files and folders for a new project
 	awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/Makefile > tmp && mv tmp $(path)/$(project)/Makefile
 
 
-sam: ## Build SAMrun executable. Makefile will look for ../SAMrun directory first
+sam: ## Build SAMrun executable. Note: This will update SAM source directory and rebuild it
 	mkdir -pv $(path)/$(project)/SAM
 	rsync -r ${SAMpp_DIR}/ $(path)/$(project)/SAM/SAMpp/ --exclude .git --exclude build
 	rsync -r ${mvrandom_DIR}/ $(path)/$(project)/SAM/mvrandom/ --exclude .git

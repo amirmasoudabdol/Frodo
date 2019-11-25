@@ -7,8 +7,12 @@ import pandas as pd
 from sqlalchemy import create_engine
 from flatten_json import flatten
 from string import digits
+import multiprocessing
 
 remove_digits = str.maketrans('', '', digits)
+
+from_ = ""
+param_names = dict()
 
 def replace_key(old_dict, old, new):
 	new_dict = {}
@@ -59,7 +63,24 @@ def extract_keys(fnames):
 
 	return params
 
+def prepare_df(fname):
+	fbase = os.path.basename(fname)
+	fprefix = fbase.split("_")[0]
+
+	params = extract_params("configs/" + fprefix + ".json", param_names)
+
+	df = pd.read_csv("outputs/" + fprefix + ("_%s.csv" % from_))
+	df.assign(**params).to_csv("outputs/%s_%s_prepared.csv" % (fprefix, from_), index=False)
+
+
 def main():
+
+	pool = multiprocessing.Pool(multiprocessing.cpu_count() - 1)
+
+	tqdm(pool.map(prepare_df, filenames), total=len(filenames))
+
+
+if __name__ == '__main__':
 
 	from_ = sys.argv[1]
 
@@ -67,14 +88,4 @@ def main():
 
 	param_names = extract_keys(glob.glob("configs/*.json"))
 
-	for i in tqdm(range(len(filenames))):
-		fbase = os.path.basename(filenames[i])
-		fprefix = fbase.split("_")[0]
-
-		params = extract_params("configs/" + fprefix + ".json", param_names)
-
-		df = pd.read_csv("outputs/" + fprefix + ("_%s.csv" % from_))
-		df.assign(**params).to_csv("outputs/%s_%s_prepared.csv" % (fprefix, from_), index=False)
-
-if __name__ == '__main__':
 	main()

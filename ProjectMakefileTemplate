@@ -48,7 +48,7 @@ parameters: ## Preparing config files for SAM
 database: ## Aggregate output files into a SQLite database
 	python3 yourprojectname_to_sqlite.py $(from)
 
-database: ## Create a set of files `*_prepared.csv` by adding all keys/values to them. Use this when the database is too big
+csv: ## Create a set of files `*_prepared.csv` by adding all keys/values to them. Use this when the database is too big
 	python3 yourprojectname_to_csv.py $(from)
 
 run-seq-local: ## Running the simulation sequentially on the local machine
