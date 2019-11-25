@@ -31,9 +31,10 @@ help:  ## Display this help
 
 ##@ Build
 
-rebuild: ## Rebuild the binaries, run this if you've modified the code
+sam-build: ## Rebuild the binaries, run this if you've modified the code
 	# TODO: Run the `cmake` first
-	make -j8 -C build/
+	cmake --build SAM/SAMpp/build --parallel 10
+	mv SAM/SAMpp/build/SAMrun .
 
 
 parameters: ## Preparing config files for SAM
@@ -46,6 +47,9 @@ parameters: ## Preparing config files for SAM
 
 database: ## Aggregate output files into a SQLite database
 	python3 yourprojectname_to_sqlite.py $(from)
+
+database: ## Create a set of files `*_prepared.csv` by adding all keys/values to them. Use this when the database is too big
+	python3 yourprojectname_to_csv.py $(from)
 
 run-seq-local: ## Running the simulation sequentially on the local machine
 	./yourprojectname_local_seq_run.sh

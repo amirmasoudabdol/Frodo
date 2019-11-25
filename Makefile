@@ -101,7 +101,7 @@ sam: ## Build SAMrun executable. Makefile will look for ../SAMrun directory firs
 	rsync -r ${SAMpp_DIR}/ $(path)/$(project)/SAM/SAMpp/ --exclude .git --exclude build
 	rsync -r ${mvrandom_DIR}/ $(path)/$(project)/SAM/mvrandom/ --exclude .git
 
-	mkdir $(path)/$(project)/SAM/SAMpp/build
+	mkdir -pv $(path)/$(project)/SAM/SAMpp/build
 	cmake -DCMAKE_BUILD_TYPE=Release -H$(path)/$(project)/SAM/SAMpp -B$(path)/$(project)/SAM/SAMpp/build
 	cmake --build $(path)/$(project)/SAM/SAMpp/build --parallel 10
 	mv $(path)/$(project)/SAM/SAMpp/build/SAMrun $(path)/$(project)/
