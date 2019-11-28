@@ -36,7 +36,6 @@ sam-build: ## Rebuild the binaries, run this if you've modified the code
 	cmake --build SAM/SAMpp/build --parallel 10
 	mv SAM/SAMpp/build/SAMrun .
 
-
 parameters: ## Preparing config files for SAM
 	mkdir -pv configs
 	mkdir -pv outputs
@@ -85,15 +84,16 @@ clean: ## Remove most project specific files, configs, jobs, logs, etc.
 	rm -vrf logs
 	rm -vrf jobs
 
-	rm configfilenames.pool
-
 	mkdir -pv configs
 	mkdir -pv logs
 	mkdir -pv jobs
 
+	rm configfilenames.pool
+	rm slurm-*.out
+
 veryclean: clean ## Remove all project files, including outputs 
-	rm -vrf outputs/*
-	rm -vrf dbs/*
+	rm -vrf outputs
+	rm -vrf dbs
 
 	mkdir -pv outputs
 	mkdir -pv dbs
