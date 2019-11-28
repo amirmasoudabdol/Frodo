@@ -67,9 +67,14 @@ def prepare_df(fname):
 	fbase = os.path.basename(fname)
 	fprefix = fbase.split("_")[0]
 
+	# Checking whether the "prepared" file exist, if so, then don't remake it
+	if (os.path.isfile("outputs/%s_%s_prepared.csv" % (fprefix, from_))):
+		return
+
 	params = extract_params("configs/" + fprefix + ".json", param_names)
 
 	df = pd.read_csv("outputs/" + fprefix + ("_%s.csv" % from_))
+
 	df.assign(**params).to_csv("outputs/%s_%s_prepared.csv" % (fprefix, from_), index=False)
 
 
