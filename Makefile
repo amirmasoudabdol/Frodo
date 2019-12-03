@@ -8,6 +8,8 @@ mvrandom_DIR=$(HOME)/Projects/mvrandom
 ooDIR=$(HOME)/Projects/SAMoo
 rrDIR=$(HOME)/Projects/SAMrr
 
+currentdatetime:="$(shell date '+%Y-%m-%d_%H-%M%p')"
+
 path=""
 ifeq ($(path),"")
 	path=$(shell pwd)/projects
@@ -105,6 +107,9 @@ sam: ## Build SAMrun executable. Note: This will update SAM source directory and
 	cmake -DCMAKE_BUILD_TYPE=Release -H$(path)/$(project)/SAM/SAMpp -B$(path)/$(project)/SAM/SAMpp/build
 	cmake --build $(path)/$(project)/SAM/SAMpp/build --parallel 10
 	mv $(path)/$(project)/SAM/SAMpp/build/SAMrun $(path)/$(project)/
+
+compress: ## Zip everything in the <project>
+	zip -r $(project)_$(currentdatetime).zip $(path)/$(project)/
 
 ##@ Cleanup
 
