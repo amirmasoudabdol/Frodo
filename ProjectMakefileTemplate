@@ -6,7 +6,7 @@ SHELL:=/bin/bash
 outputpath=outputs/
 configpath=configs/
 sampath=build/
-currentdatetime:="$(shell date '+%Y-%m-%d_%H-%M%p')"
+currentdatetime:=$(shell date '+%Y-%m-%d_%H-%M%p')
 
 name=""
 ifeq ($(name),"")

@@ -8,7 +8,7 @@ mvrandom_DIR=$(HOME)/Projects/mvrandom
 ooDIR=$(HOME)/Projects/SAMoo
 rrDIR=$(HOME)/Projects/SAMrr
 
-currentdatetime:="$(shell date '+%Y-%m-%d_%H-%M%p')"
+currentdatetime:=$(shell date '+%Y-%m-%d_%H-%M%p')
 
 path=""
 ifeq ($(path),"")
@@ -109,7 +109,7 @@ sam: ## Build SAMrun executable. Note: This will update SAM source directory and
 	mv $(path)/$(project)/SAM/SAMpp/build/SAMrun $(path)/$(project)/
 
 compress: ## Zip everything in the <project>
-	zip -r $(project)_$(currentdatetime).zip $(path)/$(project)/
+	zip -j $(project)_$(currentdatetime).zip $(path)/$(project)/*
 
 ##@ Cleanup
 
