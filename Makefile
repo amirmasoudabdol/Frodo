@@ -23,10 +23,12 @@ endif
 .PHONY: help
 
 help:  ## Display this help
-	@echo "This is SAMoo, a handy toolset for preparing a new project using SAM."
-	@echo "In the process of 'prepare'-ing a new project, this Makefile produces"
-	@echo "several template files for configuring and running a SAM project on"
-	@echo "your local machine or on Lisa cluster."
+	@printf "This is SAMoo, a handy toolset for preparing a new project using SAM.\n"
+	@printf "In the process of 'prepare'-ing a new project, this Makefile produces\n"
+	@printf "several template files for configuring and running a SAM project on\n"
+	@printf "your local machine or on Lisa cluster.\n\n"
+	@printf "$(<b>) > Make sure that this Makefile knows where SAM and other $(</b>)\n"
+	@printf "$(<b>)   dependencies are located. $(</b>)\n"
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target> parameter=value \033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 	@echo
 	@echo "Example Usage:"
@@ -98,14 +100,15 @@ config: ## Building necessary files and folders for a new project
 
 
 sam: ## Build SAMrun executable. Note: This will update SAM source directory and rebuild it
-	@printf '$(<b>) > Building SAM... $(</b>)\n'
+	@printf '$(<b>) > Copying SAM... $(</b>)\n'
 	@mkdir -pv $(path)/$(project)/SAM
 	@rsync -r ${SAMpp_DIR}/ $(path)/$(project)/SAM/SAMpp/ --exclude .git --exclude build
 	@rsync -r ${mvrandom_DIR}/ $(path)/$(project)/SAM/mvrandom/ --exclude .git
 
+	@printf '$(<b>) > Building SAM... $(</b>)\n'
 	@mkdir -pv $(path)/$(project)/SAM/SAMpp/build
-	cmake -DCMAKE_BUILD_TYPE=Release -H$(path)/$(project)/SAM/SAMpp -B$(path)/$(project)/SAM/SAMpp/build
-	cmake --build $(path)/$(project)/SAM/SAMpp/build --parallel 10
+	@cmake -DCMAKE_BUILD_TYPE=Release -H$(path)/$(project)/SAM/SAMpp -B$(path)/$(project)/SAM/SAMpp/build
+	@cmake --build $(path)/$(project)/SAM/SAMpp/build --parallel 10
 	@mv $(path)/$(project)/SAM/SAMpp/build/SAMrun $(path)/$(project)/
 
 compress: ## Zip everything in the <project>

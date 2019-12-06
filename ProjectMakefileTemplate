@@ -36,7 +36,8 @@ help:  ## Display this help
 
 sam-build: ## Rebuild the binaries, run this if you've modified the code
 	# TODO: Run the `cmake` first
-	cmake --build SAM/SAMpp/build --parallel 10
+	cmake -DCMAKE_BUILD_TYPE=Release -HSAM/SAMpp -BSAM/SAMpp/build
+	cmake --build SAM/SAMpp/build --parallel 10 --clean-first
 	mv SAM/SAMpp/build/SAMrun .
 
 parameters: clean ## Preparing config files for SAM
