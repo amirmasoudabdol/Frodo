@@ -102,8 +102,8 @@ config: ## Building necessary files and folders for a new project
 sam: ## Build SAMrun executable. Note: This will update SAM source directory and rebuild it
 	@printf '$(<b>) > Copying SAM... $(</b>)\n'
 	@mkdir -pv $(path)/$(project)/SAM
-	@rsync -r ${SAMpp_DIR}/ $(path)/$(project)/SAM/SAMpp/ --exclude .git --exclude build
-	@rsync -r ${mvrandom_DIR}/ $(path)/$(project)/SAM/mvrandom/ --exclude .git
+	@rsync -r ${SAMpp_DIR}/ $(path)/$(project)/SAM/SAMpp/ --exclude .git --exclude build --exclude cmake-build-debug
+	@rsync -r ${mvrandom_DIR}/ $(path)/$(project)/SAM/mvrandom/ --exclude .git --exclude cmake-build-debug --exclude build
 
 	@printf '$(<b>) > Building SAM... $(</b>)\n'
 	@mkdir -pv $(path)/$(project)/SAM/SAMpp/build
