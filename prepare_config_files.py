@@ -2,16 +2,19 @@ import json
 import uuid
 import itertools
 import numpy as np
+import tqdm
 
 params_info = {
     "n_sims": [1],
     "debug": [False],
     "progress": [False],
     "verbose": [False],
-    "n_items": [5],
-    "difficulties": [[0]],
-    "abilities": [[0, 0.2]],
-    "n_categories": [1],
+    "data_strategy_n_items": [5],
+    "data_strategy_difficulties": [[0]],
+    "data_strategy_abilities": [[0, 0.2]],
+    "data_strategy_n_categories": [1],
+    "data_strategy_n_conditions": [2],
+    "data_strategy_n_dep_vars": [1],
     "n_obs": [20],
     "k": [2],
     "seed": ["random"],
@@ -23,9 +26,16 @@ params_info = {
     "save_rejected": [False],
     "output_path": ["../outputs/"],
     "output_prefix": [""],
-    "max_pubs": [10],
+
     "test_alpha": [0.05],
-    "test_strategy_name": ["TTest"]
+    "test_strategy_name": ["TTest"],
+    "test_strategy_side": ["TwoSided"],
+
+    "journal_selection_strategy_name": ["FreeSelection"],
+    "journal_max_pubs": [10],
+
+    "decision_strategy_name": ["PatientDecisionMaker"],
+    "decision_strategy_preference": ["MinPvalue"]
     }
 
 
@@ -34,7 +44,7 @@ def main():
   configfilenames = open("configfilenames.pool", 'w')
 
   counter = 0;
-  for param_vals in itertools.product(*params_info.values()):
+  for param_vals in tqdm.tqdm(itertools.product(*params_info.values())):
 
       counter += 1
 
@@ -43,34 +53,34 @@ def main():
       data = {
           "ExperimentParameters": {
               "data_strategy": {
-                "abilities": params["abilities"],
-                "difficulties": params["difficulties"],
-                "n_categories": params["n_categories"],
-                "n_items": params["n_items"],
+                "abilities": params["data_strategy_abilities"],
+                "difficulties": params["data_strategy_difficulties"],
+                "n_categories": params["data_strategy_n_categories"],
+                "n_items": params["data_strategy_n_items"],
                 "_name": "GradedResponseModel"
               },
               "effect_strategy": {
                   "_name": "CohensD"
               },
-              "n_conditions": 2,
-              "n_dep_vars": 1,
+              "n_conditions": params["data_strategy_n_conditions"],
+              "n_dep_vars": params["data_strategy_n_dep_vars"],
               "n_obs": params["n_obs"],
               "test_strategy": {
                   "_name": params["test_strategy_name"],
                   "alpha": params["test_alpha"],
-                  "side": "TwoSided"
+                  "side": params["test_strategy_side"]
               }
           },
           "JournalParameters": {
-              "max_pubs": params["max_pubs"],
+              "max_pubs": params["journal_max_pubs"],
               "selection_strategy": {
-                  "_name": "FreeSelection"
+                  "_name": params["journal_selection_strategy_name"]
               }
           },
           "ResearcherParameters": {
               "decision_strategy": {
-                  "_name": "PatientDecisionMaker",
-                  "preference": "MinPvalue"
+                  "_name": params["decision_strategy_name"],
+                  "preference": params["decision_strategy_preference"]
               },
               "hacking_strategies": [
                   [
