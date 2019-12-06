@@ -1,0 +1,8 @@
+.git
+build
+cmake-build-debug
+docs
+xcode-project
+outputs
+cling-playground
+Testing
