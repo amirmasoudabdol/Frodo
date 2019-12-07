@@ -44,7 +44,7 @@ def main():
   configfilenames = open("configfilenames.pool", 'w')
 
   counter = 0;
-  for param_vals in tqdm.tqdm(itertools.product(*params_info.values())):
+  for param_vals in tqdm.tqdm(itertools.product(*params_info.values()), leave=False):
 
       counter += 1
 
@@ -141,7 +141,7 @@ def main():
       with open("configs/" + filename, 'w') as f:
           json.dump(data, f, indent = 4)
 
-  print("%d configuration files have generated!" % counter)
+  print(" %d configuration files have generated!" % counter)
 
 if __name__ == '__main__':
   main()

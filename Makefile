@@ -27,8 +27,8 @@ help:  ## Display this help
 	@printf "In the process of 'prepare'-ing a new project, this Makefile produces\n"
 	@printf "several template files for configuring and running a SAM project on\n"
 	@printf "your local machine or on Lisa cluster.\n\n"
-	@printf "$(<b>) > Make sure that this Makefile knows where SAM and other $(</b>)\n"
-	@printf "$(<b>)   dependencies are located. $(</b>)\n"
+	@printf "$(<b>)> Make sure that this Makefile knows where SAM and other $(</b>)\n"
+	@printf "$(<b>)  dependencies are located. $(</b>)\n"
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target> parameter=value \033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 	@echo
 	@echo "Example Usage:"
@@ -46,7 +46,7 @@ path: ## Project path, defaults to ./projects/
 ##@ Build
 
 prepare: ## Create a new project by running <config> and <sam>
-	@printf '$(<b>) > Preparing $(project)... $(</b>)\n'
+	@printf '$(<b>)> Preparing $(project)... $(</b>)\n'
 	@mkdir -pv $(path)/$(project)/build
 	@mkdir -pv $(path)/$(project)/configs
 	
@@ -61,10 +61,10 @@ prepare: ## Create a new project by running <config> and <sam>
 
 config: ## Building necessary files and folders for a new project
 	
-	@printf '$(<b>) > Prepare a copy of SAM for $(project)... $(</b>)\n'
+	@printf '$(<b>)> Prepare a copy of SAM for $(project)... $(</b>)\n'
 	@rsync -r $(rrDIR)/* $(path)/$(project)/rscripts/ --exclude .git
 
-	@printf '$(<b>) > Preparing project files... $(</b>)\n'
+	@printf '$(<b>)> Preparing project files... $(</b>)\n'
 
 	@cp sam_local_seq_run.sh $(path)/$(project)/$(project)_local_seq_run.sh
 	@chmod +x $(path)/$(project)/$(project)_local_seq_run.sh
@@ -100,35 +100,35 @@ config: ## Building necessary files and folders for a new project
 
 
 sam: ## Build SAMrun executable. Note: This will update SAM source directory and rebuild it
-	@printf '$(<b>) > Copying SAM... $(</b>)\n'
+	@printf '$(<b>)> Copying SAM... $(</b>)\n'
 	@mkdir -pv $(path)/$(project)/SAM
 	@rsync -r ${SAMpp_DIR}/ $(path)/$(project)/SAM/SAMpp/ --exclude-from=.rsync-exclude-list
 	@rsync -r ${mvrandom_DIR}/ $(path)/$(project)/SAM/mvrandom/ --exclude-from=.rsync-exclude-list
 
-	@printf '$(<b>) > Building SAM... $(</b>)\n'
+	@printf '$(<b>)> Building SAM... $(</b>)\n'
 	@mkdir -pv $(path)/$(project)/SAM/SAMpp/build
 	@cmake -DCMAKE_BUILD_TYPE=Release -H$(path)/$(project)/SAM/SAMpp -B$(path)/$(project)/SAM/SAMpp/build
 	@cmake --build $(path)/$(project)/SAM/SAMpp/build --parallel 10
 	@mv $(path)/$(project)/SAM/SAMpp/build/SAMrun $(path)/$(project)/
 
 compress: ## Zip everything in the <project>
-	@printf '$(<b>) > Compressing $(project)... $(</b>)\n'
+	@printf '$(<b>)> Compressing $(project)... $(</b>)\n'
 	7z a $(project)_$(currentdatetime).zip $(path)/$(project)/
 
 ##@ Cleanup
 
 clean: ## Remove all output files, i.e., configs, outputs, logs, jobs
-	@printf '$(<b>) > Cleaning up configs/*, logs/*, and jobs/*... $(</b>)\n'
+	@printf '$(<b>)> Cleaning up configs/*, logs/*, and jobs/*... $(</b>)\n'
 	@rm -rf $(path)/$(project)/configs/*
 	@rm -rf $(path)/$(project)/logs/*
 	@rm -rf $(path)/$(project)/jobs/*
 
 veryclean: clean ## Remove all project files
-	@printf '$(<b>) > Cleaning project specific files, outputs/*, dbs/*, ... $(</b>)\n'
+	@printf '$(<b>)> Cleaning project specific files, outputs/*, dbs/*, ... $(</b>)\n'
 	@rm -rf $(path)/$(project)/outputs/*
 	@rm -rf $(path)/$(project)/dbs/*
 	@rm -rf $(path)/$(project)/slurm-*.out
 
 remove: ## Delete the entire project directory
-	@printf '$(<b>) > Removing $(project)... $(</b>)\n'
+	@printf '$(<b>)> Removing $(project)... $(</b>)\n'
 	@rm -rf $(path)/$(project)
