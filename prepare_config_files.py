@@ -35,7 +35,8 @@ params_info = {
     "journal_max_pubs": [10],
 
     "decision_strategy_name": ["PatientDecisionMaker"],
-    "decision_strategy_preference": ["MinPvalue"]
+    "decision_strategy_preference": ["MinPvalue"],
+    "decision_strategy_publishing_policy": ["Anything"]
     }
 
 
@@ -80,7 +81,8 @@ def main():
           "ResearcherParameters": {
               "decision_strategy": {
                   "_name": params["decision_strategy_name"],
-                  "preference": params["decision_strategy_preference"]
+                  "preference": params["decision_strategy_preference"],
+                  "publishing_policy": params["publishing_policy"]
               },
               "hacking_strategies": [
                   [
