@@ -12,8 +12,10 @@ plan(multiprocess)
 project_path <- "outputs/"
 project_name <- "yourprojectname"
 
+# Currently I'm mainly processing prepared publications datasets as
+# they contain most of the data that I need, but you can apply this
+# script on other outputs as well, e.g., `stats`.
 filenames <- list.files(project_path, pattern = "*_pubs_prepared.csv", full.names = TRUE)
-
 
 # Reading and summarizing each file
 summarize_each_file <- function(fname) {
@@ -47,7 +49,7 @@ read_all_files <- function(fnames) {
   
   tbl <-
     filenames %>%
-    future_map_dfr(~summarize_each_file(.), .progress = TRUE)
+    future_map_dfr(~summarize_each_file(.), .progress = FALSE)
 
   return(tbl)
 
@@ -59,4 +61,4 @@ df <- read_all_files(filenames)
 df <- data.frame(df)
 
 
-write.csv(df, paste(project_path, project_name, "_summarized_df.csv"), row.names = FALSE)
+write.csv(df, paste(project_path, project_name, "_summarized_df.csv", sep=""), row.names = FALSE)

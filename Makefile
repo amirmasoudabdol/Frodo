@@ -112,10 +112,14 @@ sam: ## Build SAMrun executable. Note: This will update SAM source directory and
 	@rsync -rtu ${SAMpp_DIR}/ $(path)/$(project)/SAM/SAMpp/ --exclude-from=.rsync-exclude-list
 	@rsync -rtu ${mvrandom_DIR}/ $(path)/$(project)/SAM/mvrandom/ --exclude-from=.rsync-exclude-list
 
-	@printf '$(<b>)> Building SAM... $(</b>)\n'
 	@mkdir -pv $(path)/$(project)/SAM/SAMpp/build
+	
+	@printf '$(<b>)> Configuring SAM... $(</b>)\n'
 	@cmake -DCMAKE_BUILD_TYPE=Release -H$(path)/$(project)/SAM/SAMpp -B$(path)/$(project)/SAM/SAMpp/build
+	
+	@printf '$(<b>)> Building SAM... $(</b>)\n'
 	@cmake --build $(path)/$(project)/SAM/SAMpp/build --parallel 10
+	
 	@mv $(path)/$(project)/SAM/SAMpp/build/SAMrun $(path)/$(project)/
 
 compress: ## Zip everything in the <project>
