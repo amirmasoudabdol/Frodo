@@ -52,6 +52,9 @@ database: ## Aggregate output files into a SQLite database
 csv: ## Create a set of files `*_prepared.csv` by adding all keys/values to them. Use this when the database is too big
 	@python3 yourprojectname_to_csv.py $(from)
 
+summary: ## Runinng the `post-processing.R` script on every file in output/ folder
+	@Rscript yourprojectname_post_processing.R
+
 run-seq-local: ## Running the simulation sequentially on the local machine
 	@./yourprojectname_local_seq_run.sh
 
@@ -89,9 +92,9 @@ clean: ## Remove most project specific files, configs, jobs, logs, etc.
 	@rm -rf logs
 	@rm -rf jobs
 
-	@mkdir -pv configs
-	@mkdir -pv logs
-	@mkdir -pv jobs
+	@mkdir -p configs
+	@mkdir -p logs
+	@mkdir -p jobs
 
 	@printf '$(<b>)> Removing parameters pool... $(</b>)\n'
 
@@ -100,10 +103,10 @@ clean: ## Remove most project specific files, configs, jobs, logs, etc.
 veryclean: clean ## Remove all project files, including outputs 
 	@printf '$(<b>)> Cleaning project specific files, outputs/*, dbs/*, ... $(</b>)\n'
 
-	@rm -vrf outputs
-	@rm -vrf dbs
+	@rm -rf outputs
+	@rm -rf dbs
 
-	@mkdir -pv outputs
-	@mkdir -pv dbs
+	@mkdir -p outputs
+	@mkdir -p dbs
 	
-	@rm slurm-*.out
+	@rm -rf slurm-*.out

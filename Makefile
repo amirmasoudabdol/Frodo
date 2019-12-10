@@ -83,6 +83,10 @@ config: ## Building necessary files and folders for a new project
 	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/r_job_temp.sh > tmp && mv tmp $(path)/$(project)/r_job_temp.sh
 	@chmod +x $(path)/$(project)/r_job_temp.sh
 
+	@cp post_processing.R $(path)/$(project)/$(project)_post_processing.R
+	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/post_processing.R > tmp && mv tmp $(path)/$(project)/$(project)_post_processing.R
+	@chmod +x $(path)/$(project)/$(project)_post_processing.R
+
 	@cp to_sqlite.py $(path)/$(project)/$(project)_to_sqlite.py
 	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/$(project)_to_sqlite.py > tmp && mv tmp $(path)/$(project)/$(project)_to_sqlite.py
 	@chmod +x $(path)/$(project)/$(project)_to_sqlite.py
@@ -105,8 +109,8 @@ config: ## Building necessary files and folders for a new project
 sam: ## Build SAMrun executable. Note: This will update SAM source directory and rebuild it
 	@printf '$(<b>)> Copying SAM... $(</b>)\n'
 	@mkdir -pv $(path)/$(project)/SAM
-	@rsync -rt ${SAMpp_DIR}/ $(path)/$(project)/SAM/SAMpp/ --exclude-from=.rsync-exclude-list
-	@rsync -rt ${mvrandom_DIR}/ $(path)/$(project)/SAM/mvrandom/ --exclude-from=.rsync-exclude-list
+	@rsync -rtu ${SAMpp_DIR}/ $(path)/$(project)/SAM/SAMpp/ --exclude-from=.rsync-exclude-list
+	@rsync -rtu ${mvrandom_DIR}/ $(path)/$(project)/SAM/mvrandom/ --exclude-from=.rsync-exclude-list
 
 	@printf '$(<b>)> Building SAM... $(</b>)\n'
 	@mkdir -pv $(path)/$(project)/SAM/SAMpp/build

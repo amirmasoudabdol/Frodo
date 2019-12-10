@@ -82,7 +82,7 @@ def main():
 					"decision_strategy": {
 							"_name": params["decision_strategy_name"],
 							"preference": params["decision_strategy_preference"],
-							"publishing_policy": params["publishing_policy"]
+							"publishing_policy": params["decision_strategy_publishing_policy"]
 					},
 					"hacking_strategies": [
 							[
