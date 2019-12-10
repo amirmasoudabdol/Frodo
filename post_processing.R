@@ -4,11 +4,6 @@
 # so, I'm leaving it out to run it in parallel via the Makefile
 
 suppressWarnings(suppressMessages(library(tidyverse)))
-suppressWarnings(suppressMessages(library(RSQLite)))
-suppressWarnings(suppressMessages(library(reshape2)))
-suppressWarnings(suppressMessages(library(ggthemes)))
-suppressWarnings(suppressMessages(library(showtext)))
-suppressWarnings(suppressMessages(library(metafor)))
 suppressWarnings(suppressMessages(library(furrr)))
 suppressWarnings(suppressMessages(library(data.table)))
 
@@ -20,6 +15,7 @@ project_name <- "yourprojectname"
 filenames <- list.files(project_path, pattern = "*_pubs_prepared.csv", full.names = TRUE)
 
 
+# Reading and summarizing each file
 summarize_each_file <- function(fname) {
 
   df <- fread(fname)
@@ -44,20 +40,23 @@ summarize_each_file <- function(fname) {
 }
 
 
+# Reading and summarizing all files in parallel
 read_all_files <- function(fnames) {
 
   options(warn =  -1)
   
   tbl <-
-    files %>%
-    map_df(~summarize_each_file(.), progress = TRUE)
+    filenames %>%
+    future_map_dfr(~summarize_each_file(.), .progress = TRUE)
 
   return(tbl)
 
 }
 
-
 df <- read_all_files(filenames)
+
+# Removig the grouping columns
+df <- data.frame(df)
 
 
 write.csv(df, paste(project_path, project_name, "_summarized_df.csv"), row.names = FALSE)
