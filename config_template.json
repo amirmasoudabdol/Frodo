@@ -1,5 +1,5 @@
 {
-    "ExperimentParameters": {
+    "experiment_parameters": {
         "data_strategy": {
             "_name": "LinearModel",
             "covs": 0.0,
@@ -21,7 +21,7 @@
             "side": "TwoSided"
         }
     },
-    "JournalParameters": {
+    "journal_parameters": {
         "max_pubs": 20,
         "selection_strategy": {
             "_name": "FreeSelection",
@@ -30,7 +30,7 @@
             "side": 0
         }
     },
-    "ResearcherParameters": {
+    "researcher_parameters": {
         "decision_strategy": {
             "_name": "PatientDecisionMaker",
             "preference": "MinPvalue"
@@ -54,7 +54,7 @@
         ],
         "is_phacker": true
     },
-    "SimulationParameters": {
+    "simulation_parameters": {
         "debug": false,
         "master_seed": 42,
         "n_sims": 5,

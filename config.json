@@ -1,5 +1,5 @@
 {
-   "ExperimentParameters": {
+   "experiment_parameters": {
       "covs": 0,
       "data-strategy": "LinearModel",
       "effect-estimators": [
@@ -21,14 +21,14 @@
       },
       "vars": 0.01
    },
-   "JournalParameters": {
+   "journal_parameters": {
       "alpha": 0.050000000000000003,
       "journal-selection-model": "SignificantSelection",
       "max-pubs": 70,
       "pub-bias": 0.94999999999999996,
       "side": 1
    },
-   "ResearcherParameters": {
+   "researcher_parameters": {
       "decision-strategy": {
          "name": "PatientDecisionMaker",
          "preference": "MinPvalue"
@@ -47,7 +47,7 @@
          ]
       ]
    },
-   "SimulationParameters": {
+   "simulation_parameters": {
       "debug": false,
       "master-seed": 42,
       "n-sims": 1,

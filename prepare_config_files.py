@@ -52,7 +52,7 @@ def main():
 		params = dict(zip(params_info.keys(), param_vals))
 
 		data = {
-			"ExperimentParameters": {
+			"experiment_parameters": {
 					"data_strategy": {
 						"abilities": params["data_strategy_abilities"],
 						"difficulties": params["data_strategy_difficulties"],
@@ -72,13 +72,13 @@ def main():
 							"side": params["test_strategy_side"]
 					}
 			},
-			"JournalParameters": {
+			"journal_parameters": {
 					"max_pubs": params["journal_max_pubs"],
 					"selection_strategy": {
 							"_name": params["journal_selection_strategy_name"]
 					}
 			},
-			"ResearcherParameters": {
+			"researcher_parameters": {
 					"decision_strategy": {
 							"_name": params["decision_strategy_name"],
 							"preference": params["decision_strategy_preference"],
@@ -118,7 +118,7 @@ def main():
 							}
 					]
 			},
-			"SimulationParameters": {
+			"simulation_parameters": {
 					"debug": params["debug"],
 					"master_seed": params["seed"],
 					"n_sims": params["n_sims"],

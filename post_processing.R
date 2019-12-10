@@ -28,12 +28,12 @@ summarize_each_file <- function(fname) {
   # later post-processing and plotting.
   agg_df <- df %>% 
     mutate(tnobs = factor(tnobs),
-           n_items = factor(ExperimentParameters_data_strategy_n_items),
-           n_categories = factor(ExperimentParameters_data_strategy_n_categories),
-           k = factor(ResearcherParameters_pre_processing_methods_0_multipliers_0),
-           is_pre_processed = factor(ResearcherParameters_is_pre_processing),
-           abilities = ExperimentParameters_data_strategy_abilities_1,
-           difficulties = ExperimentParameters_data_strategy_difficulties_0) %>%
+           n_items = factor(experiment_parameters_data_strategy_n_items),
+           n_categories = factor(experiment_parameters_data_strategy_n_categories),
+           k = factor(researcher_parameters_pre_processing_methods_0_multipliers_0),
+           is_pre_processed = factor(researcher_parameters_is_pre_processing),
+           abilities = experiment_parameters_data_strategy_abilities_1,
+           difficulties = experiment_parameters_data_strategy_difficulties_0) %>%
     group_by(abilities, k, n_categories, n_items, difficulties, tnobs, is_pre_processed) %>%
     summarize(sig_mean = mean(sig),
               pval_mean = mean(pvalue),
