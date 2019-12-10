@@ -84,7 +84,7 @@ config: ## Building necessary files and folders for a new project
 	@chmod +x $(path)/$(project)/r_job_temp.sh
 
 	@cp post_processing.R $(path)/$(project)/$(project)_post_processing.R
-	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/post_processing.R > tmp && mv tmp $(path)/$(project)/$(project)_post_processing.R
+	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/$(project)_post_processing.R > tmp && mv tmp $(path)/$(project)/$(project)_post_processing.R
 	@chmod +x $(path)/$(project)/$(project)_post_processing.R
 
 	@cp to_sqlite.py $(path)/$(project)/$(project)_to_sqlite.py
