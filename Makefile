@@ -59,6 +59,9 @@ prepare: ## Create a new project by running <config> and <sam>
 
 	@$(MAKE) sam
 
+	@printf '$(<b>)> Successfully preapred and saved "$(project)" in "$(path)" ... $(</b>)\n'
+	@printf '$(<b>)> `cd` into the project folder and start with the `make` command ... $(</b>)\n'
+
 config: ## Building necessary files and folders for a new project
 	
 	@printf '$(<b>)> Prepare a copy of SAM for $(project)... $(</b>)\n'
@@ -102,8 +105,8 @@ config: ## Building necessary files and folders for a new project
 sam: ## Build SAMrun executable. Note: This will update SAM source directory and rebuild it
 	@printf '$(<b>)> Copying SAM... $(</b>)\n'
 	@mkdir -pv $(path)/$(project)/SAM
-	@rsync -r ${SAMpp_DIR}/ $(path)/$(project)/SAM/SAMpp/ --exclude-from=.rsync-exclude-list
-	@rsync -r ${mvrandom_DIR}/ $(path)/$(project)/SAM/mvrandom/ --exclude-from=.rsync-exclude-list
+	@rsync -rt ${SAMpp_DIR}/ $(path)/$(project)/SAM/SAMpp/ --exclude-from=.rsync-exclude-list
+	@rsync -rt ${mvrandom_DIR}/ $(path)/$(project)/SAM/mvrandom/ --exclude-from=.rsync-exclude-list
 
 	@printf '$(<b>)> Building SAM... $(</b>)\n'
 	@mkdir -pv $(path)/$(project)/SAM/SAMpp/build
