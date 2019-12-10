@@ -47,13 +47,13 @@ path: ## Project path, defaults to ./projects/
 
 prepare: ## Create a new project by running <config> and <sam>
 	@printf '$(<b>)> Preparing $(project)... $(</b>)\n'
-	@mkdir -pv $(path)/$(project)/build
-	@mkdir -pv $(path)/$(project)/configs
+	@mkdir -p $(path)/$(project)/build
+	@mkdir -p $(path)/$(project)/configs
 	
-	@mkdir -pv $(path)/$(project)/outputs
-	@mkdir -pv $(path)/$(project)/logs
-	@mkdir -pv $(path)/$(project)/jobs
-	@mkdir -pv $(path)/$(project)/dbs
+	@mkdir -p $(path)/$(project)/outputs
+	@mkdir -p $(path)/$(project)/logs
+	@mkdir -p $(path)/$(project)/jobs
+	@mkdir -p $(path)/$(project)/dbs
 
 	@$(MAKE) config
 
@@ -108,11 +108,11 @@ config: ## Building necessary files and folders for a new project
 
 sam: ## Build SAMrun executable. Note: This will update SAM source directory and rebuild it
 	@printf '$(<b>)> Copying SAM... $(</b>)\n'
-	@mkdir -pv $(path)/$(project)/SAM
+	@mkdir -p $(path)/$(project)/SAM
 	@rsync -rtu ${SAMpp_DIR}/ $(path)/$(project)/SAM/SAMpp/ --exclude-from=.rsync-exclude-list
 	@rsync -rtu ${mvrandom_DIR}/ $(path)/$(project)/SAM/mvrandom/ --exclude-from=.rsync-exclude-list
 
-	@mkdir -pv $(path)/$(project)/SAM/SAMpp/build
+	@mkdir -p $(path)/$(project)/SAM/SAMpp/build
 	
 	@printf '$(<b>)> Configuring SAM... $(</b>)\n'
 	@cmake -DCMAKE_BUILD_TYPE=Release -H$(path)/$(project)/SAM/SAMpp -B$(path)/$(project)/SAM/SAMpp/build
