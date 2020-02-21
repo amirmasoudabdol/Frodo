@@ -69,7 +69,6 @@ prepare: ## Create a new project by running <config> and <sam>
 config: ## Building necessary files and folders for a new project
 	
 	@printf '$(<b>)> Prepare a copy of SAM for $(project)... $(</b>)\n'
-	@rsync -r $(rrDIR)/* $(path)/$(project)/rscripts/ --exclude .git
 
 	@printf '$(<b>)> Preparing project files... $(</b>)\n'
 
