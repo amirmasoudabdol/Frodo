@@ -18,6 +18,13 @@ else
 	archivefolder=$(name)
 endif
 
+using=""
+ifeq ($(using),"")
+	configtemp=scripts/yourprojectname_prepare_config_files.py
+else
+	configtemp=$(using)
+endif
+
 # Calculating the number of cores needed for running the job on Lisa
 n_configs=$$(wc -l < configfilenames.pool)
 n_nodes=$(shell echo $$(( $(n_configs)/16 + 1 )) )
@@ -25,14 +32,27 @@ n_nodes=$(shell echo $$(( $(n_configs)/16 + 1 )) )
 .PHONY: help
 
 help:  ## Display this help
-	@echo "You can control your project using this Makefile. There are several"
-	@echo "commands are available for running your simulation locally or on a "
-	@echo "cluster. It's also possible to run the simulation sequentially or in"
-	@echo "parallel on your local machine."
+	@echo " \nYou can control your project using this Makefile. There are several"
+	@echo " commands are available for running your simulation locally or on a "
+	@echo " cluster. It's also possible to run the simulation sequentially or in"
+	@echo " parallel on your local machine."
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target> \033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+	@echo
+	@echo "Example Usage:"
+	@echo "    make parameters using=~/projects_config/2012_project.py"
+	@echo "    make run-seq-local; make archive name=Feb_5.zip"
+
+##@ [Paramters]
+
+using: ## Path to a new parameter generator
+	@echo "Path to a new Python script for generating parameters, example usuage: 'make parameters using=my_config_grid.py"
+
+name: ## The name of the archive
+	@echo "Indicates the name of the archive, example usage: 'make archive name=my_archive"
 
 
-##@ Build
+##@ --------------------------------------------------------------
+##@ Build 
 
 sam-build: ## Rebuild the binaries, run this if you've modified the code
 	# TODO: Run the `cmake` first
@@ -44,16 +64,20 @@ parameters: clean ## Preparing config files for SAM
 	@printf '$(<b>)> Make sure that you have set all the parameters correctly... $(</b>)\n'
 	@printf '$(<b>)> Make sure that you have updated the "data" dictionary in "main()"... $(</b>)\n'
 
-	@python3 scripts/yourprojectname_prepare_config_files.py
+	@python3 $(configtemp)
 
-database: ## Aggregate output files into a SQLite database
-	@python3 scripts/yourprojectname_to_sqlite.py $(from)
+##@ Post-processing
 
 csv: ## Create a set of files `*_prepared.csv` by adding all keys/values to them. Use this when the database is too big
 	@python3 scripts/yourprojectname_to_csv.py $(from)
 
+database: ## Aggregate output files into a SQLite database
+	@python3 scripts/yourprojectname_to_sqlite.py $(from)
+
 summary: ## Runinng the `post-processing.R` script on every file in output/ folder
 	@Rscript scripts/yourprojectname_post_processing.R
+
+##@ Run
 
 run-seq-local: ## Running the simulation sequentially on the local machine
 	@./scripts/yourprojectname_local_seq_run.sh
@@ -71,6 +95,8 @@ run-par-lisa: ## Running the simulation in parallel on the Lisa cluster
 	@echo "Requesting $(n_nodes) nodes..."
 	sbatch -a 1-$(n_nodes) scripts/yourprojectname_lisa_par_run.sh
 
+##@ Packaging
+
 archive: ## Archiving the entire project directory to ../yourprojectname_archive/archive/CUREENT_DATE_TIME or ../yourprojectname_analysis/archive/<name>
 	@printf '$(<b>)> Copying everything to ../yourprojectname_archive/$(archivefolder)... $(</b>)\n'
 
@@ -85,6 +111,8 @@ compress: ## Compress the outputs/*, logs/* and configs/*
 	7z a outputs.zip outputs/
 	7z a configs.zip configs/
 	7z a logs.zip logs/
+
+##@ Cleanup
 
 clean: ## Remove most project specific files, configs, jobs, logs, etc.
 	@printf '$(<b>)> Cleaning up configs/* logs/* jobs/*... $(</b>)\n'
