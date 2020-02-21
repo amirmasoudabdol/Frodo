@@ -23,12 +23,13 @@ endif
 .PHONY: help
 
 help:  ## Display this help
-	@printf "This is SAMoo, a handy toolset for preparing a new project using SAM.\n"
-	@printf "In the process of 'prepare'-ing a new project, this Makefile produces\n"
-	@printf "several template files for configuring and running a SAM project on\n"
-	@printf "your local machine or on Lisa cluster.\n\n"
+	@printf "\n This is SAMoo, a handy toolset for preparing a new project using SAM.\n"
+	@printf " In the process of 'prepare'-ing a new project, this Makefile produces\n"
+	@printf " several template files for configuring and running a SAM project on\n"
+	@printf " your local machine or on Lisa cluster.\n\n"
 	@printf "$(<b>)> Make sure that this Makefile knows where SAM and other $(</b>)\n"
-	@printf "$(<b>)  dependencies are located. $(</b>)\n"
+	@printf "$(<b>)  dependencies are located. You can set their path through the $(</b>)\n"
+	@printf "$(<b>)  parameters defined in line 9 – 12 of the Makefile.$(</b>)\n"
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target> parameter=value \033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 	@echo
 	@echo "Example Usage:"
@@ -43,12 +44,15 @@ project: ## Project name
 path: ## Project path, defaults to ./projects/
 	@echo "The 'project' target is a parameter, example usage: 'make prepare project=apollo path='~/projects/'"
 
+##@ -----------------------------------------------------------
 ##@ Build
 
 prepare: ## Create a new project by running <config> and <sam>
 	@printf '$(<b>)> Preparing $(project)... $(</b>)\n'
 	@mkdir -p $(path)/$(project)/build
 	@mkdir -p $(path)/$(project)/configs
+
+	@mkdir -p $(path)/$(project)/scripts
 	
 	@mkdir -p $(path)/$(project)/outputs
 	@mkdir -p $(path)/$(project)/logs
