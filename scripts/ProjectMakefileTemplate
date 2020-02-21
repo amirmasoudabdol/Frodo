@@ -44,22 +44,22 @@ parameters: clean ## Preparing config files for SAM
 	@printf '$(<b>)> Make sure that you have set all the parameters correctly... $(</b>)\n'
 	@printf '$(<b>)> Make sure that you have updated the "data" dictionary in "main()"... $(</b>)\n'
 
-	@python3 yourprojectname_prepare_config_files.py
+	@python3 scripts/yourprojectname_prepare_config_files.py
 
 database: ## Aggregate output files into a SQLite database
-	@python3 yourprojectname_to_sqlite.py $(from)
+	@python3 scripts/yourprojectname_to_sqlite.py $(from)
 
 csv: ## Create a set of files `*_prepared.csv` by adding all keys/values to them. Use this when the database is too big
-	@python3 yourprojectname_to_csv.py $(from)
+	@python3 scripts/yourprojectname_to_csv.py $(from)
 
 summary: ## Runinng the `post-processing.R` script on every file in output/ folder
-	@Rscript yourprojectname_post_processing.R
+	@Rscript scripts/yourprojectname_post_processing.R
 
 run-seq-local: ## Running the simulation sequentially on the local machine
-	@./yourprojectname_local_seq_run.sh
+	@./scripts/yourprojectname_local_seq_run.sh
 
 run-par-local: ## Running the simulation in parallel on the local machine
-	@./yourprojectname_local_par_run.sh
+	@./scripts/yourprojectname_local_par_run.sh
 
 run-par-lisa: ## Running the simulation in parallel on the Lisa cluster
 	module load pre2019
@@ -67,9 +67,9 @@ run-par-lisa: ## Running the simulation in parallel on the Lisa cluster
 	stopos purge -p yourprojectname_pool
 	stopos create -p yourprojectname_pool
 	stopos add -p yourprojectname_pool configfilenames.pool
-	chmod +x yourprojectname_lisa_par_run.sh
+	chmod +x scripts/yourprojectname_lisa_par_run.sh
 	@echo "Requesting $(n_nodes) nodes..."
-	sbatch -a 1-$(n_nodes) yourprojectname_lisa_par_run.sh
+	sbatch -a 1-$(n_nodes) scripts/yourprojectname_lisa_par_run.sh
 
 archive: ## Archiving the entire project directory to ../yourprojectname_archive/archive/CUREENT_DATE_TIME or ../yourprojectname_analysis/archive/<name>
 	@printf '$(<b>)> Copying everything to ../yourprojectname_archive/$(archivefolder)... $(</b>)\n'

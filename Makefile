@@ -72,40 +72,40 @@ config: ## Building necessary files and folders for a new project
 
 	@printf '$(<b>)> Preparing project files... $(</b>)\n'
 
-	@cp sam_local_seq_run.sh $(path)/$(project)/$(project)_local_seq_run.sh
-	@chmod +x $(path)/$(project)/$(project)_local_seq_run.sh
+	@cp scripts/sam_local_seq_run.sh $(path)/$(project)/scripts/$(project)_local_seq_run.sh
+	@chmod +x $(path)/$(project)/scripts/$(project)_local_seq_run.sh
 
-	@cp sam_local_par_run.sh $(path)/$(project)/$(project)_local_par_run.sh
-	@chmod +x $(path)/$(project)/$(project)_local_par_run.sh
+	@cp scripts/sam_local_par_run.sh $(path)/$(project)/scripts/$(project)_local_par_run.sh
+	@chmod +x $(path)/$(project)/scripts/$(project)_local_par_run.sh
 	
-	@cp sam_lisa_par_run.sh $(path)/$(project)/$(project)_lisa_par_run.sh
-	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/$(project)_lisa_par_run.sh > tmp && mv tmp $(path)/$(project)/$(project)_lisa_par_run.sh
-	@chmod +x $(path)/$(project)/$(project)_lisa_par_run.sh
+	@cp scripts/sam_lisa_par_run.sh $(path)/$(project)/scripts/$(project)_lisa_par_run.sh
+	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/scripts/$(project)_lisa_par_run.sh > tmp && mv tmp $(path)/$(project)/scripts/$(project)_lisa_par_run.sh
+	@chmod +x $(path)/$(project)/scripts/$(project)_lisa_par_run.sh
 
-	@cp r_job_temp.sh $(path)/$(project)/r_job_temp.sh
-	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/r_job_temp.sh > tmp && mv tmp $(path)/$(project)/r_job_temp.sh
-	@chmod +x $(path)/$(project)/r_job_temp.sh
+	@cp scripts/r_job_temp.sh $(path)/$(project)/scripts/$(project)_r_job_temp.sh
+	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/scripts/$(project)_r_job_temp.sh > tmp && mv tmp $(path)/$(project)/scripts/$(project)_r_job_temp.sh
+	@chmod +x $(path)/$(project)/scripts/$(project)_r_job_temp.sh
 
-	@cp post_processing.R $(path)/$(project)/$(project)_post_processing.R
-	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/$(project)_post_processing.R > tmp && mv tmp $(path)/$(project)/$(project)_post_processing.R
-	@chmod +x $(path)/$(project)/$(project)_post_processing.R
+	@cp scripts/post_processing.R $(path)/$(project)/scripts/$(project)_post_processing.R
+	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/scripts/$(project)_post_processing.R > tmp && mv tmp $(path)/$(project)/scripts/$(project)_post_processing.R
+	@chmod +x $(path)/$(project)/scripts/$(project)_post_processing.R
 
-	@cp to_sqlite.py $(path)/$(project)/$(project)_to_sqlite.py
-	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/$(project)_to_sqlite.py > tmp && mv tmp $(path)/$(project)/$(project)_to_sqlite.py
-	@chmod +x $(path)/$(project)/$(project)_to_sqlite.py
+	@cp scripts/to_sqlite.py $(path)/$(project)/scripts/$(project)_to_sqlite.py
+	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/scripts/$(project)_to_sqlite.py > tmp && mv tmp $(path)/$(project)/scripts/$(project)_to_sqlite.py
+	@chmod +x $(path)/$(project)/scripts/$(project)_to_sqlite.py
 
-	@cp to_csv.py $(path)/$(project)/$(project)_to_csv.py
-	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/$(project)_to_csv.py > tmp && mv tmp $(path)/$(project)/$(project)_to_csv.py
-	@chmod +x $(path)/$(project)/$(project)_to_csv.py
+	@cp scripts/to_csv.py $(path)/$(project)/scripts/$(project)_to_csv.py
+	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/scripts/$(project)_to_csv.py > tmp && mv tmp $(path)/$(project)/scripts/$(project)_to_csv.py
+	@chmod +x $(path)/$(project)/scripts/$(project)_to_csv.py
 
-	@cp config_template.json $(path)/$(project)/$(project)_config_template.json
-	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/$(project)_config_template.json > tmp && mv tmp $(path)/$(project)/$(project)_config_template.json
+	@cp scripts/config_template.json $(path)/$(project)/scripts/$(project)_config_template.json
+	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/scripts/$(project)_config_template.json > tmp && mv tmp $(path)/$(project)/scripts/$(project)_config_template.json
 
-	@cp prepare_config_files.py $(path)/$(project)/$(project)_prepare_config_files.py
-	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/$(project)_prepare_config_files.py > tmp && mv tmp $(path)/$(project)/$(project)_prepare_config_files.py
-	@chmod +x $(path)/$(project)/$(project)_prepare_config_files.py
+	@cp scripts/prepare_config_files.py $(path)/$(project)/scripts/$(project)_prepare_config_files.py
+	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/scripts/$(project)_prepare_config_files.py > tmp && mv tmp $(path)/$(project)/scripts/$(project)_prepare_config_files.py
+	@chmod +x $(path)/$(project)/scripts/$(project)_prepare_config_files.py
 
-	@cp ProjectMakefileTemplate $(path)/$(project)/Makefile
+	@cp scripts/ProjectMakefileTemplate $(path)/$(project)/Makefile
 	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/Makefile > tmp && mv tmp $(path)/$(project)/Makefile
 
 
