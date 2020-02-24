@@ -112,15 +112,7 @@ def main():
 					"is_pre_processing": params["is_pre_processing"],
 					"pre_processing_methods": [
 							{
-								"_name": "SDOutlierRemoval",
-								"max_attempts": 1000,
-								"min_observations": 5,
-								"multipliers": [
-										0.5
-								],
-								"n_attempts": 1000,
-								"num": 1000,
-								"order": "random"
+								"_name": "none"
 							}
 					]
 			},
