@@ -9,20 +9,20 @@ params_info = {
 	"debug": [False],
 	"progress": [False],
 	"verbose": [False],
-	"data_strategy_n_items": [5],
-	"data_strategy_difficulties": [[0]],
-	"data_strategy_abilities": [[0, 0.2]],
-	"data_strategy_n_categories": [1],
+	"data_strategy_n_items": [2, 5, 10, 20, 40],
+	"data_strategy_difficulties_mean": [0, 1.5, 3.0],
+	"data_strategy_abilities_mean": [[0, 0.2]],
+	"data_strategy_n_categories": [1, 5],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [1],
-	"n_obs": [20],
-	"k": [2],
+	"n_obs": [20, 40, 80, 150, 500],
+	"k": [x for x in np.arange(2.0, 4.0, 0.1)],
 	"seed": ["random"],
-	"is_pre_processing": [False],
+	"is_pre_processing": [True],
 	"is_phacker": [False],
-	"save_pubs": [False],
+	"save_pubs": [True],
 	"save_sims": [False],
-	"save_stats": [True],
+	"save_stats": [False],
 	"save_rejected": [False],
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
@@ -32,9 +32,9 @@ params_info = {
 	"test_strategy_side": ["TwoSided"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [10],
+	"journal_max_pubs": [10000],
 
-	"decision_strategy_name": ["PatientDecisionMaker"],
+	"decision_strategy_name": ["ImpatientDecisionMaker"],
 	"decision_strategy_preference": ["MinPvalue"],
 	"decision_strategy_publishing_policy": ["Anything"]
 	}
@@ -54,8 +54,19 @@ def main():
 		data = {
 			"experiment_parameters": {
 					"data_strategy": {
-						"abilities": params["data_strategy_abilities"],
-						"difficulties": params["data_strategy_difficulties"],
+						"abilities": {
+							"dist": "mvnorm_distribution",
+							"means": params["data_strategy_abilities_mean"],
+							"stddevs": 1.0,
+							"covs": 0.0
+						},
+						"difficulties": [
+			                {
+			                    "dist": "normal_distribution",
+			                    "mean": params["data_strategy_difficulties_mean"],
+			                    "stddev": 1.0
+			                }
+						],
 						"n_categories": params["data_strategy_n_categories"],
 						"n_items": params["data_strategy_n_items"],
 						"_name": "GradedResponseModel"
@@ -107,14 +118,14 @@ def main():
 							{
 									"_name": "SDOutlierRemoval",
 									"level": "dv",
-									"max_attempts": 1000,
+									"max_attempts": 1,
 									"min_observations": 5,
 									"multipliers": [
-											0.5
+											params["k"]
 									],
-									"n_attempts": 1000,
-									"num": 1000,
-									"order": "random"
+									"n_attempts": 1,
+									"num": params["n_obs"],
+									"order": "max first"
 							}
 					]
 			},
