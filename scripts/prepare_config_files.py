@@ -143,7 +143,7 @@ def main():
 		with open("configs/" + filename, 'w') as f:
 				json.dump(data, f, indent = 4)
 
-	print(" %d configuration files have generated!" % counter)
+	print(" > %d configuration files have generated!" % counter)
 
 if __name__ == '__main__':
 	main()

@@ -108,6 +108,23 @@ config: ## Building necessary files and folders for a new project
 	@cp scripts/ProjectMakefileTemplate $(path)/$(project)/Makefile
 	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/Makefile > tmp && mv tmp $(path)/$(project)/Makefile
 
+load:
+	@printf '$(<b>)> Loading existing project files... $(</b>)\n'
+
+ifneq ("$(wildcard templates/$(project)_post_processing.R)","")
+	@echo "Found and copied $(project)_post_processing.R"
+	@cp $(shell pwd)/templates/$(project)_post_processing.R $(path)/$(project)/scripts/$(project)_post_processing.R
+endif
+
+ifneq ("$(wildcard templates/$(project)_prepare_config_files.py)","")
+	@echo "Found and copied $(project)_prepare_config_files.py"
+	@cp $(shell pwd)/templates/$(project)_prepare_config_files.py $(path)/$(project)/scripts/$(project)_prepare_config_files.py
+endif
+
+ifneq ("$(wildcard templates/$(project)_lisa_par_run.sh)","")
+	@echo "Found and copied $(project)_lisa_par_run.sh"
+	@cp $(shell pwd)/templates/$(project)_lisa_par_run.sh $(path)/$(project)/scripts/$(project)_lisa_par_run.sh
+endif
 
 sam: ## Build SAMrun executable. Note: This will update SAM source directory and rebuild it
 	@printf '$(<b>)> Copying SAM... $(</b>)\n'

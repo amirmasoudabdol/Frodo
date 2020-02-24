@@ -86,6 +86,7 @@ run-par-local: ## Running the simulation in parallel on the local machine
 	@./scripts/yourprojectname_local_par_run.sh
 
 run-par-lisa: ## Running the simulation in parallel on the Lisa cluster
+	@printf '$(<b>)> Preparing Lisa enviroment, and submitting an array job... $(</b>)\n'
 	module load pre2019
 	module load stopos
 	stopos purge -p yourprojectname_pool
