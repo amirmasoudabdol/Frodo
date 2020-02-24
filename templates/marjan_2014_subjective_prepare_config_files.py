@@ -35,7 +35,7 @@ params_info = {
 	"journal_max_pubs": [10000],
 
 	"decision_strategy_name": ["ImpatientDecisionMaker"],
-	"decision_strategy_preference": ["MinPvalue"],
+	"decision_strategy_preference": ["PreRegisteredOutcome", "MinSigPvalue", "RandomSigPvalue"],
 	"decision_strategy_publishing_policy": ["Anything"]
 	}
 
