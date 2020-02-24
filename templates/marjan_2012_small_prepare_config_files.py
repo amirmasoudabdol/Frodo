@@ -11,14 +11,14 @@ params_info = {
 	"verbose": [False],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [5],
-        "data_strategy_measurements": [
-                {
-                "dist": "mvnorm_distribution",
-        "means": [0.0, 0.0, 0.0, 0.0, 0.0, x, x, x, x, x],
-        "covs": 0.5,
-        "stddevs": 1.0
-                } for x in np.arange(0.0, 1.01, 0.05)
-        ],
+	"data_strategy_measurements": [
+		{
+		"dist": "mvnorm_distribution",
+		"means": [0.0, 0.0, 0.0, 0.0, 0.0, x, x, x, x, x],
+		"covs": 0.5,
+		"stddevs": 1.0
+		} for x in np.arange(0.0, 1.01, 0.05)
+	],
 	"n_obs": [50, 100, 200],
 	"k": [2],
 	"seed": ["random"],
