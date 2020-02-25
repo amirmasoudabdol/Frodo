@@ -144,7 +144,7 @@ sam: ## Build SAMrun executable. Note: This will update SAM source directory and
 
 compress: ## Zip everything in the <project>
 	@printf '$(<b>)> Compressing $(project)... $(</b>)\n'
-	7z a $(project)_$(currentdatetime).zip $(path)/$(project)/
+	7z a -mx=0 -mmt=16 $(project)_$(currentdatetime).zip $(path)/$(project)/
 
 ##@ Cleanup
 
