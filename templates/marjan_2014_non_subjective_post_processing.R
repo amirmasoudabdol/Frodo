@@ -30,9 +30,10 @@ summarize_each_file <- function(fname) {
            n_categories = factor(experiment_parameters_data_strategy_n_categories),
            k = factor(researcher_parameters_pre_processing_methods_0_multipliers_0),
            is_pre_processed = factor(researcher_parameters_is_pre_processing),
-           abilities = experiment_parameters_data_strategy_abilities_1,
-           difficulties = experiment_parameters_data_strategy_difficulties_0) %>%
-    group_by(abilities, k, n_categories, n_items, difficulties, tnobs, is_pre_processed) %>%
+           selection_pref = factor(researcher_parameters_decision_strategy_preference),
+           abilities = experiment_parameters_data_strategy_abilities_means_1,
+           difficulties = experiment_parameters_data_strategy_difficulties_0_mean) %>%
+    group_by(abilities, k, n_categories, selction_pref, n_items, difficulties, tnobs, is_pre_processed) %>%
     summarize(sig_mean = mean(sig),
               pval_mean = mean(pvalue),
               nobs_mean = mean(nobs)
@@ -49,7 +50,7 @@ read_all_files <- function(fnames) {
   
   tbl <-
     filenames %>%
-    future_map_dfr(~summarize_each_file(.), .progress = FALSE)
+    future_map_dfr(~summarize_each_file(.), .progress = TRUE)
 
   return(tbl)
 
