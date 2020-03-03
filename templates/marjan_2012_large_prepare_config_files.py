@@ -33,7 +33,7 @@ params_info = {
 
 	"test_alpha": [0.05],
 	"test_strategy_name": ["TTest"],
-	"test_strategy_side": ["TwoSided"],
+	"test_strategy_alternative": ["TwoSided"],
 
 	"effect_strategy_name": ["MeanDifference"],
 
@@ -72,7 +72,7 @@ def main():
 					"test_strategy": {
 							"_name": params["test_strategy_name"],
 							"alpha": params["test_alpha"],
-							"side": params["test_strategy_side"]
+							"alternative": params["test_strategy_alternative"]
 					}
 			},
 			"journal_parameters": {
