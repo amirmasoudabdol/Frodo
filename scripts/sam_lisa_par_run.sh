@@ -67,7 +67,7 @@ for ((i=1; i<=ncores; i++)) ; do
 	echo "Running the simulation for: ${CONFIG_FILE_NAME}.json"
 	LOG_FILE="${PROJECT_TMP_DIR}/logs/${CONFIG_FILE_NAME}.log"
 	
-	start=`date +%s`
+	# start=`date +%s`
 
 	# Running SAM
 	${SAM_EXEC} --config="${CONFIG_FILE}" \
@@ -78,9 +78,9 @@ for ((i=1; i<=ncores; i++)) ; do
 	end=`date +%s`
 
 	# Calculating and saving the runtime
-	runtime=$((end-start))
-	echo "runtime in seconds: " >> ${LOG_FILE}
-	echo ${runtime} >> ${LOG_FILE}
+	# runtime=$((end-start))
+	# echo "runtime in seconds: " >> ${LOG_FILE}
+	# echo ${runtime} >> ${LOG_FILE}
 
 	# Masking all possible output files
 	OUTPUT_FILES="${PROJECT_TMP_DIR}/outputs/${CONFIG_FILE_NAME}_*.csv"
@@ -105,3 +105,5 @@ for ((i=1; i<=ncores; i++)) ; do
 ) &
 done
 wait
+
+echo "Done!"
