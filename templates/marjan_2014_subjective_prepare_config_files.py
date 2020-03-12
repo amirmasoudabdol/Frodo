@@ -36,7 +36,7 @@ params_info = {
 
 	"decision_strategy_name": ["ImpatientDecisionMaker"],
 	"decision_strategy_preference": ["PreRegisteredOutcome", "MinSigPvalue", "RandomSigPvalue"],
-	"decision_strategy_publishing_policy": ["Anything"]
+	"decision_strategy_submission_policy": ["Anything"]
 	}
 
 
@@ -93,7 +93,7 @@ def main():
 					"decision_strategy": {
 							"_name": params["decision_strategy_name"],
 							"preference": params["decision_strategy_preference"],
-							"publishing_policy": params["decision_strategy_publishing_policy"]
+							"submission_policy": params["decision_strategy_submission_policy"]
 					},
 					"hacking_strategies": [
 							[
