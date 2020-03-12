@@ -7,7 +7,7 @@ SHELL:=/bin/bash
 # This is a utility Makefile
 
 SAMpp_DIR=$(HOME)/Projects/SAMpp
-mvrandom_DIR=$(HOME)/Projects/mvrandom
+baaraan_DIR=$(HOME)/Projects/baaraan
 ooDIR=$(HOME)/Projects/SAMoo
 rrDIR=$(HOME)/Projects/SAMrr
 
@@ -130,7 +130,7 @@ sam: ## Build SAMrun executable. Note: This will update SAM source directory and
 	@printf '$(<b>)> Copying SAM... $(</b>)\n'
 	@mkdir -p $(path)/$(project)/SAM
 	@rsync -rtu ${SAMpp_DIR}/ $(path)/$(project)/SAM/SAMpp/ --exclude-from=.rsync-exclude-list
-	@rsync -rtu ${mvrandom_DIR}/ $(path)/$(project)/SAM/mvrandom/ --exclude-from=.rsync-exclude-list
+	@rsync -rtu ${baaraan_DIR}/ $(path)/$(project)/SAM/baaraan/ --exclude-from=.rsync-exclude-list
 
 	@mkdir -p $(path)/$(project)/SAM/SAMpp/build
 	
