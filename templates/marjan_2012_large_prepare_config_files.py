@@ -41,7 +41,7 @@ params_info = {
 	"journal_max_pubs": [10000],
 
 	"decision_strategy_name": ["ImpatientDecisionMaker"],
-	"decision_strategy_preference": ["PreRegisteredOutcome", "RandomSigPvalue", "MinSigPvalue", "MaxSigPvalue", "RevisedMarjanHacker"],
+	# "decision_strategy_preference": ["PreRegisteredOutcome", "RandomSigPvalue", "MinSigPvalue", "MaxSigPvalue", "RevisedMarjanHacker"],
 	"decision_strategy_submission_policy": ["Anything"]
 	}
 
@@ -83,9 +83,22 @@ def main():
 			},
 			"researcher_parameters": {
 					"decision_strategy": {
-							"_name": params["decision_strategy_name"],
-							"preference": params["decision_strategy_preference"],
-							"submission_policy": params["decision_strategy_submission_policy"]
+			            "_name": "ImpatientDecisionMaker",
+			            "decision_policies": [
+			                [
+			                    "sig",
+			                    "effect > 0",
+			                    "first"
+			                ],
+			                [
+			                	"effect < 0",
+			                	"max(pvalue)"
+			                ]
+			            ],
+			            "final_decision_policies": [
+			                
+			            ],
+			            "submission_policies": []
 					},
 					"hacking_strategies": [
 							[
