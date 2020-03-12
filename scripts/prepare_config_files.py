@@ -138,7 +138,7 @@ def main():
 		configfilenames.write(filename + "\n")
 
 		# Replacing the output prefix with a unique id
-		data["output_prefix"] = uid
+		data["simulation_parameters"]["output_prefix"] = uid
 
 		with open("configs/" + filename, 'w') as f:
 				json.dump(data, f, indent = 4)

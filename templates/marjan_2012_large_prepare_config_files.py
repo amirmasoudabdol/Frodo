@@ -41,8 +41,9 @@ params_info = {
 	"journal_max_pubs": [10000],
 
 	"decision_strategy_name": ["ImpatientDecisionMaker"],
-	# "decision_strategy_preference": ["PreRegisteredOutcome", "RandomSigPvalue", "MinSigPvalue", "MaxSigPvalue", "RevisedMarjanHacker"],
-	"decision_strategy_submission_policy": ["Anything"]
+	"decision_strategy_policies": [[[ "sig", "effect > 0", "first"], ["effect < 0","max(pvalue)"]],
+									 [["first"]],
+									 [["random"]]]
 	}
 
 
@@ -84,17 +85,9 @@ def main():
 			"researcher_parameters": {
 					"decision_strategy": {
 			            "_name": "ImpatientDecisionMaker",
-			            "decision_policies": [
-			                [
-			                    "sig",
-			                    "effect > 0",
-			                    "first"
-			                ],
-			                [
-			                	"effect < 0",
-			                	"max(pvalue)"
-			                ]
-			            ],
+			            "decision_policies": 
+			            	params["decision_strategy_policies"]
+			            ,
 			            "final_decision_policies": [
 			                
 			            ],
@@ -150,7 +143,7 @@ def main():
 		configfilenames.write(filename + "\n")
 
 		# Replacing the output prefix with a unique id
-		data["output_prefix"] = uid
+		data["simulation_parameters"]["output_prefix"] = uid
 
 		with open("configs/" + filename, 'w') as f:
 				json.dump(data, f, indent = 4)
