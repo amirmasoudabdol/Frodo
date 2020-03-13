@@ -41,7 +41,7 @@ params_info = {
 	"journal_max_pubs": [10000],
 
 	"decision_strategy_name": ["ImpatientDecisionMaker"],
-	"decision_strategy_policies": [[[ "sig", "effect > 0", "first"], ["effect < 0","max(pvalue)"]]]
+	"decision_strategy_policies": [[[ "sig", "effect > 0", "first"], ["effect > 0","min(pvalue)"], ["effect < 0", "max(pvalue)"]]]
 	}
 
 
