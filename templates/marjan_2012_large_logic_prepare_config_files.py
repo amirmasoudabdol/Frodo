@@ -86,10 +86,8 @@ def main():
 			            "decision_policies": 
 			            	params["decision_strategy_policies"]
 			            ,
-			            "final_decision_policies": [
-			                
-			            ],
-			            "submission_policies": []
+			            "final_decision_policies": ["none"],
+			            "submission_policies": ["none"]
 					},
 					"hacking_strategies": [
 							[
