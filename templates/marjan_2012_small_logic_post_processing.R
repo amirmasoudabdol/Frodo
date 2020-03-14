@@ -10,7 +10,7 @@ suppressWarnings(suppressMessages(library(data.table)))
 plan(multiprocess)
 
 project_path <- "outputs/"
-project_name <- "marjan_2012_small"
+project_name <- "marjan_2012_small_logic"
 
 # Currently I'm mainly processing prepared publications datasets as
 # they contain most of the data that I need, but you can apply this
@@ -31,7 +31,7 @@ summarize_each_file <- function(fname) {
            covs = factor(experiment_parameters_data_strategy_measurements_covs),
            decision_strategy = factor(researcher_parameters_decision_strategy__name),
            is_hacked = factor(researcher_parameters_is_phacker),
-           selection_policy = factor(researcher_parameters_decision_strategy_decision_policies_0_0),
+           selection_policy = "Marjan's Hacker",
            tmean = experiment_parameters_data_strategy_measurements_means_5,
            effect = effect) %>%
     mutate(eff_abs_diff= effect - tmean) %>%
