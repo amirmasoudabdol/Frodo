@@ -22,8 +22,8 @@ params_info = {
 	"n_obs": [10, 20, 40],
 	"k": [2],
 	"seed": ["random"],
-	"is_pre_processing": [False],
-	"is_phacker": [True, False],
+	"is_pre_processing": [True, False],
+	"is_phacker": [False],
 	"save_pubs": [True],
 	"save_sims": [False],
 	"save_stats": [False],
@@ -91,6 +91,12 @@ def main():
 					},
 					"hacking_strategies": [
 							[
+								{"_name": "none"}
+							]
+					],
+					"is_phacker": params["is_phacker"],
+					"is_pre_processing": params["is_pre_processing"],
+					"pre_processing_methods": [
 								{
 					               "_name": "OptionalStopping",
 					               "level": "dv",
@@ -111,12 +117,6 @@ def main():
 									"num": params["n_obs"],
 									"order": "random"
 								}
-							]
-					],
-					"is_phacker": params["is_phacker"],
-					"is_pre_processing": params["is_pre_processing"],
-					"pre_processing_methods": [
-							{"_name": "none"}
 					]
 			},
 			"simulation_parameters": {
