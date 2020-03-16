@@ -10,16 +10,16 @@ params_info = {
 	"progress": [False],
 	"verbose": [False],
 	"data_strategy_n_conditions": [2],
-	"data_strategy_n_dep_vars": [2],
+	"data_strategy_n_dep_vars": [5],
 	"data_strategy_measurements": [
 		{
 		"dist": "mvnorm_distribution",
-    	"means": [0.0, 0.0, x, x],
-        "covs": 0.5,
-        "stddevs": 1.0
-		} for x in np.arange(0.0, 1.01, 0.05)
+		"means": [0.0, 0.0, 0.0, 0.0, 0.0, x, x, x, x, x],
+		"covs": 0.5,
+		"stddevs": 1.0
+		} for x in np.arange(0.0, 1.01, 0.1)
 	],
-	"n_obs": [50, 100, 200],
+	"n_obs": [10, 20, 40],
 	"k": [2],
 	"seed": ["random"],
 	"is_pre_processing": [True, False],
@@ -38,10 +38,11 @@ params_info = {
 	"effect_strategy_name": ["MeanDifference"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [10000],
+	"journal_max_pubs": [1000],
 
 	"decision_strategy_name": ["ImpatientDecisionMaker"],
-	"decision_strategy_policies": [[[ "sig", "effect > 0", "first"], ["effect > 0","min(pvalue)"], ["effect < 0", "max(pvalue)"]]]
+	"decision_strategy_policies": [[[ "sig", "effect > 0", "first"], ["effect > 0","min(pvalue)"], ["effect < 0", "max(pvalue)"]],
+										[["first"]]]
 	}
 
 

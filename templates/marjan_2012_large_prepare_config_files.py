@@ -19,7 +19,7 @@ params_info = {
         "stddevs": 1.0
 		} for x in np.arange(0.0, 1.01, 0.05)
 	],
-	"n_obs": [10, 20, 40],
+	"n_obs": [50, 100, 200],
 	"k": [2],
 	"seed": ["random"],
 	"is_pre_processing": [True, False],

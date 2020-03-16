@@ -17,7 +17,7 @@ params_info = {
     	"means": [0.0, 0.0, x, x],
         "covs": 0.5,
         "stddevs": 1.0
-		} for x in np.arange(0.0, 1.01, 0.05)
+		} for x in np.arange(0.0, 1.01, 0.1)
 	],
 	"n_obs": [50, 100, 200],
 	"k": [2],
@@ -38,10 +38,11 @@ params_info = {
 	"effect_strategy_name": ["MeanDifference"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [10000],
+	"journal_max_pubs": [1000],
 
 	"decision_strategy_name": ["ImpatientDecisionMaker"],
-	"decision_strategy_policies": [[[ "sig", "effect > 0", "first"], ["effect > 0","min(pvalue)"], ["effect < 0", "max(pvalue)"]]]
+	"decision_strategy_policies": [[[ "sig", "effect > 0", "first"], ["effect > 0","min(pvalue)"], ["effect < 0", "max(pvalue)"]],
+									[["first"]]]
 	}
 
 
