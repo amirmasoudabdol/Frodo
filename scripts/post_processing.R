@@ -49,7 +49,7 @@ read_all_files <- function(fnames) {
   
   tbl <-
     filenames %>%
-    future_map_dfr(~summarize_each_file(.), .progress = FALSE)
+    future_map_dfr(~summarize_each_file(.), .progress = TRUE)
 
   return(tbl)
 

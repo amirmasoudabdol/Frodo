@@ -51,3 +51,5 @@ for CONFIG_FILE in "configs/"*.json; do
 	# Rscript ${PROJECT_DIR}/rscripts/post-analyzer.R ${SIM_FILE} FALSE
 
 done
+
+echo
