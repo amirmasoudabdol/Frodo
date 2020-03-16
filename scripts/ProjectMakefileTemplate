@@ -69,17 +69,20 @@ parameters: clean ## Preparing config files for SAM
 ##@ Post-processing
 
 csv: ## Create a set of files `*_prepared.csv` by adding all keys/values to them. Use this when the database is too big
+	@printf '$(<b>)> Preparing the extended dataset... $(</b>)\n'
 	@python3 scripts/yourprojectname_to_csv.py $(from)
 
 database: ## Aggregate output files into a SQLite database
 	@python3 scripts/yourprojectname_to_sqlite.py $(from)
 
 summary: ## Runinng the `post-processing.R` script on every file in output/ folder
+	@printf '$(<b>)> Summarizing the dataset... $(</b>)\n'
 	@Rscript scripts/yourprojectname_post_processing.R
 
 ##@ Run
 
 run-seq-local: ## Running the simulation sequentially on the local machine
+	@printf '$(<b>)> Running SAM on the local machine... $(</b>)\n'
 	@./scripts/yourprojectname_local_seq_run.sh
 
 run-par-local: ## Running the simulation in parallel on the local machine

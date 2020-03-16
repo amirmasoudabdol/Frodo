@@ -81,7 +81,7 @@ def prepare_df(fname):
 def main():
 
 	with multiprocessing.Pool(multiprocessing.cpu_count() - 1) as pool:
-		for _ in tqdm(pool.imap(prepare_df, filenames), total=len(filenames)):
+		for _ in tqdm(pool.imap(prepare_df, filenames), total=len(filenames), leave = False, ascii = True):
 			pass
 
 
