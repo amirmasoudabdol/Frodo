@@ -25,7 +25,6 @@ summarize_each_file <- function(fname) {
   # You can use this snippet as an example of how to summarize your data for
   # later post-processing and plotting.
   df %>% 
-    # filter(effect > 0) %>%
     mutate(tnobs = factor(tnobs),
            nobs = nobs,
            covs = factor(experiment_parameters_data_strategy_measurements_covs),
@@ -36,7 +35,7 @@ summarize_each_file <- function(fname) {
            effect = effect) %>%
     mutate(eff_abs_diff= effect - tmean) %>%
     group_by(tmean, tnobs, covs, decision_strategy, is_hacked, selection_policy) %>%
-    summarize(sigmean = mean(sig[effect > 0.0]),
+    summarize(sigmean = mean(sig),
               mean_nobs = mean(nobs),
               mean_eff = mean(effect),
               mean_eff_diff = mean(eff_abs_diff)) %>%
