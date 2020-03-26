@@ -41,8 +41,8 @@ params_info = {
 	"journal_max_pubs": [1000],
 
 	"decision_strategy_name": ["ImpatientDecisionMaker"],
-	"decision_strategy_policies": [[[ "sig", "effect > 0", "first"], ["effect > 0","min(pvalue)"], ["effect < 0", "max(pvalue)"]],
-									[["first"]]]
+	"decision_strategy_policies": [[["effect > 0", "sig", "first"], ["effect > 0","min(pvalue)"]],
+										[["first"]]]
 	}
 
 
@@ -92,7 +92,35 @@ def main():
 					},
 					"hacking_strategies": [
 							[
-								{"_name": "none"}
+								{
+					               "_name": "OptionalStopping",
+					               "level": "dv",
+					               "num": 10,
+					               "n_attempts": 1,
+					               "max_attempts": 1
+					          	}
+							],
+							[
+								{
+					               "_name": "OptionalStopping",
+					               "level": "dv",
+					               "num": 10,
+					               "n_attempts": 1,
+					               "max_attempts": 1
+					          	},
+								{
+									"_name": "SDOutlierRemoval",
+									"level": "dv",
+									"max_attempts": 1,
+									"min_observations": 1,
+									"mode": "Recursive",
+									"multipliers": [
+											2
+									],
+									"n_attempts": 1,
+									"num": params["n_obs"],
+									"order": "random"
+								}
 							]
 					],
 					"is_phacker": params["is_phacker"],
