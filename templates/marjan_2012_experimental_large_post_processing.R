@@ -37,8 +37,8 @@ summarize_each_file <- function(fname) {
            tnobs = factor(tnobs),
            covs = factor(experiment_parameters_data_strategy_measurements_covs),
            decision_strategy = factor(researcher_parameters_decision_strategy__name),
-           is_hacked = factor(researcher_parameters_is_pre_processing),
-           selection_policy = factor(researcher_parameters_decision_strategy_decision_policies_0_0),
+           is_hacked = factor(researcher_parameters_is_phacker),
+           selection_policy = "Marjan's Hacker",
            tmean = experiment_parameters_data_strategy_measurements_means_2,
            effect = effect) %>%
     mutate(eff_abs_diff= effect - tmean) %>%

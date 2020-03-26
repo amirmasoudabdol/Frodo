@@ -105,7 +105,7 @@ def main():
 					               "max_attempts": 1
 					          	},
 								{
-									"_name": "SDOutlierRemoval",
+									"_name": "OutliersRemoval",
 									"level": "dv",
 									"max_attempts": 1,
 									"min_observations": 1,

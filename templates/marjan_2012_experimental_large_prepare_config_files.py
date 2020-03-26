@@ -22,8 +22,8 @@ params_info = {
 	"n_obs": [50, 100, 200],
 	"k": [2],
 	"seed": ["random"],
-	"is_pre_processing": [True, False],
-	"is_phacker": [False],
+	"is_pre_processing": [False],
+	"is_phacker": [True, False],
 	"save_pubs": [True],
 	"save_sims": [False],
 	"save_stats": [False],
@@ -40,9 +40,7 @@ params_info = {
 	"journal_selection_strategy_name": ["FreeSelection"],
 	"journal_max_pubs": [1000],
 
-	"decision_strategy_name": ["ImpatientDecisionMaker"],
-	"decision_strategy_policies": [[["effect > 0", "sig", "first"], ["effect > 0","min(pvalue)"]],
-										[["first"]]]
+	"decision_strategy_name": ["ImpatientDecisionMaker"]
 	}
 
 
@@ -84,11 +82,11 @@ def main():
 			"researcher_parameters": {
 					"decision_strategy": {
 			            "_name": "ImpatientDecisionMaker",
-			            "decision_policies": 
-			            	params["decision_strategy_policies"]
+			            "initial_decision_policies": 
+			            	[[ "sig", "effect > 0", "first"]]
 			            ,
-			            "final_decision_policies": ["none"],
-			            "submission_policies": ["none"]
+			            "final_decision_policies": [],
+			            "submission_policies": []
 					},
 					"hacking_strategies": [
 							[
@@ -98,7 +96,10 @@ def main():
 					               "num": 10,
 					               "n_attempts": 1,
 					               "max_attempts": 1
-					          	}
+					          	},
+					          	[
+					          		["effect > 0","min(pvalue)"]
+					          	]
 							],
 							[
 								{
@@ -109,7 +110,7 @@ def main():
 					               "max_attempts": 1
 					          	},
 								{
-									"_name": "SDOutlierRemoval",
+									"_name": "OutliersRemoval",
 									"level": "dv",
 									"max_attempts": 1,
 									"min_observations": 1,
@@ -120,7 +121,10 @@ def main():
 									"n_attempts": 1,
 									"num": params["n_obs"],
 									"order": "random"
-								}
+								},
+								[
+									["effect < 0", "max(pvalue)"]
+								]
 							]
 					],
 					"is_phacker": params["is_phacker"],
@@ -134,7 +138,7 @@ def main():
 					               "max_attempts": 1
 					          	},
 								{
-									"_name": "SDOutlierRemoval",
+									"_name": "OutliersRemoval",
 									"level": "dv",
 									"max_attempts": 1,
 									"min_observations": 1,

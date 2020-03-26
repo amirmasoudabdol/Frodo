@@ -98,7 +98,7 @@ def main():
 					"hacking_strategies": [
 							[
 									{
-											"_name": "SDOutlierRemoval",
+											"_name": "OutliersRemoval",
 											"level": "dv",
 											"max_attempts": 10,
 											"min_observations": 20,
@@ -116,7 +116,7 @@ def main():
 					"is_pre_processing": params["is_pre_processing"],
 					"pre_processing_methods": [
 							{
-									"_name": "SDOutlierRemoval",
+									"_name": "OutliersRemoval",
 									"level": "dv",
 									"max_attempts": 1,
 									"min_observations": 5,
