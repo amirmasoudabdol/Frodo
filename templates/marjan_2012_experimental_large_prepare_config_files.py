@@ -23,7 +23,7 @@ params_info = {
 	"k": [2],
 	"seed": ["random"],
 	"is_pre_processing": [False],
-	"is_phacker": [True, False],
+	"is_phacker": [True],
 	"save_pubs": [True],
 	"save_sims": [False],
 	"save_stats": [False],
@@ -40,7 +40,7 @@ params_info = {
 	"journal_selection_strategy_name": ["FreeSelection"],
 	"journal_max_pubs": [1000],
 
-	"decision_strategy_name": ["ImpatientDecisionMaker"]
+	"decision_strategy_name": ["PatientDecisionMaker"]
 	}
 
 
@@ -81,53 +81,79 @@ def main():
 			},
 			"researcher_parameters": {
 					"decision_strategy": {
-			            "_name": "ImpatientDecisionMaker",
-			            "initial_decision_policies": 
-			            	[[ "sig", "effect > 0", "first"]]
-			            ,
-			            "final_decision_policies": [],
-			            "submission_policies": []
-					},
-					"hacking_strategies": [
-							[
-								{
-					               "_name": "OptionalStopping",
-					               "level": "dv",
-					               "num": 10,
-					               "n_attempts": 1,
-					               "max_attempts": 1
-					          	},
-					          	[
-					          		["effect > 0","min(pvalue)"]
-					          	]
-							],
-							[
-								{
-					               "_name": "OptionalStopping",
-					               "level": "dv",
-					               "num": 10,
-					               "n_attempts": 1,
-					               "max_attempts": 1
-					          	},
-								{
-									"_name": "OutliersRemoval",
-									"level": "dv",
-									"max_attempts": 1,
-									"min_observations": 1,
-									"mode": "Recursive",
-									"multipliers": [
-											2
-									],
-									"n_attempts": 1,
-									"num": params["n_obs"],
-									"order": "random"
-								},
-								[
-									["effect < 0", "max(pvalue)"]
-								]
-							]
-					],
+				      "_name": "PatientDecisionMaker",
+				      "final_decision_policies": [
+				        [
+				          "sig",
+				          "effect > 0",
+				          "first"
+				        ],
+				        [
+				          "effect > 0",
+				          "min(pvalue)"
+				        ],
+				        [
+				          "effect < 0",
+				          "max(pvalue)"
+				        ]
+				      ],
+				      "initial_decision_policies": [
+				        [
+				          "sig",
+				          "effect > 0",
+				          "first"
+				        ]
+				      ],
+				      "submission_policies": ["none"]
+				    },
 					"is_phacker": params["is_phacker"],
+				    "hacking_strategies": [
+				      [
+				        {
+				          "_name": "OptionalStopping",
+				          "level": "dv",
+				          "num": 10,
+				          "n_attempts": 1,
+				          "max_attempts": 1
+				        },
+				        [
+				          [
+				            "sig",
+				            "effect > 0",
+				            "first"
+				          ]
+				        ]
+				      ],
+				      [
+				        {
+				          "_name": "OptionalStopping",
+				          "level": "dv",
+				          "num": 10,
+				          "n_attempts": 1,
+				          "max_attempts": 1
+				        },
+				        {
+				          "_name": "OutliersRemoval",
+				          "level": "dv",
+				          "max_attempts": 1,
+				          "min_observations": 1,
+				          "mode": "Recursive",
+				          "multipliers": [
+				            2
+				          ],
+				          "n_attempts": 1,
+				          "num": 200,
+				          "order": "random"
+				        },
+				        [
+				          [
+				            "sig",
+				            "effect > 0",
+				            "first"
+				          ]
+				        ]
+				      ]
+				    ],
 					"is_pre_processing": params["is_pre_processing"],
 					"pre_processing_methods": [
 								{
