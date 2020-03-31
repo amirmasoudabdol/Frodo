@@ -23,7 +23,7 @@ params_info = {
 	"k": [2],
 	"seed": ["random"],
 	"is_pre_processing": [False],
-	"is_phacker": [True],
+	"is_phacker": [False],
 	"save_pubs": [True],
 	"save_sims": [False],
 	"save_stats": [False],
@@ -99,9 +99,7 @@ def main():
 				      ],
 				      "initial_decision_policies": [
 				        [
-				          "sig",
-				          "effect > 0",
-				          "first"
+				          "random"
 				        ]
 				      ],
 				      "submission_policies": ["none"]

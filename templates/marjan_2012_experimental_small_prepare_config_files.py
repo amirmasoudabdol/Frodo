@@ -40,7 +40,7 @@ params_info = {
 	"journal_selection_strategy_name": ["FreeSelection"],
 	"journal_max_pubs": [1000],
 
-	"decision_strategy_name": ["ImpatientDecisionMaker"]
+	"decision_strategy_name": ["MarjansDecisionMaker"]
 	}
 
 
@@ -81,7 +81,7 @@ def main():
 			},
 			"researcher_parameters": {
 					"decision_strategy": {
-				      "_name": "PatientDecisionMaker",
+				      "_name": params["decision_strategy_name"],
 				      "final_decision_policies": [
 				        [
 				          "sig",

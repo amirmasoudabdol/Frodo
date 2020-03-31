@@ -10,20 +10,20 @@ params_info = {
 	"progress": [False],
 	"verbose": [False],
 	"data_strategy_n_conditions": [2],
-	"data_strategy_n_dep_vars": [2],
+	"data_strategy_n_dep_vars": [5],
 	"data_strategy_measurements": [
 		{
 		"dist": "mvnorm_distribution",
-    	"means": [0.0, 0.0, x, x],
-        "covs": 0.5,
-        "stddevs": 1.0
+		"means": [0.0, 0.0, x, x, x, x, x, x, x, x],
+		"covs": 0.5,
+		"stddevs": 1.0
 		} for x in np.arange(0.0, 1.01, 0.1)
 	],
-	"n_obs": [50, 100, 200],
+	"n_obs": [10, 20, 40],
 	"k": [2],
 	"seed": ["random"],
 	"is_pre_processing": [False],
-	"is_phacker": [True],
+	"is_phacker": [False],
 	"save_pubs": [True],
 	"save_sims": [False],
 	"save_stats": [False],
@@ -99,9 +99,7 @@ def main():
 				      ],
 				      "initial_decision_policies": [
 				        [
-				          "sig",
-				          "effect > 0",
-				          "first"
+				          "random"
 				        ]
 				      ],
 				      "submission_policies": ["none"]
