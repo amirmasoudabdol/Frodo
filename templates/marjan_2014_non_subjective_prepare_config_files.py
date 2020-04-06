@@ -9,13 +9,13 @@ params_info = {
 	"debug": [False],
 	"progress": [False],
 	"verbose": [False],
+	"n_obs": [20, 40, 80, 150, 500],
 	"data_strategy_n_items": [2, 5, 10, 20, 40],
 	"data_strategy_difficulties_mean": [0, 1.5, 3.0],
-	"data_strategy_abilities_mean": [[0, 0.2]],
+	"data_strategy_abilities_mean": [[0.0, 0.0]],
 	"data_strategy_n_categories": [1, 5],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [1],
-	"n_obs": [20, 40, 80, 150, 500],
 	"k": [x for x in np.arange(2.0, 4.0, 0.1)],
 	"seed": ["random"],
 	"is_pre_processing": [True],
@@ -32,7 +32,7 @@ params_info = {
 	"test_strategy_alternative": ["TwoSided"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [10000],
+	"journal_max_pubs": [5000],
 
 	"decision_strategy_name": ["PatientDecisionMaker"],
 	"decision_strategy_init_dec_policies": [["first"]]
@@ -117,7 +117,8 @@ def main():
 											"n_attempts": 4,
 											"num": 2,
 											"order": "max first"
-									}
+									},
+									[["_"]]
 							]
 					],
 					"is_phacker": params["is_phacker"],
