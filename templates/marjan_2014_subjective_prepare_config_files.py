@@ -34,9 +34,8 @@ params_info = {
 	"journal_selection_strategy_name": ["FreeSelection"],
 	"journal_max_pubs": [10000],
 
-	"decision_strategy_name": ["ImpatientDecisionMaker"],
-	"decision_strategy_preference": ["PreRegisteredOutcome", "MinSigPvalue", "RandomSigPvalue"],
-	"decision_strategy_submission_policy": ["Anything"]
+	"decision_strategy_name": ["PatientDecisionMaker"],
+	"decision_strategy_init_dec_policies": [["first"]]
 	}
 
 
@@ -65,19 +64,20 @@ def main():
 			                    "dist": "normal_distribution",
 			                    "mean": params["data_strategy_difficulties_mean"],
 			                    "stddev": 1.0
-			                }
-						],
+			                } for x in range(params["data_strategy_n_categories"])
+			           	]
+						,
 						"n_categories": params["data_strategy_n_categories"],
 						"n_items": params["data_strategy_n_items"],
 						"_name": "GradedResponseModel"
 					},
 					"effect_strategy": {
-						"_name": "CohensD"
+							"_name": "CohensD"
 					},
 					"n_conditions": params["data_strategy_n_conditions"],
 					"n_dep_vars": params["data_strategy_n_dep_vars"],
 					"n_obs": params["n_obs"],
-                    "n_reps": params["n_reps"],
+                    "n_reps": 1,
 					"test_strategy": {
 							"_name": params["test_strategy_name"],
 							"alpha": params["test_alpha"],
@@ -92,10 +92,16 @@ def main():
 			},
 			"researcher_parameters": {
 					"decision_strategy": {
-							"_name": params["decision_strategy_name"],
-							"preference": params["decision_strategy_preference"],
-							"submission_policy": params["decision_strategy_submission_policy"]
-					},
+				      "_name": params["decision_strategy_name"],
+				      "between_replications_decision_policies": [
+				      "_"
+			            ],
+				      "final_decision_policies": [["_"]],
+				      "initial_decision_policies": [
+				      	["_"]
+				      ],
+				      "submission_policies": ["_"]
+				    },
 					"hacking_strategies": [
 							[
 				              	{
@@ -106,7 +112,8 @@ def main():
 				                    ],
 				                    "min_observations": 5,
 				                    "step_size": 0.1
-				                }
+				                },
+				                [["first"]]
 							]
 					],
 					"is_phacker": params["is_phacker"],

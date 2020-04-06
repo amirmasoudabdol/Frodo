@@ -17,7 +17,7 @@ params_info = {
     	"means": [0.0, 0.0, x, x],
         "covs": 0.5,
         "stddevs": 1.0
-		} for x in np.arange(0.0, 1.01, 0.1)
+		} for x in np.arange(0.0, 1.01, 0.05)
 	],
 	"n_obs": [10, 20, 40, 50, 100, 200],
 	"k": [2],
