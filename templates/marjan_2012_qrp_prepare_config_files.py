@@ -125,7 +125,7 @@ def main():
 				          "effect > 0"
 				        ]
 				      ],
-				      "submission_policies": ["none"]
+				      "submission_policies": ["_"]
 				    },
 					"is_phacker": params["is_phacker"],
 				    "hacking_strategies": [
