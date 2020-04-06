@@ -93,9 +93,7 @@ def main():
 			"researcher_parameters": {
 					"decision_strategy": {
 				      "_name": params["decision_strategy_name"],
-				      "between_replications_decision_policies": [
-				      "_"
-			            ],
+				      "between_replications_decision_policies": [["_"]],
 				      "final_decision_policies": [["_"]],
 				      "initial_decision_policies": [
 				      	["_"]
