@@ -82,50 +82,15 @@ def main():
 			},
 			"researcher_parameters": {
 					"decision_strategy": {
-				      "_name": params["decision_strategy_name"],
-				      "between_replications_decision_policies": [
-			                [
-			                    "sig",
-			                    "effect > 0",
-			                    "first"
-			                ],
-			                [
-			                    "effect > 0",
-			                    "min(pvalue)"
-			                ],
-			                [
-			                    "effect < 0",
-			                    "max(pvalue)"
-			                ]
-			            ],
-				      "final_decision_policies": [
-				        [
-				          "sig",
-				          "effect > 0",
-				          "first"
-				        ],
-				        [
-				          "effect > 0",
-				          "min(pvalue)"
-				        ],
-				        [
-				          "effect < 0",
-				          "max(pvalue)"
-				        ]
-				      ],
+				      "_name": "MarjansDecisionMaker",
+				      "between_replications_decision_policies": [[""]] if params["n_obs"] in [50, 100, 200] else [["sig","effect > 0","random"],["effect > 0","min(pvalue)"],["effect < 0","max(pvalue)"]],
+				      "final_decision_policies": [[""]],
 				      "initial_decision_policies": [
 				        [
-				          "id == 3",
-				          "sig",
-				          "effect > 0"
-				        ],
-				        [
-				          "id == 4",
-				          "sig",
-				          "effect > 0"
+				          "first"
 				        ]
 				      ],
-				      "submission_policies": ["_"]
+				      "submission_policies": [""]
 				    },
 					"is_phacker": params["is_phacker"],
 				    "hacking_strategies": [
@@ -139,9 +104,8 @@ def main():
 				        },
 				        [
 				          [
-				            "sig",
 				            "effect > 0",
-				            "first"
+				            "min(pvalue)"
 				          ]
 				        ]
 				      ],
@@ -168,9 +132,8 @@ def main():
 				        },
 				        [
 				          [
-				            "sig",
 				            "effect > 0",
-				            "first"
+				            "min(pvalue)"
 				          ]
 				        ]
 				      ]

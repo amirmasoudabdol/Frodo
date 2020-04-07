@@ -102,7 +102,7 @@ def main():
 				        [
 				          "sig",
 				          "effect > 0",
-				          "first"
+				          "random"
 				        ],
 				        [
 				          "effect > 0",
@@ -115,17 +115,17 @@ def main():
 				      ],
 				      "initial_decision_policies": [
 				        [
-				          "id == 3",
+				          "id == 2",
 				          "sig",
 				          "effect > 0"
 				        ],
 				        [
-				          "id == 4",
+				          "id == 3",
 				          "sig",
 				          "effect > 0"
 				        ]
 				      ],
-				      "submission_policies": ["_"]
+				      "submission_policies": [""]
 				    },
 					"is_phacker": params["is_phacker"],
 				    "hacking_strategies": [
@@ -139,9 +139,8 @@ def main():
 				        },
 				        [
 				          [
-				            "sig",
 				            "effect > 0",
-				            "first"
+				            "min(pvalue)"
 				          ]
 				        ]
 				      ],
@@ -168,9 +167,8 @@ def main():
 				        },
 				        [
 				          [
-				            "sig",
 				            "effect > 0",
-				            "first"
+				            "min(pvalue)"
 				          ]
 				        ]
 				      ]
