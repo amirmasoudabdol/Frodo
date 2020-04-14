@@ -4,6 +4,9 @@ import itertools
 import numpy as np
 import tqdm
 
+nSmall = np.array([5, 10, 20])
+nLarge = 5 * nSmall
+
 params_info = {
 	"n_sims": [1],
 	"debug": [False],
@@ -17,9 +20,9 @@ params_info = {
     	"means": [0.0, 0.0, x, x],
         "covs": 0.5,
         "stddevs": 1.0
-		} for x in np.arange(0.0, 1.01, 0.05)
+		} for x in np.arange(0.0, 1.01, 0.1)
 	],
-	"n_obs": [10, 20, 40, 50, 100, 200],
+	"n_obs": [5, 10, 20, 25, 50, 100],
 	"k": [2],
 	"seed": ["random"],
 	"is_pre_processing": [False],
@@ -38,7 +41,7 @@ params_info = {
 	"effect_strategy_name": ["MeanDifference"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [10000],
+	"journal_max_pubs": [1000],
 
 	"decision_strategy_name": ["MarjansDecisionMaker"]
 	}
@@ -67,7 +70,7 @@ def main():
 					"n_conditions": params["data_strategy_n_conditions"],
 					"n_dep_vars": params["data_strategy_n_dep_vars"],
 					"n_obs": params["n_obs"],
-                    "n_reps": 1 if params["n_obs"] in [50, 100, 200] else 5,
+                    "n_reps": 1 if params["n_obs"] in [25, 50, 100] else 5,
 					"test_strategy": {
 							"_name": params["test_strategy_name"],
 							"alpha": params["test_alpha"],
@@ -87,7 +90,7 @@ def main():
 			                [
 			                    "sig",
 			                    "effect > 0",
-			                    "first"
+			                    "random"
 			                ],
 			                [
 			                    "effect > 0",
@@ -99,11 +102,6 @@ def main():
 			                ]
 			            ],
 				      "final_decision_policies": [
-				        [
-				          "sig",
-				          "effect > 0",
-				          "random"
-				        ],
 				        [
 				          "effect > 0",
 				          "min(pvalue)"
@@ -125,7 +123,8 @@ def main():
 				          "effect > 0"
 				        ]
 				      ],
-				      "submission_policies": [""]
+				      "submission_policies": [""],
+            		  "will_be_hacking_policies": ["effect > 0", "sig"]
 				    },
 					"is_phacker": params["is_phacker"],
 				    "hacking_strategies": [
