@@ -18,9 +18,9 @@ project_name <- "marjan_2012_no_qrp"
 filenames <- list.files(project_path, pattern = "*_pubs_prepared.csv", full.names = TRUE)
 
 determine_size_class <- function(x) {
-  if (x %in% c(5, 25)) return("S")
-  if (x %in% c(10, 50)) return("M")
-  if (x %in% c(20, 100)) return("L")
+  if (x %in% c(5, 25)) return("5")
+  if (x %in% c(10, 50)) return("10")
+  if (x %in% c(20, 100)) return("20")
 }
 
 determine_size <- function(x) {
@@ -45,13 +45,13 @@ summarize_each_file <- function(fname) {
            is_hacked = factor(researcher_parameters_is_phacker),
            selection_policy = factor(researcher_parameters_decision_strategy_initial_decision_policies_0_0),
            tmean = experiment_parameters_data_strategy_measurements_means_2,
-           effect = effect) %>%
-    mutate(eff_abs_diff= effect - tmean) %>%
+           n_pos_sig = if_else(effect > 0 & sig, 1, 0)) %>%
     group_by(tmean, covs, tnobs, sizeclass, decision_strategy, is_hacked, selection_policy) %>%
-    summarize(sigmean = mean(sig),
+    summarize(sigmean = sum(n_pos_sig) / n(),
               mean_nobs = mean(nobs),
               mean_eff = mean(effect),
-              mean_eff_diff = mean(eff_abs_diff),
+              mean_eff_diff = mean(effect) - head(tmean, 1),
+              mean_pvalue = mean(pvalue),
               size = head(size, 1)) -> agg_df
   
   return(agg_df)

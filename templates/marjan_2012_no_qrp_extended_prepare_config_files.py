@@ -24,13 +24,13 @@ params_info = {
 	              [0.5,   1.0,   0.0,   0.0],
 	              [0.0,   0.0,   1.0,   0.5],
 	              [0.0,   0.0,   0.5,   1.0]]
-		} for x in np.arange(0.0, 1.01, 0.1)
+		} for x in np.arange(0.0, 1.01, 0.05)
 	],
 	"n_obs": [5, 10, 20, 25, 50, 100],
 	"k": [2],
 	"seed": ["random"],
 	"is_pre_processing": [False],
-	"is_phacker": [True],
+	"is_phacker": [False],
 	"save_pubs": [True],
 	"save_sims": [False],
 	"save_stats": [False],
@@ -38,14 +38,14 @@ params_info = {
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
-	"test_alpha": [0.05],
+	"test_alpha": [0.05, 0.005, 0.0005],
 	"test_strategy_name": ["TTest"],
 	"test_strategy_alternative": ["TwoSided"],
 
 	"effect_strategy_name": ["MeanDifference"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [1000],
+	"journal_max_pubs": [10000],
 
 	"decision_strategy_name": ["MarjansDecisionMaker"]
 	}
@@ -89,42 +89,12 @@ def main():
 			},
 			"researcher_parameters": {
 					"decision_strategy": {
-				      "_name": params["decision_strategy_name"],
-				      "between_replications_decision_policies": [
-			                [
-			                    "effect > 0",
-			                    "sig",
-			                    "first"
-			                ],
-			                [
-			                    "effect > 0",
-			                    "min(pvalue)"
-			                ],
-			                [
-			                    "effect < 0",
-			                    "max(pvalue)"
-			                ]
-			            ],
-				      "final_decision_policies": [
-				        [
-				          "effect > 0",
-				          "min(pvalue)"
-				        ],
-				        [
-				          "effect < 0",
-				          "max(pvalue)"
-				        ]
-				      ],
+				      "_name": "MarjansDecisionMaker",
+				      "between_replications_decision_policies": [[""]] if params["n_obs"] in nLarge else [["sig","effect > 0","first"],["effect > 0","min(pvalue)"],["effect < 0","max(pvalue)"]],
+				      "final_decision_policies": [[""]],
 				      "initial_decision_policies": [
 				        [
-				          "id == 2",
-				          "sig",
-				          "effect > 0"
-				        ],
-				        [
-				          "id == 3",
-				          "sig",
-				          "effect > 0"
+				          "id == 2"
 				        ]
 				      ],
 				      "submission_policies": [""],

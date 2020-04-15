@@ -4,6 +4,9 @@ import itertools
 import numpy as np
 import tqdm
 
+nSmall = np.array([5, 10, 20])
+nLarge = 5 * nSmall
+
 params_info = {
 	"n_sims": [1],
 	"debug": [False],
@@ -16,7 +19,11 @@ params_info = {
 		"dist": "mvnorm_distribution",
     	"means": [0.0, 0.0, x, x],
         "covs": 0.5,
-        "stddevs": 1.0
+        "stddevs": 1.0,
+        "sigma": [[1.0,   0.5,   0.0,   0.0],
+	              [0.5,   1.0,   0.0,   0.0],
+	              [0.0,   0.0,   1.0,   0.5],
+	              [0.0,   0.0,   0.5,   1.0]]
 		} for x in np.arange(0.0, 1.01, 0.1)
 	],
 	"n_obs": [5, 10, 20, 25, 50, 100],
@@ -67,7 +74,7 @@ def main():
 					"n_conditions": params["data_strategy_n_conditions"],
 					"n_dep_vars": params["data_strategy_n_dep_vars"],
 					"n_obs": params["n_obs"],
-                    "n_reps": 1 if params["n_obs"] in [25, 50, 100] else 5,
+                    "n_reps": 1 if params["n_obs"] in nLarge else 5,
 					"test_strategy": {
 							"_name": params["test_strategy_name"],
 							"alpha": params["test_alpha"],
@@ -83,11 +90,11 @@ def main():
 			"researcher_parameters": {
 					"decision_strategy": {
 				      "_name": "MarjansDecisionMaker",
-				      "between_replications_decision_policies": [[""]] if params["n_obs"] in [25, 50, 100] else [["sig","effect > 0","random"],["effect > 0","min(pvalue)"],["effect < 0","max(pvalue)"]],
+				      "between_replications_decision_policies": [[""]] if params["n_obs"] in nLarge else [["effect > 0", "sig", "first"],["effect > 0","min(pvalue)"],["effect < 0","max(pvalue)"]],
 				      "final_decision_policies": [[""]],
 				      "initial_decision_policies": [
 				        [
-				          "first"
+				          "id == 2"
 				        ]
 				      ],
 				      "submission_policies": [""],

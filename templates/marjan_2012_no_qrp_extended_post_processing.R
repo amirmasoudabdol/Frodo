@@ -10,7 +10,7 @@ suppressWarnings(suppressMessages(library(data.table)))
 plan(multiprocess)
 
 project_path <- "outputs/"
-project_name <- "marjan_2012_qrp"
+project_name <- "marjan_2012_no_qrp_extended"
 
 # Currently I'm mainly processing prepared publications datasets as
 # they contain most of the data that I need, but you can apply this
@@ -18,9 +18,9 @@ project_name <- "marjan_2012_qrp"
 filenames <- list.files(project_path, pattern = "*_pubs_prepared.csv", full.names = TRUE)
 
 determine_size_class <- function(x) {
-  if (x %in% c(5, 25)) return("5")
-  if (x %in% c(10, 50)) return("10")
-  if (x %in% c(20, 100)) return("20")
+  if (x %in% c(5, 25)) return("S")
+  if (x %in% c(10, 50)) return("M")
+  if (x %in% c(20, 100)) return("L")
 }
 
 determine_size <- function(x) {

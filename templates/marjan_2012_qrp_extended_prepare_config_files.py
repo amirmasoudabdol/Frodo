@@ -24,7 +24,7 @@ params_info = {
 	              [0.5,   1.0,   0.0,   0.0],
 	              [0.0,   0.0,   1.0,   0.5],
 	              [0.0,   0.0,   0.5,   1.0]]
-		} for x in np.arange(0.0, 1.01, 0.1)
+		} for x in np.arange(0.0, 1.01, 0.05)
 	],
 	"n_obs": [5, 10, 20, 25, 50, 100],
 	"k": [2],
@@ -38,14 +38,14 @@ params_info = {
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
-	"test_alpha": [0.05],
+	"test_alpha": [0.05, 0.005, 0.0005],
 	"test_strategy_name": ["TTest"],
 	"test_strategy_alternative": ["TwoSided"],
 
 	"effect_strategy_name": ["MeanDifference"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [1000],
+	"journal_max_pubs": [10000],
 
 	"decision_strategy_name": ["MarjansDecisionMaker"]
 	}
