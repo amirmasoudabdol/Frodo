@@ -18,9 +18,9 @@ project_name <- "marjan_2012_qrp"
 filenames <- list.files(project_path, pattern = "*_pubs_prepared.csv", full.names = TRUE)
 
 determine_size_class <- function(x) {
-  if (x %in% c(5, 25)) return("5")
-  if (x %in% c(10, 50)) return("10")
-  if (x %in% c(20, 100)) return("20")
+  if (x %in% c(5, 25)) return("S")
+  if (x %in% c(10, 50)) return("M")
+  if (x %in% c(20, 100)) return("L")
 }
 
 determine_size <- function(x) {
