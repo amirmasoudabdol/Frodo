@@ -71,7 +71,7 @@ def main():
 						"_name": "GradedResponseModel"
 					},
 					"effect_strategy": {
-							"_name": "CohensD"
+							"_name": "MeanDifference"
 					},
 					"n_conditions": params["data_strategy_n_conditions"],
 					"n_dep_vars": params["data_strategy_n_dep_vars"],
@@ -129,7 +129,7 @@ def main():
 									],
 									"n_attempts": 1,
 									"num": params["n_obs"],
-									"order": "max first"
+									"order": "random"
 							}
 					]
 			},
