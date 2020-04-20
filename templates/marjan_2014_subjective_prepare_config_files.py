@@ -7,19 +7,19 @@ import tqdm
 params_info = {
 	"n_sims": [1],
 	"debug": [False],
-	"progress": [False],
+	"progress": [True],
 	"verbose": [False],
-	"n_obs": [20, 40, 80, 150, 500],
 	"data_strategy_n_items": [2, 5, 10, 20, 40],
-	"data_strategy_difficulties_mean": [0, 1.5, 3.0],
-	"data_strategy_abilities_mean": [[0.0, 0.0]],
+	"n_obs": [20, 40, 100],
+	"data_strategy_difficulties_mean": [0, 3],
+	"data_strategy_abilities_mean": [[0, 0]],
 	"data_strategy_n_categories": [1, 5],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [1],
-	"k": [2],
+	# "k": [x for x in np.arange(2.0, 4.1, 0.25)],
 	"seed": ["random"],
-	"is_pre_processing": [False],
-	"is_phacker": [True],
+	"is_pre_processing": [True],
+	"is_phacker": [False],
 	"save_pubs": [True],
 	"save_sims": [False],
 	"save_stats": [False],
@@ -32,10 +32,10 @@ params_info = {
 	"test_strategy_alternative": ["TwoSided"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [5000],
+	"journal_max_pubs": [10000],
 
 	"decision_strategy_name": ["PatientDecisionMaker"],
-	"decision_strategy_init_dec_policies": [["first"]]
+	"decision_strategy_init_dec_policies": [["id == 1"]]
 	}
 
 
@@ -65,14 +65,13 @@ def main():
 			                    "mean": params["data_strategy_difficulties_mean"],
 			                    "stddev": 1.0
 			                } for x in range(params["data_strategy_n_categories"])
-			           	]
-						,
+			           	],
 						"n_categories": params["data_strategy_n_categories"],
 						"n_items": params["data_strategy_n_items"],
 						"_name": "GradedResponseModel"
 					},
 					"effect_strategy": {
-							"_name": "CohensD"
+							"_name": "MeanDifference"
 					},
 					"n_conditions": params["data_strategy_n_conditions"],
 					"n_dep_vars": params["data_strategy_n_dep_vars"],
@@ -93,34 +92,46 @@ def main():
 			"researcher_parameters": {
 					"decision_strategy": {
 				      "_name": params["decision_strategy_name"],
-				      "between_replications_decision_policies": [["_"]],
-				      "final_decision_policies": [["_"]],
+				      "between_replications_decision_policies": [[""]],
+				      "final_decision_policies": [[""]],
 				      "initial_decision_policies": [
-				      	["_"]
+				      	params["decision_strategy_init_dec_policies"]
 				      ],
-				      "submission_policies": ["_"]
+				      "submission_policies": [""]
 				    },
 					"hacking_strategies": [
 							[
-				              	{
-				                    "_name": "SubjectiveOutlierRemoval",
-				                    "range": [
-				                        2.0,
-				                        4.0
-				                    ],
-				                    "min_observations": 5,
-				                    "step_size": 0.1
-				                },
-				                [["first"]]
+									{
+											"_name": "OutliersRemoval",
+											"level": "dv",
+											"max_attempts": 10,
+											"min_observations": 20,
+											"mode": "Recursive",
+											"multipliers": [
+													1
+											],
+											"n_attempts": 4,
+											"num": 2,
+											"order": "max first"
+									}
 							]
 					],
 					"is_phacker": params["is_phacker"],
 					"is_pre_processing": params["is_pre_processing"],
-					"pre_processing_methods": [
-							{
-								"_name": "none"
-							}
-					]
+			        "pre_processing_methods": [
+			            {
+			                "_name": "SubjectiveOutlierRemoval",
+			                "min_observations": 5,
+			                "range": [
+			                    2,
+			                    3
+			                ],
+			                "step_size": 0.5,
+			                "stopping_condition": [
+			                    "sig"
+			                ]
+			            }
+			        ]
 			},
 			"simulation_parameters": {
 					"debug": params["debug"],

@@ -30,9 +30,8 @@ summarize_each_file <- function(fname) {
            n_categories = factor(experiment_parameters_data_strategy_n_categories),
            is_pre_processed = factor(researcher_parameters_is_pre_processing),
            abilities = experiment_parameters_data_strategy_abilities_means_1,
-           selection_pref = factor(researcher_parameters_decision_strategy_preference),
            difficulties = experiment_parameters_data_strategy_difficulties_0_mean) %>%
-    group_by(abilities, n_categories, selction_pref, n_items, difficulties, tnobs, is_pre_processed) %>%
+    group_by(abilities, n_categories, n_items, difficulties, tnobs, is_pre_processed) %>%
     summarize(sig_mean = mean(sig),
               pval_mean = mean(pvalue),
               nobs_mean = mean(nobs)
