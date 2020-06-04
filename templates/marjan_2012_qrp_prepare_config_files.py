@@ -45,7 +45,7 @@ params_info = {
 	"effect_strategy_name": ["MeanDifference"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [1000],
+	"journal_max_pubs": [5000],
 
 	"decision_strategy_name": ["MarjansDecisionMaker"]
 	}
@@ -90,92 +90,113 @@ def main():
 			"researcher_parameters": {
 					"decision_strategy": {
 				      "_name": params["decision_strategy_name"],
-				      "between_replications_decision_policies": [
-			                [
-			                    "effect > 0",
-			                    "sig",
-			                    "first"
-			                ],
-			                [
-			                    "effect > 0",
-			                    "min(pvalue)"
-			                ],
-			                [
-			                    "effect < 0",
-			                    "max(pvalue)"
-			                ]
-			            ],
-				      "final_decision_policies": [
-				        [
-				          "effect > 0",
-				          "min(pvalue)"
-				        ],
-				        [
-				          "effect < 0",
-				          "max(pvalue)"
-				        ]
-				      ],
-				      "initial_decision_policies": [
-				        [
-				          "id == 2",
-				          "sig",
-				          "effect > 0"
-				        ],
-				        [
-				          "id == 3",
-				          "sig",
-				          "effect > 0"
-				        ]
-				      ],
-				      "submission_policies": [""],
-            		  "will_be_hacking_policies": ["effect > 0", "sig"]
+	                  "between_hacks_selection_policies": [
+				                [
+				                    "effect > 0",
+				                    "min(pvalue)"
+				                ],
+				                [
+				                    "effect < 0",
+				                    "max(pvalue)"
+				                ]
+				            ],
+				            "between_replications_selection_policies": [
+				                [
+				                    "effect > 0",
+				                    "sig",
+				                    "first"
+				                ],
+				                [
+				                    "effect > 0",
+				                    "min(pvalue)"
+				                ],
+				                [
+				                    "effect < 0",
+				                    "max(pvalue)"
+				                ]
+				            ],
+				            "initial_selection_policies": [
+				                [
+				                    "id == 2",
+				                    "sig",
+				                    "effect > 0"
+				                ],
+				                [
+				                    "id == 3",
+				                    "sig",
+				                    "effect > 0"
+				                ]
+				            ],
+				            "stashing_policy": [
+				                "all"
+				            ],
+				            "submission_decision_policies": [
+				                ""
+				            ],
+				            "will_continue_replicating_decision_policy": [
+				                ""
+				            ],
+				            "will_start_hacking_decision_policies": [
+				                "effect < 0",
+				                "!sig"
+				            ]
 				    },
 					"is_phacker": params["is_phacker"],
 				    "hacking_strategies": [
-				      [
-				        {
-				          "_name": "OptionalStopping",
-				          "level": "dv",
-				          "num": 10,
-				          "n_attempts": 1,
-				          "max_attempts": 1
-				        },
-				        [
-				          [
-				            "effect > 0",
-				            "min(pvalue)"
-				          ]
-				        ]
-				      ],
-				      [
-				        {
-				          "_name": "OptionalStopping",
-				          "level": "dv",
-				          "num": 10,
-				          "n_attempts": 1,
-				          "max_attempts": 1
-				        },
-				        {
-				          "_name": "OutliersRemoval",
-				          "level": "dv",
-				          "max_attempts": 1,
-				          "min_observations": 1,
-				          "mode": "Recursive",
-				          "multipliers": [
-				            2
-				          ],
-				          "n_attempts": 1,
-				          "num": 200,
-				          "order": "random"
-				        },
-				        [
-				          [
-				            "effect > 0",
-				            "min(pvalue)"
-				          ]
-				        ]
-				      ]
-				    ],
+					            [
+					                {
+					                    "_name": "OptionalStopping",
+					                    "level": "dv",
+					                    "max_attempts": 1,
+					                    "n_attempts": 1,
+					                    "num": 25
+					                },
+					                [
+					                    {
+					                        "selection": [
+					                            [
+					                                "effect > 0",
+					                                "min(pvalue)"
+					                            ]
+					                        ]
+					                    },
+					                    {
+					                        "will_continue_hacking_decision_policy": [
+					                            "effect < 0",
+					                            "!sig"
+					                        ]
+					                    }
+					                ],
+					                {
+					                    "_name": "OutliersRemoval",
+					                    "level": "dv",
+					                    "max_attempts": 1,
+					                    "min_observations": 1,
+					                    "multipliers": [
+					                        2
+					                    ],
+					                    "n_attempts": 1,
+					                    "num": 200,
+					                    "order": "random"
+					                },
+					                [
+					                    {
+					                        "selection": [
+					                            [
+					                                "effect > 0",
+					                                "min(pvalue)"
+					                            ]
+					                        ]
+					                    },
+					                    {
+					                        "will_continue_hacking_decision_policy": [
+					                            "effect < 0",
+					                            "!sig"
+					                        ]
+					                    }
+					                ]
+					            ]
+					        ],
 					"is_pre_processing": params["is_pre_processing"],
 					"pre_processing_methods": [
 								{
