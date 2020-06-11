@@ -100,21 +100,7 @@ def main():
 				                    "max(pvalue)"
 				                ]
 				            ],
-				            "between_replications_selection_policies": [
-				                [
-				                    "effect > 0",
-				                    "sig",
-				                    "first"
-				                ],
-				                [
-				                    "effect > 0",
-				                    "min(pvalue)"
-				                ],
-				                [
-				                    "effect < 0",
-				                    "max(pvalue)"
-				                ]
-				            ],
+				            "between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["effect > 0", "sig", "first"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]],
 				            "initial_selection_policies": [
 				                [
 				                    "id == 2",
@@ -143,13 +129,13 @@ def main():
 				    },
 					"is_phacker": params["is_phacker"],
 				    "hacking_strategies": [
-					            [
+				    [
 					                {
 					                    "_name": "OptionalStopping",
 					                    "level": "dv",
 					                    "max_attempts": 1,
 					                    "n_attempts": 1,
-					                    "num": 25
+					                    "num": 10
 					                },
 					                [
 					                    {

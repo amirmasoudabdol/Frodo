@@ -100,7 +100,7 @@ def main():
 				                    "max(pvalue)"
 				                ]
 				            ],
-				            "between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["sig","effect > 0","first"],["effect > 0","min(pvalue)"],["effect < 0","max(pvalue)"]],
+				            "between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["effect > 0", "sig", "first"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]],
 				            "initial_selection_policies": [
 				                [
 				                    "id == 2"
@@ -123,57 +123,7 @@ def main():
 					"is_phacker": params["is_phacker"],
 				    "hacking_strategies": [
 					            [
-					                {
-					                    "_name": "OptionalStopping",
-					                    "level": "dv",
-					                    "max_attempts": 1,
-					                    "n_attempts": 1,
-					                    "num": 25
-					                },
-					                [
-					                    {
-					                        "selection": [
-					                            [
-					                                "effect > 0",
-					                                "min(pvalue)"
-					                            ]
-					                        ]
-					                    },
-					                    {
-					                        "will_continue_hacking_decision_policy": [
-					                            "effect < 0",
-					                            "!sig"
-					                        ]
-					                    }
-					                ],
-					                {
-					                    "_name": "OutliersRemoval",
-					                    "level": "dv",
-					                    "max_attempts": 1,
-					                    "min_observations": 1,
-					                    "multipliers": [
-					                        2
-					                    ],
-					                    "n_attempts": 1,
-					                    "num": 200,
-					                    "order": "random"
-					                },
-					                [
-					                    {
-					                        "selection": [
-					                            [
-					                                "effect > 0",
-					                                "min(pvalue)"
-					                            ]
-					                        ]
-					                    },
-					                    {
-					                        "will_continue_hacking_decision_policy": [
-					                            "effect < 0",
-					                            "!sig"
-					                        ]
-					                    }
-					                ]
+					                ""
 					            ]
 					        ],
 					"is_pre_processing": params["is_pre_processing"],
