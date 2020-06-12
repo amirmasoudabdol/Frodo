@@ -129,7 +129,7 @@ def main():
 				    },
 					"is_phacker": params["is_phacker"],
 				    "hacking_strategies": [
-				    [
+				    			[
 					                {
 					                    "_name": "OptionalStopping",
 					                    "level": "dv",

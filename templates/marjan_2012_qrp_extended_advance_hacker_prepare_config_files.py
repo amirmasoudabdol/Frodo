@@ -30,7 +30,7 @@ params_info = {
 	"k": [2],
 	"seed": ["random"],
 	"is_pre_processing": [False],
-	"is_phacker": [False],
+	"is_phacker": [True],
 	"save_pubs": [True],
 	"save_sims": [False],
 	"save_stats": [False],
@@ -89,7 +89,7 @@ def main():
 			},
 			"researcher_parameters": {
 					"decision_strategy": {
-				      "_name": "MarjansDecisionMaker",
+				      "_name": params["decision_strategy_name"],
 	                  "between_hacks_selection_policies": [
 				                [
 				                    "effect > 0",
@@ -103,7 +103,14 @@ def main():
 				            "between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["effect > 0", "sig", "first"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]],
 				            "initial_selection_policies": [
 				                [
-				                    "id == 2"
+				                    "id == 2",
+				                    "sig",
+				                    "effect > 0"
+				                ],
+				                [
+				                    "id == 3",
+				                    "sig",
+				                    "effect > 0"
 				                ]
 				            ],
 				            "stashing_policy": [
@@ -122,8 +129,58 @@ def main():
 				    },
 					"is_phacker": params["is_phacker"],
 				    "hacking_strategies": [
-					            [
-					                ""
+				    			[
+					                {
+					                    "_name": "OptionalStopping",
+					                    "level": "dv",
+					                    "max_attempts": 1,
+					                    "n_attempts": 1,
+					                    "num": max(5, params["n_obs"]/2)
+					                },
+					                [
+					                    {
+					                        "selection": [
+					                            [
+					                                "effect > 0",
+					                                "min(pvalue)"
+					                            ]
+					                        ]
+					                    },
+					                    {
+					                        "will_continue_hacking_decision_policy": [
+					                            "effect < 0",
+					                            "!sig"
+					                        ]
+					                    }
+					                ],
+						            {
+						                "_name": "SubjectiveOutlierRemoval",
+						                "min_observations": params["n_obs"]/2,
+						                "range": [
+						                    2,
+						                    4,
+						                ],
+						                "step_size": 0.5,
+						                "stopping_condition": [
+						                    "sig"
+						                ]
+						            },
+					                [
+					                    {
+					                        "selection": [
+					                            [
+					                                "effect > 0",
+					                                "min(pvalue)"
+					                            ]
+					                        ]
+					                    },
+					                    {
+					                        "will_continue_hacking_decision_policy": [
+					                            "effect < 0",
+					                            "!sig"
+					                        ]
+					                    }
+					                ]
 					            ]
 					        ],
 					"is_pre_processing": params["is_pre_processing"],
