@@ -10,7 +10,7 @@ suppressWarnings(suppressMessages(library(data.table)))
 plan(multiprocess)
 
 project_path <- "outputs/"
-project_name <- "marjan_2012_qrp_extended"
+project_name <- "marjan_2012_qrp_extended_advance_hacker"
 
 # Currently I'm mainly processing prepared publications datasets as
 # they contain most of the data that I need, but you can apply this
