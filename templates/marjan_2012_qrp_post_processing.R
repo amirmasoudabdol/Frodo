@@ -43,10 +43,11 @@ summarize_each_file <- function(fname) {
            covs = factor(experiment_parameters_data_strategy_measurements_covs),
            decision_strategy = factor(researcher_parameters_decision_strategy__name),
            is_hacked = factor(researcher_parameters_is_phacker),
-           selection_policy = factor(researcher_parameters_decision_strategy_initial_selection_policies_0_0),
            tmean = experiment_parameters_data_strategy_measurements_means_2,
+           alpha = experiment_parameters_test_strategy_alpha,
+           test_strategy = experiment_parameters_test_strategy__name,
            n_pos_sig = if_else(effect > 0 & sig, 1, 0)) %>%
-    group_by(tmean, covs, tnobs, sizeclass, decision_strategy, is_hacked, selection_policy) %>%
+    group_by(tmean, covs, tnobs, alpha, sizeclass, decision_strategy, test_strategy, is_hacked) %>%
     summarize(sigmean = sum(n_pos_sig) / n(),
               mean_nobs = mean(nobs),
               mean_eff = mean(effect),
