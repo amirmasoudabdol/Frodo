@@ -45,9 +45,12 @@ params_info = {
 	"effect_strategy_name": ["MeanDifference"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [5000],
+	"journal_max_pubs": [2500],
 
-	"decision_strategy_name": ["MarjansDecisionMaker"]
+	"decision_strategy_name": ["MarjansDecisionMaker"],
+
+	"n_reps": [5],
+	"nb": [10]
 	}
 
 
@@ -74,7 +77,7 @@ def main():
 					"n_conditions": params["data_strategy_n_conditions"],
 					"n_dep_vars": params["data_strategy_n_dep_vars"],
 					"n_obs": params["n_obs"],
-                    "n_reps": 1 if params["n_obs"] in nLarge else 5,
+                    "n_reps": 1 if params["n_obs"] in nLarge else params["n_reps"],
 					"test_strategy": {
 							"_name": params["test_strategy_name"],
 							"alpha": params["test_alpha"],
@@ -100,25 +103,26 @@ def main():
 				                    "max(pvalue)"
 				                ]
 				            ],
-				            "between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["effect > 0", "sig", "first"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]],
-				            "initial_selection_policies": [
-				                [
-				                    "id == 2"
-				                ]
-				            ],
-				            "stashing_policy": [
-				                "all"
-				            ],
-				            "submission_decision_policies": [
-				                ""
-				            ],
-				            "will_continue_replicating_decision_policy": [
-				                ""
-				            ],
-				            "will_start_hacking_decision_policies": [
-				                "effect < 0",
-				                "!sig"
-				            ]
+			            "between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["effect > 0", "sig", "first"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]],
+			            # "between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["last"]],
+			            "initial_selection_policies": [
+			                [
+			                    "id == 2"
+			                ]
+			            ],
+			            "stashing_policy": [
+			                "all"
+			            ],
+			            "submission_decision_policies": [
+			                ""
+			            ],
+			            "will_continue_replicating_decision_policy": [
+			                ""
+			            ],
+			            "will_start_hacking_decision_policies": [
+			                "effect < 0",
+			                "!sig"
+			            ]
 				    },
 					"is_phacker": params["is_phacker"],
 				    "hacking_strategies": [

@@ -39,7 +39,7 @@ params_info = {
 	"output_prefix": [""],
 
 	"test_alpha": [0.05, 0.005, 0.0005, 0.00005],
-	"test_strategy_name": ["TTest", "YuenTest"],
+	"test_strategy_name": ["TTest"],
 	"test_strategy_alternative": ["TwoSided"],
 
 	"effect_strategy_name": ["MeanDifference"],
@@ -47,7 +47,9 @@ params_info = {
 	"journal_selection_strategy_name": ["FreeSelection"],
 	"journal_max_pubs": [10000],
 
-	"decision_strategy_name": ["MarjansDecisionMaker"]
+	"decision_strategy_name": ["MarjansDecisionMaker"],
+
+	"n_reps": [1, 2, 3, 4, 5]
 	}
 
 
