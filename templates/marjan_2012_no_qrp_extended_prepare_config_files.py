@@ -52,9 +52,7 @@ params_info = {
         [""]
 	],
 
-	"decision_strategy_name": ["MarjansDecisionMaker"],
-
-	"n_reps": [1, 2, 3, 4, 5]
+	"decision_strategy_name": ["MarjansDecisionMaker"]
 	}
 
 

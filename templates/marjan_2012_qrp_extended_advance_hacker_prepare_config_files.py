@@ -47,14 +47,12 @@ params_info = {
 	"journal_selection_strategy_name": ["FreeSelection"],
 	"journal_max_pubs": [40],
 
-	"decision_strategy_name": ["MarjansDecisionMaker"],
-
 	"continue_replication_rules": [
 		["effect < 0","!sig"],
-        [""],
-	]
+        [""]
+	],
 
-	"n_reps": [1, 2, 3, 4, 5]
+	"decision_strategy_name": ["MarjansDecisionMaker"]
 	}
 
 
