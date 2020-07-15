@@ -8,6 +8,7 @@ from sqlalchemy import create_engine
 from flatten_json import flatten
 from string import digits
 import multiprocessing
+import itertools
 
 remove_digits = str.maketrans('', '', digits)
 
@@ -63,13 +64,16 @@ def extract_keys(fnames):
 
 	return params
 
-def prepare_df(fname):
+def prepare_df(entry):
+	fname = entry[0]
+	from_ = entry[1]
+	param_names = entry[2]
 	fbase = os.path.basename(fname)
 	fprefix = fbase.split("_")[0]
 
 	# Checking whether the "prepared" file exist, if so, then don't remake it
-	if (os.path.isfile("outputs/%s_%s_prepared.csv" % (fprefix, from_))):
-		return
+	# if (os.path.isfile("outputs/%s_%s_prepared.csv" % (fprefix, from_))):
+	# 	return
 
 	params = extract_params("configs/" + fprefix + ".json", param_names)
 
@@ -81,7 +85,7 @@ def prepare_df(fname):
 def main():
 
 	with multiprocessing.Pool(multiprocessing.cpu_count() - 1) as pool:
-		for _ in tqdm(pool.imap(prepare_df, filenames), total=len(filenames), leave = False, ascii = True):
+		for _ in tqdm(pool.imap(prepare_df, zip(filenames, itertools.repeat(from_), itertools.repeat(param_names))), total=len(filenames), leave = True, ascii = True):
 			pass
 
 
