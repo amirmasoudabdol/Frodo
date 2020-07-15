@@ -27,7 +27,7 @@ printf "\rProgress : [${_done// /#}${_left// /-}] ${_progress}%% ${3}"
 _number=1
 
 # This accounts as the "totalState" variable for the progressBar function
-_end=$(ls configs/* | wc -l)
+_end=$(wc -l < configfilenames.pool)
 
 for CONFIG_FILE in "configs/"*.json; do
 
