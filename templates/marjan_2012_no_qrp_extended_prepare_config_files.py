@@ -8,7 +8,7 @@ nSmall = np.array([5, 10, 20])
 nLarge = 5 * nSmall
 
 params_info = {
-	"n_sims": [1],
+	"n_sims": [250],
 	"debug": [False],
 	"progress": [False],
 	"verbose": [False],
@@ -45,7 +45,12 @@ params_info = {
 	"effect_strategy_name": ["MeanDifference"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [10000],
+	"journal_max_pubs": [40],
+
+	"continue_replication_rules": [
+		["effect < 0","!sig"],
+        [""]
+	],
 
 	"decision_strategy_name": ["MarjansDecisionMaker"],
 
@@ -87,7 +92,11 @@ def main():
 					"max_pubs": params["journal_max_pubs"],
 					"selection_strategy": {
 							"_name": params["journal_selection_strategy_name"]
-					}
+					},
+			        "meta_analysis_metrics": [
+			            "RandomEffectEstimator",
+			            "EggersTestEstimator"
+			        ],
 			},
 			"researcher_parameters": {
 					"decision_strategy": {
@@ -114,9 +123,7 @@ def main():
 				            "submission_decision_policies": [
 				                ""
 				            ],
-				            "will_continue_replicating_decision_policy": [
-				                ""
-				            ],
+				            "will_continue_replicating_decision_policy": params["continue_replication_rules"],
 				            "will_start_hacking_decision_policies": [
 				                "effect < 0",
 				                "!sig"
