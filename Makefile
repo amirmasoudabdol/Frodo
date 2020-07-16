@@ -20,6 +20,18 @@ else
 	path=$(path)
 endif
 
+OSTYPE=$(shell uname -s)
+ifeq ($(OSTYPE),Linux)
+	ncores=$(shell grep -c ^processor /proc/cpuinfo)
+endif 
+
+ifeq ($(OSTYPE),Darwin)
+    ncores=$(shell sysctl -n hw.ncpu)
+endif
+
+# Number of cores to build SAM
+n_cores=$(shell echo $$(( $(ncores) - 1)) )
+
 .PHONY: help
 
 help:  ## Display this help
@@ -138,7 +150,7 @@ sam: ## Build SAMrun executable. Note: This will update SAM source directory and
 	@cmake -DCMAKE_BUILD_TYPE=Release -H$(path)/$(project)/SAM/SAMpp -B$(path)/$(project)/SAM/SAMpp/build
 	
 	@printf '$(<b>)> Building SAM... $(</b>)\n'
-	@cmake --build $(path)/$(project)/SAM/SAMpp/build --parallel 10
+	@cmake --build $(path)/$(project)/SAM/SAMpp/build --parallel $(n_cores)
 	
 	@mv $(path)/$(project)/SAM/SAMpp/build/SAMrun $(path)/$(project)/
 

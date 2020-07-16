@@ -25,9 +25,21 @@ else
 	configtemp=$(using)
 endif
 
+OSTYPE=$(shell uname -s)
+ifeq ($(OSTYPE),Linux)
+	ncores=$(shell grep -c ^processor /proc/cpuinfo)
+endif 
+
+ifeq ($(OSTYPE),Darwin)
+    ncores=$(shell sysctl -n hw.ncpu)
+endif
+
 # Calculating the number of cores needed for running the job on Lisa
 n_configs=$$(wc -l < configfilenames.pool)
 n_nodes=$(shell echo $$(( $(n_configs)/16 + 1 )) )
+
+# Number of cores to build SAM
+n_cores=$(shell echo $$(( $(ncores) - 1)) )
 
 .PHONY: help
 
@@ -57,7 +69,7 @@ name: ## The name of the archive
 sam-build: ## Rebuild the binaries, run this if you've modified the code
 	# TODO: Run the `cmake` first
 	@cmake -DCMAKE_BUILD_TYPE=Release -HSAM/SAMpp -BSAM/SAMpp/build
-	@cmake --build SAM/SAMpp/build --parallel 10 --clean-first
+	@cmake --build SAM/SAMpp/build --parallel $(n_cores) --clean-first
 	@mv SAM/SAMpp/build/SAMrun .
 
 parameters: clean ## Preparing config files for SAM
