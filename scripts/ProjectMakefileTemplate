@@ -81,15 +81,15 @@ parameters: clean ## Preparing config files for SAM
 ##@ Post-processing
 
 csv: ## Create a set of files `*_prepared.csv` by adding all keys/values to them. Use this when the database is too big
-	@printf '$(<b>)> Preparing the extended dataset... $(</b>)\n'
+	@printf '$(<b>)> Preparing the extended dataset for $(from)... $(</b>)\n'
 	@python3 scripts/yourprojectname_to_csv.py $(from)
 
 stack: ## Stack several CSV files into one CSV file
-	@printf '$(<b>)> Stacking output files... $(</b>)\n'
+	@printf '$(<b>)> Stacking $(from) output files... $(</b>)\n'
 	@csvstack outputs/*_$(from)_prepared.csv > outputs/$(from)_stacked.csv
 
 database: ## Aggregate output files into a SQLite database
-	@printf '$(<b>)> Creating a table from outputs/$(from) dataset... $(</b>)\n'
+	@printf '$(<b>)> Creating a table from $(from) stacked output file... $(</b>)\n'
 	@csvsql --db sqlite:///dbs/yourprojectname.sqlite --insert outputs/$(from)_stacked.csv
 
 summary: ## Runinng the `post-processing.R` script on every file in output/ folder
