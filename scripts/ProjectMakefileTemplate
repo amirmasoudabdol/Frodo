@@ -86,15 +86,23 @@ csv: ## Create a set of files `*_prepared.csv` by adding all keys/values to them
 
 stack: ## Stack several CSV files into one CSV file
 	@printf '$(<b>)> Stacking $(from) output files... $(</b>)\n'
-	@csvstack outputs/*_$(from)_prepared.csv > outputs/$(from)_stacked.csv
+	@csvstack outputs/*_$(from)_prepared.csv > outputs/$(from)_Stacked.csv
 
 database: ## Aggregate output files into a SQLite database
+	@$(MAKE) stats from=$(from)
+	@$(MAKE) csv from=$(from)_Stats
+	@$(MAKE) stack from=$(from)_Stats
 	@printf '$(<b>)> Creating a table from $(from) stacked output file... $(</b>)\n'
-	@csvsql --db sqlite:///dbs/yourprojectname.sqlite --insert outputs/$(from)_stacked.csv
+	@csvsql --db sqlite:///dbs/yourprojectname.sqlite --insert outputs/$(from)_Stats_Stacked.csv
 
 summary: ## Runinng the `post-processing.R` script on every file in output/ folder
 	@printf '$(<b>)> Summarizing the dataset... $(</b>)\n'
 	@Rscript scripts/yourprojectname_post_processing.R
+
+stats:
+	@printf '$(<b>)> Preparing statistics from $(from)... $(</b>)\n'
+	@./scripts/yourprojectname_prepare_stats.sh $(from) $(n_cores)
+	@python3 scripts/yourprojectname_transpose_csv.py $(from)_Stats
 
 ##@ Run
 

@@ -2,13 +2,15 @@
 
 PROJECT_DIR=$(pwd)
 
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
+OSTYPE=$(shell uname -s)
+if [[ "$OSTYPE" == "Linux" ]]; then
 	ncores=$(grep -c ^processor /proc/cpuinfo)
-elif [[ "$OSTYPE" == "darwin"* ]]; then
+elif [[ "$OSTYPE" == "Darwin" ]]; then
     ncores=$(sysctl -n hw.ncpu)
 else
 	echo "Cannot deceted the OS."
 fi
+n_cores=$(shell echo $$(( $(ncores) - 1)) )
 
 echo
 echo "Running the simulation on ${ncores} cores."

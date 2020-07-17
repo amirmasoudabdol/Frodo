@@ -110,6 +110,14 @@ config: ## Building necessary files and folders for a new project
 	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/scripts/$(project)_to_csv.py > tmp && mv tmp $(path)/$(project)/scripts/$(project)_to_csv.py
 	@chmod +x $(path)/$(project)/scripts/$(project)_to_csv.py
 
+	@cp scripts/transpose_csv.py $(path)/$(project)/scripts/$(project)_transpose_csv.py
+	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/scripts/$(project)_transpose_csv.py > tmp && mv tmp $(path)/$(project)/scripts/$(project)_transpose_csv.py
+	@chmod +x $(path)/$(project)/scripts/$(project)_transpose_csv.py
+
+	@cp scripts/prepare_stats.sh $(path)/$(project)/scripts/$(project)_prepare_stats.sh
+	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/scripts/$(project)_prepare_stats.sh > tmp && mv tmp $(path)/$(project)/scripts/$(project)_prepare_stats.sh
+	@chmod +x $(path)/$(project)/scripts/$(project)_prepare_stats.sh
+
 	@cp scripts/config_template.json $(path)/$(project)/scripts/$(project)_config_template.json
 	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/scripts/$(project)_config_template.json > tmp && mv tmp $(path)/$(project)/scripts/$(project)_config_template.json
 
