@@ -48,9 +48,10 @@ params_info = {
 	"journal_max_pubs": [40],
 
 	"continue_replication_rules": [
-		["effect < 0","!sig"],
         [""]
 	],
+
+	"n_reps": [2, 3, 4, 5],
 
 	"decision_strategy_name": ["MarjansDecisionMaker"]
 	}
@@ -79,7 +80,7 @@ def main():
 					"n_conditions": params["data_strategy_n_conditions"],
 					"n_dep_vars": params["data_strategy_n_dep_vars"],
 					"n_obs": params["n_obs"],
-                    "n_reps": 1 if params["n_obs"] in nLarge else 5,
+                    "n_reps": 1 if params["n_obs"] in nLarge else params["n_reps"],
 					"test_strategy": {
 							"_name": params["test_strategy_name"],
 							"alpha": params["test_alpha"],
