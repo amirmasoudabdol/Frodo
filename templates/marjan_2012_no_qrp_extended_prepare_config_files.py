@@ -91,7 +91,7 @@ def main():
 					"max_pubs": params["journal_max_pubs"],
 			        "selection_strategy": {
 			            "_name": "SignificantSelection",
-			            "alpha": params["alpha"],
+			            "alpha": params["test_alpha"],
 			            "pub_bias": params["pub_bias"],
 			            "side": 0
 			        },
