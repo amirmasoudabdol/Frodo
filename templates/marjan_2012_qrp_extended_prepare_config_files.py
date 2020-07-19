@@ -51,7 +51,7 @@ params_info = {
         [""]
 	],
 
-	"n_reps": [2, 3, 4, 5],
+	"pub_bias": [0.1, 0.5, 0.9],
 
 	"decision_strategy_name": ["MarjansDecisionMaker"]
 	}
@@ -80,7 +80,7 @@ def main():
 					"n_conditions": params["data_strategy_n_conditions"],
 					"n_dep_vars": params["data_strategy_n_dep_vars"],
 					"n_obs": params["n_obs"],
-                    "n_reps": 1 if params["n_obs"] in nLarge else params["n_reps"],
+                    "n_reps": 1 if params["n_obs"] in nLarge else 5,
 					"test_strategy": {
 							"_name": params["test_strategy_name"],
 							"alpha": params["test_alpha"],
@@ -89,9 +89,12 @@ def main():
 			},
 			"journal_parameters": {
 					"max_pubs": params["journal_max_pubs"],
-					"selection_strategy": {
-							"_name": params["journal_selection_strategy_name"]
-					},
+			        "selection_strategy": {
+			            "_name": "SignificantSelection",
+			            "alpha": params["alpha"],
+			            "pub_bias": params["pub_bias"],
+			            "side": 0
+			        },
 			        "meta_analysis_metrics": [
 			            "RandomEffectEstimator",
 			            "EggersTestEstimator"
