@@ -34,7 +34,7 @@ params_info = {
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
-	"test_alpha": [0.05, 0.005, 0.0005],
+	"test_alpha": [0.05, 0.005, 0.0005, 0.00005],
 	"test_strategy_name": ["TTest"],
 	"test_strategy_alternative": ["TwoSided"],
 
