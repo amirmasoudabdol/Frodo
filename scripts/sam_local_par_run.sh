@@ -2,7 +2,7 @@
 
 PROJECT_DIR=$(pwd)
 
-OSTYPE=$(shell uname -s)
+OSTYPE=$(uname -s)
 if [[ "$OSTYPE" == "Linux" ]]; then
 	ncores=$(grep -c ^processor /proc/cpuinfo)
 elif [[ "$OSTYPE" == "Darwin" ]]; then
@@ -10,51 +10,53 @@ elif [[ "$OSTYPE" == "Darwin" ]]; then
 else
 	echo "Cannot deceted the OS."
 fi
-n_cores=$(shell echo $$(( $(ncores) - 1)) )
+n_cores=$(echo $(( ${ncores} - 1)) )
 
 echo
-echo "Running the simulation on ${ncores} cores."
+echo "Running the simulation on ${n_cores} cores."
 
-nconfigfiles=$(wc -l < configfilenames.pool)
+find configs -name "*.json" | xargs -t -n 1 -P ${n_cores} -I {} ./SAMrun --config={} --output-path=outputs/
 
-niters=$(echo $(( (nconfigfiles / ncores))))
+# nconfigfiles=$(wc -l < configfilenames.pool)
 
-for ((i=0; i<=niters; i++)) ; do
+# niters=$(echo $(( (nconfigfiles / ncores))))
 
-	slinen=$(echo $(((ncores * i)+1)) )
-	nlinen=$(echo $((ncores * i + ncores)) )
+# for ((i=0; i<=niters; i++)) ; do
 
-	span="${slinen},${nlinen}p"
+# 	slinen=$(echo $(((ncores * i)+1)) )
+# 	nlinen=$(echo $((ncores * i + ncores)) )
 
-	FILES=$(sed -n ${span} < configfilenames.pool)
+# 	span="${slinen},${nlinen}p"
 
-	echo "Running $slinen to $nlinen"
+# 	FILES=$(sed -n ${span} < configfilenames.pool)
 
-	for CONFIG_FILE in $FILES; do
-	(
-		# Extracting the UUID, i.e., filename without extension
-		CONFIG_FILE="configs/${CONFIG_FILE}"
-		FILE_NAME=$(basename ${CONFIG_FILE})
-		CONFIG_FILE_NAME="${FILE_NAME%%.*}"
+# 	echo "Running $slinen to $nlinen"
 
-		echo "${CONFIG_FILE}"
+# 	for CONFIG_FILE in $FILES; do
+# 	(
+# 		# Extracting the UUID, i.e., filename without extension
+# 		CONFIG_FILE="configs/${CONFIG_FILE}"
+# 		FILE_NAME=$(basename ${CONFIG_FILE})
+# 		CONFIG_FILE_NAME="${FILE_NAME%%.*}"
 
-		"${PROJECT_DIR}"/SAMrun --config="${CONFIG_FILE}" \
-									--output-path="${PROJECT_DIR}/outputs/" \
-									--output-prefix="${CONFIG_FILE_NAME}" \
-									--update-config
-		SIM_FILE="${PROJECT_DIR}/outputs/${CONFIG_FILE_NAME}_sim.csv"
+# 		echo "${CONFIG_FILE}"
 
-		# echo
-		# echo "Running Rscripts"
-		# Rscript ${PROJECT_DIR}/rscripts/post-analyzer.R ${SIM_FILE} FALSE
+# 		"${PROJECT_DIR}"/SAMrun --config="${CONFIG_FILE}" \
+# 									--output-path="${PROJECT_DIR}/outputs/" \
+# 									--output-prefix="${CONFIG_FILE_NAME}" \
+# 									--update-config
+# 		SIM_FILE="${PROJECT_DIR}/outputs/${CONFIG_FILE_NAME}_sim.csv"
 
-		echo -e "- \c"
+# 		# echo
+# 		# echo "Running Rscripts"
+# 		# Rscript ${PROJECT_DIR}/rscripts/post-analyzer.R ${SIM_FILE} FALSE
 
-	) &
-	done
-	wait
+# 		echo -e "- \c"
 
-	echo
+# 	) &
+# 	done
+# 	wait
 
-done
+# 	echo
+
+# done
