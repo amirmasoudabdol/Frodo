@@ -124,7 +124,7 @@ def main():
 				            "between_replications_selection_policies": [[""]],
 				            "initial_selection_policies": [
 				                [
-				                    "effect > 0", "min(pvalue)"
+				                    "min(pvalue)"
 				                ]
 				            ],
 				            "stashing_policy": [

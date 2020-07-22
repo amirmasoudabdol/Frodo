@@ -123,7 +123,7 @@ def main():
 				            ],
 				            "between_replications_selection_policies": [[""]],
 				            "initial_selection_policies": [
-				                ["id == 1"] if not params["is_phacker"] else ["id == 1", "effect > 0"]
+				                ["id == 1"] if not params["is_phacker"] else ["id == 1"]
 				            ],
 				            "stashing_policy": [
 				                "min(pvalue)"
