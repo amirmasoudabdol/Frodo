@@ -115,8 +115,7 @@ run-par-local: ## Running the simulation in parallel on the local machine
 
 run-par-lisa: ## Running the simulation in parallel on the Lisa cluster
 	@printf '$(<b>)> Preparing Lisa enviroment, and submitting an array job... $(</b>)\n'
-	module load pre2019
-	module load stopos
+	module load Stopos/0.93-GCC-8.3.0
 	stopos purge -p yourprojectname_pool
 	stopos create -p yourprojectname_pool
 	stopos add -p yourprojectname_pool configfilenames.pool
