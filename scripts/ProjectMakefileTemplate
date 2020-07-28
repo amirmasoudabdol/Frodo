@@ -69,7 +69,7 @@ name: ## The name of the archive
 sam-build: ## Rebuild the binaries, run this if you've modified the code
 	# TODO: Run the `cmake` first
 	@cmake -DCMAKE_BUILD_TYPE=Release -HSAM/SAMpp -BSAM/SAMpp/build
-	@cmake --build SAM/SAMpp/build --parallel $(n_cores) --clean-first
+	@cmake --build SAM/SAMpp/build --parallel $(n_cores)
 	@mv SAM/SAMpp/build/SAMrun .
 
 parameters: clean ## Preparing config files for SAM
