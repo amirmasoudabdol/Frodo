@@ -46,16 +46,13 @@ params_info = {
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
-	"hacking_prob_base_hp": [0, 0.2, 0.4],
-	# "hacking_prob_base_hp": [0.6, 0.8, 1.0],
+	"hacking_prob_base_hp": [0, 0.2, 0.4, 0.6, 0.8, 1.0],
 	# "hacking_prob_base_hp": [p for p in np.arange(0, 1.01, 0.1)],
 
-	"hacking_prob_lo_se": [0.0, 0.2, 0.4],
-	# "hacking_prob_lo_se": [0.6, 0.8],
+	"hacking_prob_lo_se": [0.0, 0.2, 0.4, 0.6, 0.8],
 	# "hacking_prob_lo_se": [lop for lop in np.arange(0, 1.01, 0.1)],
 
-	"researcher_submission_pro": [1.0, 0.9],
-	# "researcher_submission_pro": [0.8, 0.7],
+	"researcher_submission_pro": [1.0, 0.9, 0.8, 0.7],
 	# "researcher_submission_pro": [sp for sp in np.arange(0, 1.01, 0.1)],
 
 	"test_alpha": [0.05],
