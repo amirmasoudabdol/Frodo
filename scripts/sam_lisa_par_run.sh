@@ -46,63 +46,72 @@ SAM_EXEC=${PROJECT_TMP_DIR}/SAMrun
 # -----------------------------------
 # Setting up and running the simulation
 
-for ((i=1; i<=ncores; i++)) ; do
+nply=yourprojectname_nply
+
+for (( k = 0; k < nply; k++ )); do
 (
-	# Getting the next parameters from the pool
-	stopos next -p yourprojectname_pool
 
-	# Checking if the parameters pool is empty
-	if [ "$STOPOS_RC" != "OK" ]; then
-		break
-	fi
+	for ((i = 1; i <= ncores; i++)) ; do
+	(
+		# Getting the next parameters from the pool
+		stopos next -p yourprojectname_pool
 
-	ENTRY=($STOPOS_VALUE)
-	CONFIG_FILE_NAME=${ENTRY%.json}
-	CONFIG_FILE="${PROJECT_DIR}/configs/${CONFIG_FILE_NAME}.json"
-	
-	# Removing the used parameter from the pool
-	stopos remove -p yourprojectname_pool
-	
-	echo
-	echo "Running the simulation for: ${CONFIG_FILE_NAME}.json"
-	LOG_FILE="${PROJECT_TMP_DIR}/logs/${CONFIG_FILE_NAME}.log"
-	
-	# start=`date +%s`
+		# Checking if the parameters pool is empty
+		if [ "$STOPOS_RC" != "OK" ]; then
+			break
+		fi
 
-	# Running SAM
-	${SAM_EXEC} --config="${CONFIG_FILE}" \
-	 			--output-path="${PROJECT_TMP_DIR}/outputs/" \
-	 			--output-prefix="${CONFIG_FILE_NAME}" \
-	 			--update-config > ${LOG_FILE}
+		ENTRY=($STOPOS_VALUE)
+		CONFIG_FILE_NAME=${ENTRY%.json}
+		CONFIG_FILE="${PROJECT_DIR}/configs/${CONFIG_FILE_NAME}.json"
+		
+		# Removing the used parameter from the pool
+		stopos remove -p yourprojectname_pool
+		
+		echo
+		echo "Running the simulation for: ${CONFIG_FILE_NAME}.json"
+		LOG_FILE="${PROJECT_TMP_DIR}/logs/${CONFIG_FILE_NAME}.log"
+		
+		# start=`date +%s`
 
-	end=`date +%s`
+		# Running SAM
+		${SAM_EXEC} --config="${CONFIG_FILE}" \
+		 			--output-path="${PROJECT_TMP_DIR}/outputs/" \
+		 			--output-prefix="${CONFIG_FILE_NAME}" \
+		 			--update-config > ${LOG_FILE}
 
-	# Calculating and saving the runtime
-	# runtime=$((end-start))
-	# echo "runtime in seconds: " >> ${LOG_FILE}
-	# echo ${runtime} >> ${LOG_FILE}
+		end=`date +%s`
 
-	# Masking all possible output files
-	OUTPUT_FILES="${PROJECT_TMP_DIR}/outputs/${CONFIG_FILE_NAME}_*.csv"
+		# Calculating and saving the runtime
+		# runtime=$((end-start))
+		# echo "runtime in seconds: " >> ${LOG_FILE}
+		# echo ${runtime} >> ${LOG_FILE}
 
-	echo # ----------------------------------------
-	echo "Copying back the output file"
-	
-	cp -v ${OUTPUT_FILES} ${PROJECT_DIR}/outputs/
-	# cp -v ${CONFIG_FILE} ${PROJECT_DIR}/configs/
-	cp -v ${LOG_FILE} ${PROJECT_DIR}/logs/
-	# ---------------------------------------------
+		# Masking all possible output files
+		OUTPUT_FILES="${PROJECT_TMP_DIR}/outputs/${CONFIG_FILE_NAME}_*.csv"
 
-	# echo
-	# echo "Creating a new job file"
-	# R_JOB_FILE="${PROJECT_TMP_DIR}/jobs/${CONFIG_FILE_NAME}_r_job.sh"
-	# ${PROJECT_TMP_DIR}/r_job_temp.sh ${CONFIG_FILE_NAME} > ${R_JOB_FILE}
-	
-	# cp -v ${R_JOB_FILE} ${PROJECT_DIR}/jobs/
+		echo # ----------------------------------------
+		echo "Copying back the output file"
+		
+		cp -v ${OUTPUT_FILES} ${PROJECT_DIR}/outputs/
+		# cp -v ${CONFIG_FILE} ${PROJECT_DIR}/configs/
+		cp -v ${LOG_FILE} ${PROJECT_DIR}/logs/
+		# ---------------------------------------------
 
-	# sbatch ${R_JOB_FILE}
+		# echo
+		# echo "Creating a new job file"
+		# R_JOB_FILE="${PROJECT_TMP_DIR}/jobs/${CONFIG_FILE_NAME}_r_job.sh"
+		# ${PROJECT_TMP_DIR}/r_job_temp.sh ${CONFIG_FILE_NAME} > ${R_JOB_FILE}
+		
+		# cp -v ${R_JOB_FILE} ${PROJECT_DIR}/jobs/
 
-) &
+		# sbatch ${R_JOB_FILE}
+
+	) &
+	done
+	wait
+
+)
 done
 wait
 

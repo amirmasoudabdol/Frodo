@@ -11,6 +11,8 @@ configpath=configs/
 sampath=build/
 currentdatetime:=$(shell date '+%Y-%m-%d_%H-%M%p')
 
+project=yourprojectname
+
 name=""
 ifeq ($(name),"")
 	archivefolder=$(currentdatetime)
@@ -25,6 +27,15 @@ else
 	configtemp=$(using)
 endif
 
+# In case you are running a very large simulattion, you can use this parameter
+# to run more task on each node
+nply=""
+ifeq ($(nply),"")
+	nply=1
+else
+	nply=$(nply)
+endif
+
 OSTYPE=$(shell uname -s)
 ifeq ($(OSTYPE),Linux)
 	ncores=$(shell grep -c ^processor /proc/cpuinfo)
@@ -36,7 +47,7 @@ endif
 
 # Calculating the number of cores needed for running the job on Lisa
 n_configs=$$(wc -l < configfilenames.pool)
-n_nodes=$(shell echo $$(( $(n_configs)/16 + 1 )) )
+n_nodes=$(shell echo $$(( $(n_configs)/(16 * $(nply)) + 1 )) )
 
 # Number of cores to build SAM
 n_cores=$(shell echo $$(( $(ncores) - 1)) )
@@ -115,7 +126,9 @@ run-par-local: ## Running the simulation in parallel on the local machine
 
 run-par-lisa: ## Running the simulation in parallel on the Lisa cluster
 	@printf '$(<b>)> Preparing Lisa enviroment, and submitting an array job... $(</b>)\n'
-	module load Stopos/0.93-GCC-8.3.0
+	@awk '{gsub(/$(project)_nply/,"$(nply)");}1' scripts/$(project)_lisa_par_run.sh > tmp && mv tmp scripts/$(project)_lisa_par_run.sh
+	module load pre2019
+	module load stopos
 	stopos purge -p yourprojectname_pool
 	stopos create -p yourprojectname_pool
 	stopos add -p yourprojectname_pool configfilenames.pool
