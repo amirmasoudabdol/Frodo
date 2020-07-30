@@ -97,7 +97,7 @@ csv: ## Create a set of files `*_prepared.csv` by adding all keys/values to them
 
 stack: ## Stack several CSV files into one CSV file
 	@printf '$(<b>)> Stacking $(from) output files... $(</b>)\n'
-	@csvstack outputs/*_$(from)_prepared.csv > outputs/$(from)_Stacked.csv
+	@xsv cat rows outputs/*_$(from)_prepared.csv -o outputs/$(from)_Stacked.csv
 
 database: ## Aggregate output files into a SQLite database
 	@$(MAKE) stats from=$(from)

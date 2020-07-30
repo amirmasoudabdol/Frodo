@@ -39,9 +39,10 @@ params_info = {
 	"seed": ["random"],
 	"is_pre_processing": [False],
 	"is_phacker": [True],
-	"save_pubs": [False],
-	"save_sims": [False],
-	"save_stats": [True],
+	"save_all_pubs": [False],
+	"save_meta": [False],
+	"save_overall_summaries": [True],
+	"save_pubs_per_sim_summaries": [False],
 	"save_rejected": [False],
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
@@ -61,7 +62,7 @@ params_info = {
 
 	"effect_strategy_name": ["CohensD"],
 
-	"journal_max_pubs": [8, 24],
+	"journal_max_pubs": [8],
 
 	"journal_pub_bias": [z for z in np.arange(0, 1.01, 0.1)],
 
@@ -143,7 +144,7 @@ def main():
 				    "submission_probability": params["researcher_submission_pro"],
 					"is_phacker": params["is_phacker"],
 					"hacking_probability_strategy": {
-			            "base_hp": 1,
+			            "base_hp": params["hacking_prob_base_hp"],
 			            "lo_p": params["hacking_prob_lo_se"],
 			            "hi_p": params["hacking_prob_lo_se"] + 0.2,
 			            "lo_sei": 0.1,
@@ -221,10 +222,11 @@ def main():
 					"output_prefix": "",
 					"progress": params["progress"],
 					"verbose": params["verbose"],
-					"save_pubs": params["save_pubs"],
-					"save_sims": params["save_sims"],
-					"save_stats": params["save_stats"],
-					"save_rejected": params["save_rejected"]
+			        "save_all_pubs": params["save_all_pubs"],
+			        "save_meta": params["save_meta"],
+			        "save_overall_summaries": params["save_overall_summaries"],
+			        "save_pubs_per_sim_summaries": params["save_pubs_per_sim_summaries"],
+			        "save_rejected": params["save_rejected"],
 			}
 		}
 
