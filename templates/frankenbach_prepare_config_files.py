@@ -215,13 +215,12 @@ def main():
 					]
 			},
 			"simulation_parameters": {
-					"debug": params["debug"],
+					"log_level": "off",
 					"master_seed": params["seed"],
 					"n_sims": params["n_sims"],
 					"output_path": params["output_path"],
 					"output_prefix": "",
 					"progress": params["progress"],
-					"verbose": params["verbose"],
 			        "save_all_pubs": params["save_all_pubs"],
 			        "save_meta": params["save_meta"],
 			        "save_overall_summaries": params["save_overall_summaries"],
