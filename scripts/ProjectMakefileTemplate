@@ -99,6 +99,12 @@ stack: ## Stack several CSV files into one CSV file
 	@printf '$(<b>)> Stacking $(from) output files... $(</b>)\n'
 	@xsv cat rows outputs/*_$(from)_prepared.csv -o outputs/$(from)_Stacked.csv
 
+stacker:
+	@printf '$(<b>)> Stacking $(from) output files... $(</b>)\n'
+	rm outputs/$(from)_Stacked.csv
+	touch outputs/$(from)_Stacked.csv
+	@./yourprojectname_large_stacker.sh $(from)
+
 database: ## Aggregate output files into a SQLite database
 	@$(MAKE) stats from=$(from)
 	@$(MAKE) csv from=$(from)_Stats

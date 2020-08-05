@@ -118,6 +118,10 @@ config: ## Building necessary files and folders for a new project
 	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/scripts/$(project)_prepare_stats.sh > tmp && mv tmp $(path)/$(project)/scripts/$(project)_prepare_stats.sh
 	@chmod +x $(path)/$(project)/scripts/$(project)_prepare_stats.sh
 
+	@cp scripts/large_stacker.sh $(path)/$(project)/scripts/$(project)_large_stacker.sh
+	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/scripts/$(project)_large_stacker.sh > tmp && mv tmp $(path)/$(project)/scripts/$(project)_large_stacker.sh
+	@chmod +x $(path)/$(project)/scripts/$(project)_large_stacker.sh
+
 	@cp scripts/config_template.json $(path)/$(project)/scripts/$(project)_config_template.json
 	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/scripts/$(project)_config_template.json > tmp && mv tmp $(path)/$(project)/scripts/$(project)_config_template.json
 
