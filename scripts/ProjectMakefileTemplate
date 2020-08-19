@@ -99,7 +99,7 @@ stack: ## Stack several CSV files into one CSV file
 	@printf '$(<b>)> Stacking $(from) output files... $(</b>)\n'
 	@xsv cat rows outputs/*_$(from)_prepared.csv -o outputs/$(from)_Stacked.csv
 
-stacker:
+stacker: ## Faster version of stacker. Use this for lager data files
 	@printf '$(<b>)> Stacking $(from) output files... $(</b>)\n'
 	rm outputs/$(from)_Stacked.csv
 	touch outputs/$(from)_Stacked.csv
@@ -149,9 +149,6 @@ archive: ## Archiving the entire project directory to ../yourprojectname_archive
 
 	@mkdir -pv ../yourprojectname_archive/$(archivefolder)
 	@cp -rv * ../yourprojectname_archive/$(archivefolder)
-
-package:
-	@echo "This will zip everything, and put it somewhere, and delete the project"
 
 compress: ## Compress the outputs/*, logs/* and configs/*
 	7z a sam.zip SAM/
