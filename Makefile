@@ -59,7 +59,13 @@ path: ## Project path, defaults to ./projects/
 ##@ -----------------------------------------------------------
 ##@ Build
 
-prepare: ## Create a new project by running <config> and <sam>
+check:
+ifeq ("$(project)","")
+	@echo "Please specify the project name."
+	@exit 1
+endif
+
+prepare: check ## Create a new project by running <config> and <sam>
 	@printf '$(<b>)> Preparing $(project)... $(</b>)\n'
 	@mkdir -p $(path)/$(project)/build
 	@mkdir -p $(path)/$(project)/configs
@@ -78,7 +84,7 @@ prepare: ## Create a new project by running <config> and <sam>
 	@printf '$(<b>)> Successfully preapred and saved "$(project)" in "$(path)" ... $(</b>)\n'
 	@printf '$(<b>)> `cd` into the project folder and start with the `make` command ... $(</b>)\n'
 
-config: ## Building necessary files and folders for a new project
+config: check ## Building necessary files and folders for a new project
 	
 	@printf '$(<b>)> Prepare a copy of SAM for $(project)... $(</b>)\n'
 
@@ -132,7 +138,7 @@ config: ## Building necessary files and folders for a new project
 	@cp scripts/ProjectMakefileTemplate $(path)/$(project)/Makefile
 	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/Makefile > tmp && mv tmp $(path)/$(project)/Makefile
 
-load:
+load: check
 	@printf '$(<b>)> Loading existing project files... $(</b>)\n'
 
 ifneq ("$(wildcard templates/$(project)_post_processing.R)","")
@@ -150,7 +156,7 @@ ifneq ("$(wildcard templates/$(project)_lisa_par_run.sh)","")
 	@cp $(shell pwd)/templates/$(project)_lisa_par_run.sh $(path)/$(project)/scripts/$(project)_lisa_par_run.sh
 endif
 
-sam: ## Build SAMrun executable. Note: This will update SAM source directory and rebuild it
+sam: check ## Build SAMrun executable. Note: This will update SAM source directory and rebuild it
 	@printf '$(<b>)> Copying SAM... $(</b>)\n'
 	@mkdir -p $(path)/$(project)/SAM
 	@rsync -rtu ${SAMpp_DIR}/ $(path)/$(project)/SAM/SAMpp/ --exclude-from=.rsync-exclude-list
@@ -166,13 +172,13 @@ sam: ## Build SAMrun executable. Note: This will update SAM source directory and
 	
 	@mv $(path)/$(project)/SAM/SAMpp/build/SAMrun $(path)/$(project)/
 
-compress: ## Zip everything in the <project>
+compress: check ## Zip everything in the <project>
 	@printf '$(<b>)> Compressing $(project)... $(</b>)\n'
 	7z a -mx=0 -mmt=16 $(project)_$(currentdatetime).zip $(path)/$(project)/
 
 ##@ Cleanup
 
-clean: ## Remove all output files, i.e., configs, outputs, logs, jobs
+clean: check ## Remove all output files, i.e., configs, outputs, logs, jobs
 	@printf '$(<b>)> Cleaning up configs/*, logs/*, and jobs/*... $(</b>)\n'
 	@rm -rf $(path)/$(project)/configs/*
 	@rm -rf $(path)/$(project)/logs/*
@@ -184,6 +190,6 @@ veryclean: clean ## Remove all project files
 	@rm -rf $(path)/$(project)/dbs/*
 	@rm -rf $(path)/$(project)/slurm-*.out
 
-remove: ## Delete the entire project directory
+remove: check ## Delete the entire project directory
 	@printf '$(<b>)> Removing $(project)... $(</b>)\n'
 	@rm -rf $(path)/$(project)
