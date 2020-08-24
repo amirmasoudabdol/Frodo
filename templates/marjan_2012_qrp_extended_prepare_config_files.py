@@ -53,7 +53,7 @@ params_info = {
 
 	"pub_bias": [0.1, 0.5, 0.9],
 
-	"decision_strategy_name": ["MarjansDecisionMaker"]
+	"decision_strategy_name": ["DefaultDecisionMaker"]
 	}
 
 

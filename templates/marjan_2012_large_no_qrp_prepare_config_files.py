@@ -40,7 +40,7 @@ params_info = {
 	"journal_selection_strategy_name": ["FreeSelection"],
 	"journal_max_pubs": [1000],
 
-	"decision_strategy_name": ["MarjansDecisionMaker"]
+	"decision_strategy_name": ["DefaultDecisionMaker"]
 	}
 
 

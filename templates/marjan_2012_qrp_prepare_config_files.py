@@ -47,7 +47,7 @@ params_info = {
 	"journal_selection_strategy_name": ["FreeSelection"],
 	"journal_max_pubs": [2500],
 
-	"decision_strategy_name": ["MarjansDecisionMaker"],
+	"decision_strategy_name": ["DefaultDecisionMaker"],
 
 	"n_reps": [5],
 	"nb": [10]

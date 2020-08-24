@@ -44,7 +44,7 @@ params_info = {
 
 	"journal_pub_bias": [z for z in np.arange(0, 1.01, 0.1)],
 
-	"decision_strategy_name": ["MarjansDecisionMaker"]
+	"decision_strategy_name": ["DefaultDecisionMaker"]
 	}
 
 
@@ -113,7 +113,7 @@ def main():
 			},
 			"researcher_parameters": {
 					"decision_strategy": {
-				      "_name": "MarjansDecisionMaker",
+				      "_name": "DefaultDecisionMaker",
 	                  "between_hacks_selection_policies": [
 				                ["last"]
 				            ],
