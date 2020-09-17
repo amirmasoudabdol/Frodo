@@ -15,7 +15,7 @@ project_name <- "marjan_2012_qrp"
 # Currently I'm mainly processing prepared publications datasets as
 # they contain most of the data that I need, but you can apply this
 # script on other outputs as well, e.g., `stats`.
-filenames <- list.files(project_path, pattern = "*_pubs_prepared.csv", full.names = TRUE)
+filenames <- list.files(project_path, pattern = "*_Publications_prepared.csv", full.names = TRUE)
 
 determine_size_class <- function(x) {
   if (x %in% c(5, 25)) return("S")
@@ -41,12 +41,12 @@ summarize_each_file <- function(fname) {
     mutate(nobs = nobs,
            tnobs = factor(tnobs),
            covs = factor(experiment_parameters_data_strategy_measurements_covs),
-           decision_strategy = factor(researcher_parameters_decision_strategy__name),
+           decision_strategy = factor(researcher_parameters_decision_strategy_name),
            is_hacked = factor(researcher_parameters_is_phacker),
            tmean = experiment_parameters_data_strategy_measurements_means_2,
            alpha = experiment_parameters_test_strategy_alpha,
            n_reps = experiment_parameters_n_reps,
-           test_strategy = experiment_parameters_test_strategy__name,
+           test_strategy = experiment_parameters_test_strategy_name,
            n_pos_sig = if_else(effect > 0 & sig, 1, 0)) %>%
     group_by(tmean, covs, tnobs, alpha, n_reps, sizeclass, decision_strategy, test_strategy, is_hacked) %>%
     summarize(sigmean = sum(n_pos_sig) / n(),

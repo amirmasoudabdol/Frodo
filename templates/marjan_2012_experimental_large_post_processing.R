@@ -36,7 +36,7 @@ summarize_each_file <- function(fname) {
     mutate(nobs = nobs,
            tnobs = factor(tnobs),
            covs = factor(experiment_parameters_data_strategy_measurements_covs),
-           decision_strategy = factor(researcher_parameters_decision_strategy__name),
+           decision_strategy = factor(researcher_parameters_decision_strategy_name),
            is_hacked = factor(researcher_parameters_is_phacker),
            selection_policy = factor(researcher_parameters_decision_strategy_initial_decision_policies_0_0),
            tmean = experiment_parameters_data_strategy_measurements_means_2,

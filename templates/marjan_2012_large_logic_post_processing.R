@@ -28,7 +28,7 @@ summarize_each_file <- function(fname) {
     mutate(tnobs = factor(tnobs),
            nobs = nobs,
            covs = factor(experiment_parameters_data_strategy_measurements_covs),
-           decision_strategy = factor(researcher_parameters_decision_strategy__name),
+           decision_strategy = factor(researcher_parameters_decision_strategy_name),
            is_hacked = factor(researcher_parameters_is_pre_processing),
            selection_policy = "Marjan's Hacker",
            tmean = experiment_parameters_data_strategy_measurements_means_2,

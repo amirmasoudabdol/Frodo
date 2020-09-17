@@ -9,7 +9,7 @@ nLarge = 5 * nSmall
 
 params_info = {
 	"n_sims": [1],
-	"log_level": ["info"],
+	"log_level": ["off"],
 	"progress": [False],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [2],
@@ -44,7 +44,7 @@ params_info = {
 	"effect_strategy_name": ["MeanDifference"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [2500],
+	"journal_max_pubs": [1000],
 
 	"decision_strategy_name": ["DefaultDecisionMaker"],
 
@@ -126,11 +126,7 @@ def main():
 			    },
 				"probability_of_being_a_hacker": params["hacking_probability"],
 	        	"probability_of_committing_a_hack": 1,
-			    "hacking_strategies": [
-		            [
-		                ""
-		            ]
-		        ],
+			    "hacking_strategies": [],
 				"is_pre_processing": params["is_pre_processing"],
 				"pre_processing_methods": [
 					{
