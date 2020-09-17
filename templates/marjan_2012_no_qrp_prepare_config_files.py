@@ -17,8 +17,6 @@ params_info = {
 		{
 		"dist": "mvnorm_distribution",
     	"means": [0.0, 0.0, x, x],
-        "covs": 0.5,
-        "stddevs": 1.0,
         "sigma": [[1.0,   0.5,   0.0,   0.0],
 	              [0.5,   1.0,   0.0,   0.0],
 	              [0.0,   0.0,   1.0,   0.5],
@@ -126,7 +124,7 @@ def main():
 			    },
 				"probability_of_being_a_hacker": params["hacking_probability"],
 	        	"probability_of_committing_a_hack": 1,
-			    "hacking_strategies": [],
+			    "hacking_strategies": [""],
 				"is_pre_processing": params["is_pre_processing"],
 				"pre_processing_methods": [
 					{

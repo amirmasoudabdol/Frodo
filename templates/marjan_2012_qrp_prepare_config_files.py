@@ -17,8 +17,6 @@ params_info = {
 		{
 		"dist": "mvnorm_distribution",
     	"means": [0.0, 0.0, x, x],
-        "covs": 0.5,
-        "stddevs": 1.0,
         "sigma": [[1.0,   0.5,   0.0,   0.0],
 	              [0.5,   1.0,   0.0,   0.0],
 	              [0.0,   0.0,   1.0,   0.5],
