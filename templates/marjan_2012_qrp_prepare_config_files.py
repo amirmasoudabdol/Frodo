@@ -9,9 +9,8 @@ nLarge = 5 * nSmall
 
 params_info = {
 	"n_sims": [1],
-	"debug": [False],
+	"log_level": ["info"],
 	"progress": [False],
-	"verbose": [False],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [2],
 	"data_strategy_measurements": [
@@ -30,7 +29,7 @@ params_info = {
 	"k": [2],
 	"seed": ["random"],
 	"is_pre_processing": [False],
-	"is_phacker": [True],
+	"hacking_probability": [1],
 	"save_pubs": [True],
 	"save_sims": [False],
 	"save_stats": [False],
@@ -67,162 +66,159 @@ def main():
 
 		data = {
 			"experiment_parameters": {
-				    "data_strategy": {
-				        "_name": "LinearModel",
-				        "measurements": params["data_strategy_measurements"]
-				    },
-					"effect_strategy": {
-							"_name": params["effect_strategy_name"]
-					},
-					"n_conditions": params["data_strategy_n_conditions"],
-					"n_dep_vars": params["data_strategy_n_dep_vars"],
-					"n_obs": params["n_obs"],
-                    "n_reps": 1 if params["n_obs"] in nLarge else params["n_reps"],
-					"test_strategy": {
-							"_name": params["test_strategy_name"],
-							"alpha": params["test_alpha"],
-							"alternative": params["test_strategy_alternative"]
-					}
+			    "data_strategy": {
+			        "name": "LinearModel",
+			        "measurements": params["data_strategy_measurements"]
+			    },
+				"effect_strategy": {
+					"name": params["effect_strategy_name"]
+				},
+				"n_conditions": params["data_strategy_n_conditions"],
+				"n_dep_vars": params["data_strategy_n_dep_vars"],
+				"n_obs": params["n_obs"],
+                "n_reps": 1 if params["n_obs"] in nLarge else params["n_reps"],
+				"test_strategy": {
+					"name": params["test_strategy_name"],
+					"alpha": params["test_alpha"],
+					"alternative": params["test_strategy_alternative"],
+					"var_equal": True
+				}
 			},
 			"journal_parameters": {
-					"max_pubs": params["journal_max_pubs"],
-					"selection_strategy": {
-							"_name": params["journal_selection_strategy_name"]
-					}
+				"max_pubs": params["journal_max_pubs"],
+				"selection_strategy": {
+					"name": params["journal_selection_strategy_name"]
+				}
 			},
 			"researcher_parameters": {
-					"decision_strategy": {
-				      "_name": params["decision_strategy_name"],
-	                  "between_hacks_selection_policies": [
-				                [
-				                    "effect > 0",
-				                    "min(pvalue)"
-				                ],
-				                [
-				                    "effect < 0",
-				                    "max(pvalue)"
-				                ]
-				            ],
-				            "between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["effect > 0", "sig", "first"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]],
-				            # "between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["last"]],
-				            "initial_selection_policies": [
-				                [
-				                    "id == 2",
-				                    "sig",
-				                    "effect > 0"
-				                ],
-				                [
-				                    "id == 3",
-				                    "sig",
-				                    "effect > 0"
-				                ]
-				            ],
-				            "stashing_policy": [
-				                "all"
-				            ],
-				            "submission_decision_policies": [
-				                ""
-				            ],
-				            "will_continue_replicating_decision_policy": [
-				                ""
-				            ],
-				            "will_start_hacking_decision_policies": [
-				                "effect < 0",
-				                "!sig"
-				            ]
-				    },
-					"is_phacker": params["is_phacker"],
-				    "hacking_strategies": [
-				    			[
-					                {
-					                    "_name": "OptionalStopping",
-					                    "level": "dv",
-					                    "max_attempts": 1,
-					                    "n_attempts": 1,
-					                    "num": params["nb"]
-					                },
-					                [
-					                    {
-					                        "selection": [
-					                            [
-					                                "effect > 0",
-					                                "min(pvalue)"
-					                            ]
-					                        ]
-					                    },
-					                    {
-					                        "will_continue_hacking_decision_policy": [
-					                            "effect < 0",
-					                            "!sig"
-					                        ]
-					                    }
-					                ],
-					                {
-					                    "_name": "OutliersRemoval",
-					                    "level": "dv",
-					                    "max_attempts": 1,
-					                    "min_observations": 1,
-					                    "multipliers": [
-					                        2
-					                    ],
-					                    "n_attempts": 1,
-					                    "num": params["n_obs"],
-					                    "order": "random"
-					                },
-					                [
-					                    {
-					                        "selection": [
-					                            [
-					                                "effect > 0",
-					                                "min(pvalue)"
-					                            ]
-					                        ]
-					                    },
-					                    {
-					                        "will_continue_hacking_decision_policy": [
-					                            "effect < 0",
-					                            "!sig"
-					                        ]
-					                    }
-					                ]
-					            ]
-					        ],
-					"is_pre_processing": params["is_pre_processing"],
-					"pre_processing_methods": [
-								{
-					               "_name": "OptionalStopping",
-					               "level": "dv",
-					               "num": 10,
-					               "n_attempts": 1,
-					               "max_attempts": 1
-					          	},
-								{
-									"_name": "OutliersRemoval",
-									"level": "dv",
-									"max_attempts": 1,
-									"min_observations": 1,
-									"mode": "Recursive",
-									"multipliers": [
-											2
-									],
-									"n_attempts": 1,
-									"num": params["n_obs"],
-									"order": "random"
-								}
+				"decision_strategy": {
+					"name": params["decision_strategy_name"],
+					"between_hacks_selection_policies": [
+					[
+					    "effect > 0",
+					    "min(pvalue)"
+					],
+					[
+					    "effect < 0",
+					    "max(pvalue)"
 					]
+					],
+					"between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["effect > 0", "sig", "first"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]],
+					# "between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["last"]],
+					"initial_selection_policies": [
+					[
+					    "id == 2",
+					    "sig",
+					    "effect > 0"
+					],
+					[
+					    "id == 3",
+					    "sig",
+					    "effect > 0"
+					]
+					],
+					"stashing_policy": [
+						"all"
+					],
+					"submission_decision_policies": [
+						""
+					],
+					"will_continue_replicating_decision_policy": [
+						""
+					],
+					"will_start_hacking_decision_policies": [
+						"effect < 0",
+						"!sig"
+					]
+			    },
+				"probability_of_being_a_hacker": params["hacking_probability"],
+	        	"probability_of_committing_a_hack": 1,
+			    "hacking_strategies": [
+	    			[
+		                {
+		                    "name": "OptionalStopping",
+		                    "max_attempts": 1,
+		                    "n_attempts": 1,
+				            "target": "Both",
+				            "prevalence": 0.1,
+				            "defensibility": 0.1,
+		                    "num": params["nb"]
+		                },
+		                [
+                            [
+                                "effect > 0",
+                                "min(pvalue)"
+                            ]
+                        ],
+						[
+							"effect < 0",
+                            "!sig"
+                        ]
+		            ],
+		            [
+		                {
+		                    "name": "OutliersRemoval",
+		                    "max_attempts": 1,
+		                    "min_observations": 1,
+		                    "multipliers": [
+		                        2
+		                    ],
+		                    "n_attempts": 1,
+				            "target": "Both",
+				            "prevalence": 0.1,
+				            "defensibility": 0.1,		                    
+		                    "num": params["n_obs"],
+		                    "order": "random"
+		                },
+	             		[
+                            [
+                                "effect > 0",
+                                "min(pvalue)"
+                            ]
+                        ],
+                        [
+                            "effect < 0",
+                            "!sig"
+		                ]
+		            ]
+		        ],
+				"is_pre_processing": params["is_pre_processing"],
+				"pre_processing_methods": [
+					{
+		               "name": "OptionalStopping",
+		               "level": "dv",
+		               "num": 10,
+		               "n_attempts": 1,
+		               "max_attempts": 1
+		          	},
+					{
+						"name": "OutliersRemoval",
+						"level": "dv",
+						"max_attempts": 1,
+						"min_observations": 1,
+						"mode": "Recursive",
+						"multipliers": [
+								2
+						],
+						"n_attempts": 1,
+						"num": params["n_obs"],
+						"order": "random"
+					}
+				]
 			},
 			"simulation_parameters": {
-					"debug": params["debug"],
-					"master_seed": params["seed"],
-					"n_sims": params["n_sims"],
-					"output_path": params["output_path"],
-					"output_prefix": "",
-					"progress": params["progress"],
-					"verbose": params["verbose"],
-					"save_pubs": params["save_pubs"],
-					"save_sims": params["save_sims"],
-					"save_stats": params["save_stats"],
-					"save_rejected": params["save_rejected"]
+				"log_level": params["log_level"],
+				"master_seed": params["seed"],
+				"n_sims": params["n_sims"],
+				"output_path": params["output_path"],
+				"output_prefix": "",
+		        "update_config": True,
+		        "progress": False,
+		        "save_all_pubs": True,
+		        "save_meta": True,
+		        "save_overall_summaries": True,
+		        "save_pubs_per_sim_summaries": True,
+		        "save_rejected": False
 			}
 		}
 

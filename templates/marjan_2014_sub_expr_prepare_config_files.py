@@ -7,7 +7,7 @@ import tqdm
 params_info = {
 	"n_sims": [1],
 	"log_level": ["info"],
-	"progress": [True],
+	"progress": [False],
 	"data_strategy_n_items": [2, 5, 10, 20, 40],
 	"n_obs": [20, 40, 100],
 	"data_strategy_difficulties_mean": [0, 3],
@@ -31,7 +31,7 @@ params_info = {
 	"test_strategy_alternative": ["TwoSided"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [10000],
+	"journal_max_pubs": [100],
 
 	"decision_strategy_name": ["PatientDecisionMaker"],
 	"decision_strategy_init_dec_policies": [["id == 1"]]

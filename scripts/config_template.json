@@ -1,7 +1,7 @@
 {
     "experiment_parameters": {
         "data_strategy": {
-            "_name": "LinearModel",
+            "name": "LinearModel",
             "covs": 0.0,
             "means": [
                 0,
@@ -10,13 +10,13 @@
             "vars": 0.1
         },
         "effect_strategy": {
-            "_name": "CohensD"
+            "name": "CohensD"
         },
         "n_conditions": 2,
         "n_dep_vars": 1,
         "n_obs": 100,
         "test_strategy": {
-            "_name": "TTest",
+            "name": "TTest",
             "alpha": 0.05,
             "side": "TwoSided"
         }
@@ -24,7 +24,7 @@
     "journal_parameters": {
         "max_pubs": 20,
         "selection_strategy": {
-            "_name": "FreeSelection",
+            "name": "FreeSelection",
             "alpha": 0.05,
             "pub_bias": 0.95,
             "side": 0
@@ -32,13 +32,13 @@
     },
     "researcher_parameters": {
         "decision_strategy": {
-            "_name": "PatientDecisionMaker",
+            "name": "PatientDecisionMaker",
             "preference": "MinPvalue"
         },
         "hacking_strategies": [
             [
                 {
-                    "_name": "SDOutlierRemoval",
+                    "name": "SDOutlierRemoval",
                     "level": "dv",
                     "max_attempts": 10,
                     "min_observations": 20,

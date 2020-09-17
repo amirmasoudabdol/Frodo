@@ -77,6 +77,10 @@ def prepare_df(entry):
 
 	params = extract_params("configs/" + fprefix + ".json", param_names)
 
+	# Saving flat parameters
+	params_df = pd.DataFrame(params, index = [0]);
+	params_df.to_csv("configs/" + fprefix + ".csv")
+
 	df = pd.read_csv("outputs/" + fprefix + ("_%s.csv" % from_))
 
 	df.assign(**params).to_csv("outputs/%s_%s_prepared.csv" % (fprefix, from_), index=False)

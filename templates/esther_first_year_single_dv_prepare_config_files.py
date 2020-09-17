@@ -6,9 +6,8 @@ import tqdm
 
 params_info = {
 	"n_sims": [1000],
-	"debug": [False],
+	"debug": ["info"],
 	"progress": [False],
-	"verbose": [False],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [1],
 	"data_strategy_measurements": [
@@ -26,7 +25,7 @@ params_info = {
 	}],
 	"seed": ["random"],
 	"is_pre_processing": [False],
-	"is_phacker": [True, False],
+	"hacking_probability": [0, 1],
 	"save_pubs": [True],
 	"save_sims": [False],
 	"save_stats": [False],
@@ -61,175 +60,166 @@ def main():
 
 		data = {
 			"experiment_parameters": {
-				    "data_strategy": {
-				        "_name": "LinearModel",
-				        "measurements": params["data_strategy_measurements"]
-				    },
-					"effect_strategy": {
-							"_name": params["effect_strategy_name"]
-					},
+                    "n_reps": 1,
 					"n_conditions": params["data_strategy_n_conditions"],
 					"n_dep_vars": params["data_strategy_n_dep_vars"],
 					"n_obs": params["n_obs"],
-                    "n_reps": 1,
+				    "data_strategy": {
+				        "name": "LinearModel",
+				        "measurements": params["data_strategy_measurements"]
+				    },
+					"effect_strategy": {
+							"name": params["effect_strategy_name"]
+					},
 					"test_strategy": {
-							"_name": params["test_strategy_name"],
-							"alpha": params["test_alpha"],
-							"alternative": params["test_strategy_alternative"]
+						"name": params["test_strategy_name"],
+						"alpha": params["test_alpha"],
+						"alternative": params["test_strategy_alternative"],
+						"var_equal": True
 					}
 			},
 			"journal_parameters": {
-					"max_pubs": params["journal_max_pubs"],
-			        "selection_strategy": {
-			            "_name": "SignificantSelection",
-			            "alpha": params["test_alpha"],
-			            "pub_bias": params["journal_pub_bias"],
-			            "side": 0
-			        },
-			        "meta_analysis_metrics": [
-			            {
-			                "_name": "FixedEffectEstimator"
-			            },
-			            {
-			                "_name": "RandomEffectEstimator",
-			                "estimator": "DL"
-			            },
-			            {
-			                "_name": "EggersTestEstimator",
-			                "alpha": 0.1
-			            },
-			            {
-			                "_name": "TrimAndFill",
-			                "alpha": 0.05,
-			                "estimator": "R0",
-			                "side": "auto"
-			            },
-			            {
-			                "_name": "RankCorrelation",
-			                "alpha": 0.05,
-			                "alternative": "TwoSided"
-			            }
-			        ]
+				"max_pubs": params["journal_max_pubs"],
+		        "selection_strategy": {
+		            "name": "SignificantSelection",
+		            "alpha": params["test_alpha"],
+		            "pub_bias": params["journal_pub_bias"],
+		            "side": 0
+		        },
+		        "meta_analysis_metrics": [
+		            {
+		                "name": "FixedEffectEstimator"
+		            },
+		            {
+		                "name": "RandomEffectEstimator",
+		                "estimator": "DL"
+		            },
+		            {
+		                "name": "EggersTestEstimator",
+		                "alpha": 0.1
+		            },
+		            {
+		                "name": "TrimAndFill",
+		                "alpha": 0.05,
+		                "estimator": "R0",
+		                "side": "auto"
+		            },
+		            {
+		                "name": "RankCorrelation",
+		                "alpha": 0.05,
+		                "alternative": "TwoSided"
+		            }
+		        ]
 			},
 			"researcher_parameters": {
-					"decision_strategy": {
-				      "_name": "DefaultDecisionMaker",
-	                  "between_hacks_selection_policies": [
-				                ["last"]
-				            ],
-				            "between_replications_selection_policies": [[""]],
-				            "initial_selection_policies": [
-				                ["id == 1"] if not params["is_phacker"] else ["id == 1"]
-				            ],
-				            "stashing_policy": [
-				                "min(pvalue)"
-				            ],
-				            "submission_decision_policies": [
-				                ""
-				            ],
-				            "will_continue_replicating_decision_policy": [""],
-				            "will_start_hacking_decision_policies": [
-				                "!sig"
-				            ]
-				    },
-					"is_phacker": params["is_phacker"],
-				    "hacking_strategies": [
-							[
-				                {
-				                    "_name": "OptionalStopping",
-				                    "level": "dv",
-				                    "max_attempts": 1,
-				                    "n_attempts": 1,
-				                    "num": 0,
-				                    "add_by_fraction": 0.3
-				                },
-				                [
-				                    {
-				                        "selection": [
-				                            [
-				                                "id == 1"
-				                            ]
-				                        ]
-				                    },
-				                    {
-				                        "will_continue_hacking_decision_policy": [
-				                            "!sig"
-				                        ]
-				                    }
-				                ]
-			               	],
-			               	[
-				                {
-				                    "_name": "OptionalStopping",
-				                    "level": "dv",
-				                    "max_attempts": 1,
-				                    "n_attempts": 1,
-				                    "num": 0,
-				                    "add_by_fraction": 0.3
-				                },
-				                [
-				                    {
-				                        "selection": [
-				                            [
-				                                "id == 1"
-				                            ]
-				                        ]
-				                    },
-				                    {
-				                        "will_continue_hacking_decision_policy": [
-				                            "!sig"
-				                        ]
-				                    }
-				                ]
-			               	],
-			               	[
-				                {
-				                    "_name": "OptionalStopping",
-				                    "level": "dv",
-				                    "max_attempts": 1,
-				                    "n_attempts": 1,
-				                    "num": 0,
-				                    "add_by_fraction": 0.3
-				                },
-				                [
-				                    {
-				                        "selection": [
-				                            [
-				                                "id == 1"
-				                            ]
-				                        ]
-				                    },
-				                    {
-				                        "will_continue_hacking_decision_policy": [
-				                            "!sig"
-				                        ]
-				                    }
-				                ]
-			               	]
-					    ],
-					"is_pre_processing": params["is_pre_processing"],
-					"pre_processing_methods": [
-						{
-			               "_name": "OptionalStopping",
-			               "level": "dv",
-			               "num": 10,
-			               "n_attempts": 1,
-			               "max_attempts": 1
-			          	}
-					]
+				"decision_strategy": {
+			        "name": "DefaultDecisionMaker",
+		            "initial_selection_policies": [
+		                ["id == 1"] if not params["hacking_probability"] else ["id == 1"]
+		            ],
+		            "will_start_hacking_decision_policies": [
+		                "!sig"
+		            ],
+                    "between_hacks_selection_policies": [
+		                ["last"]
+		            ],
+		            "stashing_policy": [
+		                "min(pvalue)"
+		            ],
+		            "between_replications_selection_policies": [[""]],
+		            "will_continue_replicating_decision_policy": [""],
+		            "submission_decision_policies": [
+		                ""
+		            ]
+			    },
+				"probability_of_being_a_hacker": params["hacking_probability"],
+		        "probability_of_committing_a_hack": 1,
+			    "hacking_strategies": [
+					[
+		                {
+		                    "name": "OptionalStopping",
+				            "target": "Both",
+				            "prevalence": 0.1,
+				            "defensibility": 0.1,
+		                    "max_attempts": 1,
+		                    "n_attempts": 1,
+		                    "num": 0,
+		                    "add_by_fraction": 0.3
+		                },
+						[
+                            [
+                                "min(pvalue)"
+                            ]
+                        ],
+						[
+                            "!sig"
+		                ]
+	               	],
+	               	[
+		                {
+		                    "name": "OptionalStopping",
+				            "target": "Both",
+				            "prevalence": 0.1,
+				            "defensibility": 0.1,
+		                    "max_attempts": 1,
+		                    "n_attempts": 1,
+		                    "num": 0,
+		                    "add_by_fraction": 0.3
+		                },
+						[
+                            [
+                                "min(pvalue)"
+                            ]
+                        ],
+						[
+                            "!sig"
+		                ]
+	               	],
+	               	[
+		                {
+		                    "name": "OptionalStopping",
+				            "target": "Both",
+				            "prevalence": 0.1,
+				            "defensibility": 0.1,
+		                    "max_attempts": 1,
+		                    "n_attempts": 1,
+		                    "num": 0,
+		                    "add_by_fraction": 0.3
+		                },
+						[
+                            [
+                                "min(pvalue)"
+                            ]
+                        ],
+						[
+                            "!sig"
+		                ]
+	               	]
+			    ],
+				"is_pre_processing": params["is_pre_processing"],
+				"pre_processing_methods": [
+					{
+		               "name": "OptionalStopping",
+		               "level": "dv",
+		               "num": 10,
+		               "n_attempts": 1,
+		               "max_attempts": 1
+		          	}
+				]
 			},
 			"simulation_parameters": {
-					"debug": params["debug"],
-					"master_seed": params["seed"],
-					"n_sims": params["n_sims"],
-					"output_path": params["output_path"],
-					"output_prefix": "",
-					"progress": params["progress"],
-					"verbose": params["verbose"],
-					"save_pubs": params["save_pubs"],
-					"save_sims": params["save_sims"],
-					"save_stats": params["save_stats"],
-					"save_rejected": params["save_rejected"]
+				"log_level": params["log_level"],
+				"master_seed": params["seed"],
+				"n_sims": params["n_sims"],
+				"output_path": params["output_path"],
+				"output_prefix": "",
+		        "update_config": True,
+		        "progress": False,
+		        "save_all_pubs": True,
+		        "save_meta": True,
+		        "save_overall_summaries": True,
+		        "save_pubs_per_sim_summaries": True,
+		        "save_rejected": False
 			}
 		}
 

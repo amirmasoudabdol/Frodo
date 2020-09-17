@@ -6,9 +6,8 @@ import tqdm
 
 params_info = {
 	"n_sims": [1],
-	"debug": [False],
+	"log_level": ["info"],
 	"progress": [False],
-	"verbose": [False],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [2],
 	"data_strategy_measurements": [
@@ -23,7 +22,7 @@ params_info = {
 	"k": [2],
 	"seed": ["random"],
 	"is_pre_processing": [False],
-	"is_phacker": [False],
+	"hacking_probability": [0],
 	"save_pubs": [True],
 	"save_sims": [False],
 	"save_stats": [False],
@@ -58,31 +57,32 @@ def main():
 		data = {
 			"experiment_parameters": {
 				    "data_strategy": {
-				        "_name": "LinearModel",
+				        "name": "LinearModel",
 				        "measurements": params["data_strategy_measurements"]
 				    },
 					"effect_strategy": {
-							"_name": params["effect_strategy_name"]
+							"name": params["effect_strategy_name"]
 					},
 					"n_conditions": params["data_strategy_n_conditions"],
 					"n_dep_vars": params["data_strategy_n_dep_vars"],
 					"n_obs": params["n_obs"],
                     "n_reps": params["n_reps"],
 					"test_strategy": {
-							"_name": params["test_strategy_name"],
+							"name": params["test_strategy_name"],
 							"alpha": params["test_alpha"],
-							"alternative": params["test_strategy_alternative"]
+							"alternative": params["test_strategy_alternative"],
+					"var_equal": True
 					}
 			},
 			"journal_parameters": {
 					"max_pubs": params["journal_max_pubs"],
 					"selection_strategy": {
-							"_name": params["journal_selection_strategy_name"]
+							"name": params["journal_selection_strategy_name"]
 					}
 			},
 			"researcher_parameters": {
 					"decision_strategy": {
-				      "_name": params["decision_strategy_name"],
+				      "name": params["decision_strategy_name"],
 				      "final_decision_policies": [
 				        [
 				          "sig",
@@ -105,11 +105,12 @@ def main():
 				      ],
 				      "submission_policies": ["none"]
 				    },
-					"is_phacker": params["is_phacker"],
+									"probability_of_being_a_hacker": params["hacking_probability"],
+		        "probability_of_committing_a_hack": 1,
 				    "hacking_strategies": [
 				      [
 				        {
-				          "_name": "OptionalStopping",
+				          "name": "OptionalStopping",
 				          "level": "dv",
 				          "num": 10,
 				          "n_attempts": 1,
@@ -125,14 +126,14 @@ def main():
 				      ],
 				      [
 				        {
-				          "_name": "OptionalStopping",
+				          "name": "OptionalStopping",
 				          "level": "dv",
 				          "num": 10,
 				          "n_attempts": 1,
 				          "max_attempts": 1
 				        },
 				        {
-				          "_name": "OutliersRemoval",
+				          "name": "OutliersRemoval",
 				          "level": "dv",
 				          "max_attempts": 1,
 				          "min_observations": 1,
@@ -156,14 +157,14 @@ def main():
 					"is_pre_processing": params["is_pre_processing"],
 					"pre_processing_methods": [
 								{
-					               "_name": "OptionalStopping",
+					               "name": "OptionalStopping",
 					               "level": "dv",
 					               "num": 10,
 					               "n_attempts": 1,
 					               "max_attempts": 1
 					          	},
 								{
-									"_name": "OutliersRemoval",
+									"name": "OutliersRemoval",
 									"level": "dv",
 									"max_attempts": 1,
 									"min_observations": 1,
@@ -178,13 +179,14 @@ def main():
 					]
 			},
 			"simulation_parameters": {
-					"debug": params["debug"],
+					"log_level": params["log_level"],
 					"master_seed": params["seed"],
 					"n_sims": params["n_sims"],
 					"output_path": params["output_path"],
 					"output_prefix": "",
+					"update_config": True,
+
 					"progress": params["progress"],
-					"verbose": params["verbose"],
 					"save_pubs": params["save_pubs"],
 					"save_sims": params["save_sims"],
 					"save_stats": params["save_stats"],

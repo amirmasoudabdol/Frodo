@@ -6,9 +6,8 @@ import tqdm
 
 params_info = {
 	"n_sims": [1],
-	"debug": [False],
+	"log_level": ["info"],
 	"progress": [False],
-	"verbose": [False],
 	"data_strategy_n_items": [5],
 	"data_strategy_difficulties": [[0]],
 	"data_strategy_abilities": [[0, 0.2]],
@@ -19,7 +18,7 @@ params_info = {
 	"k": [2],
 	"seed": ["random"],
 	"is_pre_processing": [False],
-	"is_phacker": [False],
+	"hacking_probability": [0],
 	"save_pubs": [False],
 	"save_sims": [False],
 	"save_stats": [True],
@@ -58,36 +57,37 @@ def main():
 						"difficulties": params["data_strategy_difficulties"],
 						"n_categories": params["data_strategy_n_categories"],
 						"n_items": params["data_strategy_n_items"],
-						"_name": "GradedResponseModel"
+						"name": "GradedResponseModel"
 					},
 					"effect_strategy": {
-							"_name": "CohensD"
+							"name": "CohensD"
 					},
 					"n_conditions": params["data_strategy_n_conditions"],
 					"n_dep_vars": params["data_strategy_n_dep_vars"],
 					"n_obs": params["n_obs"],
 					"test_strategy": {
-							"_name": params["test_strategy_name"],
+							"name": params["test_strategy_name"],
 							"alpha": params["test_alpha"],
-							"alternative": params["test_strategy_alternative"]
+							"alternative": params["test_strategy_alternative"],
+					"var_equal": True
 					}
 			},
 			"journal_parameters": {
 					"max_pubs": params["journal_max_pubs"],
 					"selection_strategy": {
-							"_name": params["journal_selection_strategy_name"]
+							"name": params["journal_selection_strategy_name"]
 					}
 			},
 			"researcher_parameters": {
 					"decision_strategy": {
-							"_name": params["decision_strategy_name"],
+							"name": params["decision_strategy_name"],
 							"preference": params["decision_strategy_preference"],
 							"submission_policy": params["decision_strategy_submission_policy"]
 					},
 					"hacking_strategies": [
 							[
 									{
-											"_name": "SDOutlierRemoval",
+											"name": "SDOutlierRemoval",
 											"level": "dv",
 											"max_attempts": 10,
 											"min_observations": 20,
@@ -101,11 +101,12 @@ def main():
 									}
 							]
 					],
-					"is_phacker": params["is_phacker"],
+									"probability_of_being_a_hacker": params["hacking_probability"],
+		        "probability_of_committing_a_hack": 1,
 					"is_pre_processing": params["is_pre_processing"],
 					"pre_processing_methods": [
 							{
-									"_name": "SDOutlierRemoval",
+									"name": "SDOutlierRemoval",
 									"level": "dv",
 									"max_attempts": 1000,
 									"min_observations": 5,
@@ -119,13 +120,14 @@ def main():
 					]
 			},
 			"simulation_parameters": {
-					"debug": params["debug"],
+					"log_level": params["log_level"],
 					"master_seed": params["seed"],
 					"n_sims": params["n_sims"],
 					"output_path": params["output_path"],
 					"output_prefix": "",
+					"update_config": True,
+
 					"progress": params["progress"],
-					"verbose": params["verbose"],
 					"save_pubs": params["save_pubs"],
 					"save_sims": params["save_sims"],
 					"save_stats": params["save_stats"],

@@ -4,68 +4,52 @@ import itertools
 import numpy as np
 import tqdm
 
+nSmall = np.array([5, 10, 20])
+nLarge = 5 * nSmall
+
 params_info = {
-	"n_sims": [1000],
+	"n_sims": [100],
 	"log_level": ["info"],
 	"progress": [False],
 	"data_strategy_n_conditions": [2],
-	"data_strategy_n_dep_vars": [1],
+	"data_strategy_n_dep_vars": [2],
 	"data_strategy_measurements": [
 		{
 		"dist": "mvnorm_distribution",
-    	"means": [0.0, x],
-        "covs": 0.0,
-        "stddevs": 1.0
-		} for x in [0.1, 0.2, 0.35, 0.5, 0.65, 0.8]
-		# } for x in np.arange(0.0, 1.01, 0.1)
+    	"means": [0.0, 0.0, x, x],
+        "covs": 0.5,
+        "stddevs": 1.0,
+        "sigma": [[1.0,   0.5,   0.0,   0.0],
+	              [0.5,   1.0,   0.0,   0.0],
+	              [0.0,   0.0,   1.0,   0.5],
+	              [0.0,   0.0,   0.5,   1.0]]
+		} for x in np.arange(0.0, 1.01, 0.1)
 	],
-	"data_strategy_errors": [
-		{
-		"dist": "mvnorm_distribution",
-    	"means": [0.0, 0.0],
-        "covs": 0.0,
-        "stddevs": tau
-        } for tau in [0, 0.1, 0.2, .32]
-		# } for tau in np.arange(0.0, 1.01, 0.1)
-	],
-	"n_obs": [
-	{
-		"dist": "piecewise_linear_distribution",
-		"intervals": [0, x - 1, x - 1, x, x   , x + 5, x + 10, x + x, x + 40, x + 60, x + 80],
-		"densities": [0, 0 , 0.0 , 0 , 0.75 , .8     , 1     , .7     , .3     , .1  ,0]
-	} for x in [10, 20, 50, 70]
-	],
+	"n_obs": [5, 10, 20, 25, 50, 100],
+	"k": [2],
 	"seed": ["random"],
 	"is_pre_processing": [False],
 	"hacking_probability": [1],
-	"save_all_pubs": [False],
-	"save_meta": [False],
-	"save_overall_summaries": [True],
-	"save_pubs_per_sim_summaries": [False],
+	"save_pubs": [True],
+	"save_sims": [False],
+	"save_stats": [False],
 	"save_rejected": [False],
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
-
-	"hacking_prob_base_hp": [0, 0.2, 0.4, 0.6, 0.8, 1.0],
-	# "hacking_prob_base_hp": [p for p in np.arange(0, 1.01, 0.1)],
-
-	"hacking_prob_lo_se": [0.0, 0.2, 0.4, 0.6, 0.8],
-	# "hacking_prob_lo_se": [lop for lop in np.arange(0, 1.01, 0.1)],
-
-	"researcher_submission_pro": [1.0, 0.9, 0.8, 0.7],
-	# "researcher_submission_pro": [sp for sp in np.arange(0, 1.01, 0.1)],
 
 	"test_alpha": [0.05],
 	"test_strategy_name": ["TTest"],
 	"test_strategy_alternative": ["TwoSided"],
 
-	"effect_strategy_name": ["CohensD"],
+	"effect_strategy_name": ["MeanDifference"],
 
-	"journal_max_pubs": [8],
+	"journal_selection_strategy_name": ["FreeSelection"],
+	"journal_max_pubs": [40],
 
-	"journal_pub_bias": [z for z in np.arange(0, 1.01, 0.1)],
+	"decision_strategy_name": ["DefaultDecisionMaker"],
 
-	"decision_strategy_name": ["DefaultDecisionMaker"]
+	"n_reps": [5],
+	"nb": [10]
 	}
 
 
@@ -84,74 +68,81 @@ def main():
 			"experiment_parameters": {
 				    "data_strategy": {
 				        "name": "LinearModel",
-				        "measurements": params["data_strategy_measurements"],
-				        "errors": params["data_strategy_errors"]
+				        "measurements": params["data_strategy_measurements"]
 				    },
 					"effect_strategy": {
-							"name": params["effect_strategy_name"]
+						"name": params["effect_strategy_name"]
 					},
 					"n_conditions": params["data_strategy_n_conditions"],
 					"n_dep_vars": params["data_strategy_n_dep_vars"],
 					"n_obs": params["n_obs"],
-                    "n_reps": 1,
+                    "n_reps": 1 if params["n_obs"] in nLarge else params["n_reps"],
 					"test_strategy": {
-							"name": params["test_strategy_name"],
-							"alpha": params["test_alpha"],
-							"alternative": params["test_strategy_alternative"],
-					"var_equal": True
+						"name": params["test_strategy_name"],
+						"alpha": params["test_alpha"],
+						"alternative": params["test_strategy_alternative"],
+						"var_equal": True
 					}
 			},
 			"journal_parameters": {
 					"max_pubs": params["journal_max_pubs"],
-			        "selection_strategy": {
-			            "name": "SignificantSelection",
-			            "alpha": params["test_alpha"],
-			            "pub_bias": params["journal_pub_bias"],
-			            "side": 0
-			        },
+					"selection_strategy": {
+							"name": params["journal_selection_strategy_name"]
+					},
 			        "meta_analysis_metrics": [
-			            {
-			                "name": "RandomEffectEstimator",
-			                "estimator": "DL"
-			            },
-			            {
-			                "name": "EggersTestEstimator",
-			                "alpha": 0.1
-			            }
-			        ]
+		            {
+		                "name": "RandomEffectEstimator",
+		                "estimator": "DL"
+		            },
+		            {
+		                "name": "EggersTestEstimator",
+		                "alpha": 0.1
+		            }
+		        ]
 			},
 			"researcher_parameters": {
 					"decision_strategy": {
-				      "name": "DefaultDecisionMaker",
+				      "name": params["decision_strategy_name"],
 	                  "between_hacks_selection_policies": [
-				                ["sig", "min(pvalue)"]
+				                [
+				                    "effect > 0",
+				                    "min(pvalue)"
+				                ],
+				                [
+				                    "effect < 0",
+				                    "max(pvalue)"
+				                ]
 				            ],
-				            "between_replications_selection_policies": [[""]],
+				            "between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["effect > 0", "sig", "first"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]],
+				            # "between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["last"]],
 				            "initial_selection_policies": [
-				                ["id == 1"]
+				                [
+				                    "id == 2",
+				                    "sig",
+				                    "effect > 0"
+				                ],
+				                [
+				                    "id == 3",
+				                    "sig",
+				                    "effect > 0"
+				                ]
 				            ],
 				            "stashing_policy": [
-				                "sig"
+				                "all"
 				            ],
 				            "submission_decision_policies": [
 				                ""
 				            ],
-				            "will_continue_replicating_decision_policy": [""],
+				            "will_continue_replicating_decision_policy": [
+				                ""
+				            ],
 				            "will_start_hacking_decision_policies": [
+				                "effect < 0",
 				                "!sig"
 				            ]
 				    },
-				    "submission_probability": params["researcher_submission_pro"],
 									"probability_of_being_a_hacker": params["hacking_probability"],
 		        "probability_of_committing_a_hack": 1,
-					"hacking_probability_strategy": {
-			            "base_hp": params["hacking_prob_base_hp"],
-			            "lo_p": params["hacking_prob_lo_se"],
-			            "hi_p": params["hacking_prob_lo_se"] + 0.2,
-			            "lo_sei": 0.1,
-			            "hi_sei": 0.6,
-			            "method": "FrankenbachStrategy"
-			        },
 				    "hacking_strategies": [
 				    			[
 					                {
@@ -159,19 +150,20 @@ def main():
 					                    "level": "dv",
 					                    "max_attempts": 1,
 					                    "n_attempts": 1,
-					                    "num": 0,
-					                    "add_by_fraction": 0.5
+					                    "num": params["nb"]
 					                },
 					                [
 					                    {
 					                        "selection": [
 					                            [
-					                                "sig", "min(pvalue)"
+					                                "effect > 0",
+					                                "min(pvalue)"
 					                            ]
 					                        ]
 					                    },
 					                    {
 					                        "will_continue_hacking_decision_policy": [
+					                            "effect < 0",
 					                            "!sig"
 					                        ]
 					                    }
@@ -185,19 +177,21 @@ def main():
 					                        2
 					                    ],
 					                    "n_attempts": 1,
-					                    "num": 10,
+					                    "num": params["n_obs"],
 					                    "order": "random"
 					                },
 					                [
 					                    {
 					                        "selection": [
 					                            [
-					                                "sig", "min(pvalue)"
+					                                "effect > 0",
+					                                "min(pvalue)"
 					                            ]
 					                        ]
 					                    },
 					                    {
 					                        "will_continue_hacking_decision_policy": [
+					                            "effect < 0",
 					                            "!sig"
 					                        ]
 					                    }
@@ -206,17 +200,30 @@ def main():
 					        ],
 					"is_pre_processing": params["is_pre_processing"],
 					"pre_processing_methods": [
-						{
-			               "name": "OptionalStopping",
-			               "level": "dv",
-			               "num": 10,
-			               "n_attempts": 1,
-			               "max_attempts": 1
-			          	}
+								{
+					               "name": "OptionalStopping",
+					               "level": "dv",
+					               "num": 10,
+					               "n_attempts": 1,
+					               "max_attempts": 1
+					          	},
+								{
+									"name": "OutliersRemoval",
+									"level": "dv",
+									"max_attempts": 1,
+									"min_observations": 1,
+									"mode": "Recursive",
+									"multipliers": [
+											2
+									],
+									"n_attempts": 1,
+									"num": params["n_obs"],
+									"order": "random"
+								}
 					]
 			},
 			"simulation_parameters": {
-					"log_level": "off",
+					"log_level": params["log_level"],
 					"master_seed": params["seed"],
 					"n_sims": params["n_sims"],
 					"output_path": params["output_path"],
@@ -224,11 +231,10 @@ def main():
 					"update_config": True,
 
 					"progress": params["progress"],
-			        "save_all_pubs": params["save_all_pubs"],
-			        "save_meta": params["save_meta"],
-			        "save_overall_summaries": params["save_overall_summaries"],
-			        "save_pubs_per_sim_summaries": params["save_pubs_per_sim_summaries"],
-			        "save_rejected": params["save_rejected"],
+					"save_pubs": params["save_pubs"],
+					"save_sims": params["save_sims"],
+					"save_stats": params["save_stats"],
+					"save_rejected": params["save_rejected"]
 			}
 		}
 

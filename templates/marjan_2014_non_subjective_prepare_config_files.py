@@ -6,9 +6,8 @@ import tqdm
 
 params_info = {
 	"n_sims": [1],
-	"debug": [False],
+	"log_level": ["info"],
 	"progress": [False],
-	"verbose": [False],
 	"n_obs": [20, 40, 100],
 	"data_strategy_n_items": [2, 5, 10, 20, 40],
 	"data_strategy_difficulties_mean": [0, 3],
@@ -19,7 +18,7 @@ params_info = {
 	"k": [x for x in np.arange(2.0, 4.1, 0.25)],
 	"seed": ["random"],
 	"is_pre_processing": [True],
-	"is_phacker": [False],
+	"hacking_probability": [0],
 	"save_pubs": [True],
 	"save_sims": [False],
 	"save_stats": [False],
@@ -68,30 +67,31 @@ def main():
 			           	],
 						"n_categories": params["data_strategy_n_categories"],
 						"n_items": params["data_strategy_n_items"],
-						"_name": "GradedResponseModel"
+						"name": "GradedResponseModel"
 					},
 					"effect_strategy": {
-							"_name": "MeanDifference"
+							"name": "MeanDifference"
 					},
 					"n_conditions": params["data_strategy_n_conditions"],
 					"n_dep_vars": params["data_strategy_n_dep_vars"],
 					"n_obs": params["n_obs"],
                     "n_reps": 1,
 					"test_strategy": {
-							"_name": params["test_strategy_name"],
+							"name": params["test_strategy_name"],
 							"alpha": params["test_alpha"],
-							"alternative": params["test_strategy_alternative"]
+							"alternative": params["test_strategy_alternative"],
+					"var_equal": True
 					}
 			},
 			"journal_parameters": {
 					"max_pubs": params["journal_max_pubs"],
 					"selection_strategy": {
-							"_name": params["journal_selection_strategy_name"]
+							"name": params["journal_selection_strategy_name"]
 					}
 			},
 			"researcher_parameters": {
 					"decision_strategy": {
-				      "_name": params["decision_strategy_name"],
+				      "name": params["decision_strategy_name"],
 				      "between_replications_decision_policies": [[""]],
 				      "final_decision_policies": [[""]],
 				      "initial_decision_policies": [
@@ -102,7 +102,7 @@ def main():
 					"hacking_strategies": [
 							[
 									{
-											"_name": "OutliersRemoval",
+											"name": "OutliersRemoval",
 											"level": "dv",
 											"max_attempts": 10,
 											"min_observations": 20,
@@ -116,11 +116,12 @@ def main():
 									}
 							]
 					],
-					"is_phacker": params["is_phacker"],
+									"probability_of_being_a_hacker": params["hacking_probability"],
+		        "probability_of_committing_a_hack": 1,
 					"is_pre_processing": params["is_pre_processing"],
 					"pre_processing_methods": [
 							{
-									"_name": "OutliersRemoval",
+									"name": "OutliersRemoval",
 									"level": "dv",
 									"max_attempts": 1,
 									"min_observations": 5,
@@ -134,13 +135,14 @@ def main():
 					]
 			},
 			"simulation_parameters": {
-					"debug": params["debug"],
+					"log_level": params["log_level"],
 					"master_seed": params["seed"],
 					"n_sims": params["n_sims"],
 					"output_path": params["output_path"],
 					"output_prefix": "",
+					"update_config": True,
+
 					"progress": params["progress"],
-					"verbose": params["verbose"],
 					"save_pubs": params["save_pubs"],
 					"save_sims": params["save_sims"],
 					"save_stats": params["save_stats"],

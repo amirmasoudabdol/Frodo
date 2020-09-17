@@ -7,21 +7,21 @@ import tqdm
 params_info = {
 	"n_sims": [1],
 	"log_level": ["info"],
-	"progress": [True],
-	"data_strategy_n_items": [2, 5, 10, 20, 40],
-	"n_obs": [20, 40, 100],
-	"data_strategy_difficulties_mean": [0, 3],
-	"data_strategy_abilities_mean": [[0, 0]],
-	"data_strategy_n_categories": [1, 5],
+	"progress": [False],
+	"data_strategy_n_items": [5],
+	"data_strategy_difficulties": [[0]],
+	"data_strategy_abilities": [[0, 0.2]],
+	"data_strategy_n_categories": [1],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [1],
-	# "k": [x for x in np.arange(2.0, 4.1, 0.25)],
+	"n_obs": [20],
+	"k": [2],
 	"seed": ["random"],
-	"is_pre_processing": [True],
+	"is_pre_processing": [False],
 	"hacking_probability": [0],
-	"save_pubs": [True],
+	"save_pubs": [False],
 	"save_sims": [False],
-	"save_stats": [False],
+	"save_stats": [True],
 	"save_rejected": [False],
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
@@ -31,10 +31,11 @@ params_info = {
 	"test_strategy_alternative": ["TwoSided"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [10000],
+	"journal_max_pubs": [10],
 
 	"decision_strategy_name": ["PatientDecisionMaker"],
-	"decision_strategy_init_dec_policies": [["id == 1"]]
+	"decision_strategy_preference": ["MinPvalue"],
+	"decision_strategy_submission_policy": ["Anything"]
 	}
 
 
@@ -52,30 +53,18 @@ def main():
 		data = {
 			"experiment_parameters": {
 					"data_strategy": {
-						"abilities": {
-							"dist": "mvnorm_distribution",
-							"means": params["data_strategy_abilities_mean"],
-							"stddevs": 1.0,
-							"covs": 0.0
-						},
-						"difficulties": [
-			                {
-			                    "dist": "normal_distribution",
-			                    "mean": params["data_strategy_difficulties_mean"],
-			                    "stddev": 1.0
-			                } for x in range(params["data_strategy_n_categories"])
-			           	],
+						"abilities": params["data_strategy_abilities"],
+						"difficulties": params["data_strategy_difficulties"],
 						"n_categories": params["data_strategy_n_categories"],
 						"n_items": params["data_strategy_n_items"],
 						"name": "GradedResponseModel"
 					},
 					"effect_strategy": {
-							"name": "MeanDifference"
+							"name": "CohensD"
 					},
 					"n_conditions": params["data_strategy_n_conditions"],
 					"n_dep_vars": params["data_strategy_n_dep_vars"],
 					"n_obs": params["n_obs"],
-                    "n_reps": 1,
 					"test_strategy": {
 							"name": params["test_strategy_name"],
 							"alpha": params["test_alpha"],
@@ -91,18 +80,14 @@ def main():
 			},
 			"researcher_parameters": {
 					"decision_strategy": {
-				      "name": params["decision_strategy_name"],
-				      "between_replications_decision_policies": [[""]],
-				      "final_decision_policies": [[""]],
-				      "initial_decision_policies": [
-				      	params["decision_strategy_init_dec_policies"]
-				      ],
-				      "submission_policies": [""]
-				    },
+							"name": params["decision_strategy_name"],
+							"preference": params["decision_strategy_preference"],
+							"submission_policy": params["decision_strategy_submission_policy"]
+					},
 					"hacking_strategies": [
 							[
 									{
-											"name": "OutliersRemoval",
+											"name": "SDOutlierRemoval",
 											"level": "dv",
 											"max_attempts": 10,
 											"min_observations": 20,
@@ -119,20 +104,20 @@ def main():
 									"probability_of_being_a_hacker": params["hacking_probability"],
 		        "probability_of_committing_a_hack": 1,
 					"is_pre_processing": params["is_pre_processing"],
-			        "pre_processing_methods": [
-			            {
-			                "name": "SubjectiveOutlierRemoval",
-			                "min_observations": 5,
-			                "range": [
-			                    2,
-			                    3
-			                ],
-			                "step_size": 0.5,
-			                "stopping_condition": [
-			                    "sig"
-			                ]
-			            }
-			        ]
+					"pre_processing_methods": [
+							{
+									"name": "SDOutlierRemoval",
+									"level": "dv",
+									"max_attempts": 1000,
+									"min_observations": 5,
+									"multipliers": [
+											0.5
+									],
+									"n_attempts": 1000,
+									"num": 1000,
+									"order": "random"
+							}
+					]
 			},
 			"simulation_parameters": {
 					"log_level": params["log_level"],
@@ -155,7 +140,7 @@ def main():
 		configfilenames.write(filename + "\n")
 
 		# Replacing the output prefix with a unique id
-		data["output_prefix"] = uid
+		data["simulation_parameters"]["output_prefix"] = uid
 
 		with open("configs/" + filename, 'w') as f:
 				json.dump(data, f, indent = 4)

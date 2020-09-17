@@ -8,14 +8,14 @@ params_info = {
 	"n_sims": [1],
 	"log_level": ["info"],
 	"progress": [True],
-	"data_strategy_n_items": [2, 5, 10, 20, 40],
 	"n_obs": [20, 40, 100],
+	"data_strategy_n_items": [5, 10, 20],
 	"data_strategy_difficulties_mean": [0, 3],
 	"data_strategy_abilities_mean": [[0, 0]],
 	"data_strategy_n_categories": [1, 5],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [1],
-	# "k": [x for x in np.arange(2.0, 4.1, 0.25)],
+	"k": [x for x in np.arange(2.0, 4.1, 0.5)],
 	"seed": ["random"],
 	"is_pre_processing": [True],
 	"hacking_probability": [0],
@@ -31,7 +31,7 @@ params_info = {
 	"test_strategy_alternative": ["TwoSided"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [10000],
+	"journal_max_pubs": [500],
 
 	"decision_strategy_name": ["PatientDecisionMaker"],
 	"decision_strategy_init_dec_policies": [["id == 1"]]
@@ -101,38 +101,39 @@ def main():
 				    },
 					"hacking_strategies": [
 							[
-									{
-											"name": "OutliersRemoval",
-											"level": "dv",
-											"max_attempts": 10,
-											"min_observations": 20,
-											"mode": "Recursive",
-											"multipliers": [
-													1
-											],
-											"n_attempts": 4,
-											"num": 2,
-											"order": "max first"
-									}
+								{
+									"name": "OutliersRemoval",
+									"level": "dv",
+									"max_attempts": 10,
+									"min_observations": 20,
+									"mode": "Recursive",
+									"multipliers": [
+											1
+									],
+									"n_attempts": 4,
+									"num": 2,
+									"order": "max first"
+								},
+								[[""]]
 							]
 					],
 									"probability_of_being_a_hacker": params["hacking_probability"],
 		        "probability_of_committing_a_hack": 1,
 					"is_pre_processing": params["is_pre_processing"],
-			        "pre_processing_methods": [
-			            {
-			                "name": "SubjectiveOutlierRemoval",
-			                "min_observations": 5,
-			                "range": [
-			                    2,
-			                    3
-			                ],
-			                "step_size": 0.5,
-			                "stopping_condition": [
-			                    "sig"
-			                ]
-			            }
-			        ]
+					"pre_processing_methods": [
+							{
+									"name": "OutliersRemoval",
+									"level": "dv",
+									"max_attempts": 1,
+									"min_observations": 5,
+									"multipliers": [
+											params["k"]
+									],
+									"n_attempts": 1,
+									"num": params["n_obs"],
+									"order": "random"
+							}
+					]
 			},
 			"simulation_parameters": {
 					"log_level": params["log_level"],
