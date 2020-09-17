@@ -15,7 +15,7 @@ project_name <- "marjan_2012_small_no_qrp"
 # Currently I'm mainly processing prepared publications datasets as
 # they contain most of the data that I need, but you can apply this
 # script on other outputs as well, e.g., `stats`. 
-filenames <- list.files(project_path, pattern = "*_pubs_prepared.csv", full.names = TRUE)
+filenames <- list.files(project_path, pattern = "*_Publications_prepared.csv", full.names = TRUE)
 
 determine_size_class <- function(x) {
   if (x %in% c(10, 50)) return("S")
@@ -77,4 +77,4 @@ df <- read_all_files(filenames)
 df <- data.frame(df)
 
 
-write.csv(df, paste(project_path, project_name, "_summarized_df.csv", sep=""), row.names = FALSE)
+write.csv(df, paste(project_path, project_name, "_Summarized.csv", sep=""), row.names = FALSE)

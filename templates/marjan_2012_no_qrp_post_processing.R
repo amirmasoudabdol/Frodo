@@ -80,4 +80,4 @@ df <- read_all_files(filenames)
 df <- data.frame(df)
 
 
-write.csv(df, paste(project_path, project_name, "_summarized_df.csv", sep=""), row.names = FALSE)
+write.csv(df, paste(project_path, project_name, "_Summarized.csv", sep=""), row.names = FALSE)
