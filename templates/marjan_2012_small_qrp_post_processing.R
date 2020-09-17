@@ -42,7 +42,7 @@ summarize_each_file <- function(fname) {
            tnobs = factor(tnobs),
            covs = factor(experiment_parameters_data_strategy_measurements_covs),
            decision_strategy = factor(researcher_parameters_decision_strategy_name),
-           is_hacked = factor(researcher_parameters_is_phacker),
+           is_hacked = factor(researcher_parameters_probability_of_being_a_hacker),
            selection_policy = factor(researcher_parameters_decision_strategy_initial_decision_policies_0_0),
            tmean = experiment_parameters_data_strategy_measurements_means_5,
            effect = effect) %>%
