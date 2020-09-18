@@ -103,8 +103,12 @@ def main():
 		            {
 		                "name": "EggersTestEstimator",
 		                "alpha": 0.1
+		            },
+		            {
+		            	"name": "TestOfObsOverExptSig",
+		            	"alpha": 0.1
 		            }
-		        ],
+		        ]
 			},
 			"researcher_parameters": {
 				"decision_strategy": {

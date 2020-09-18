@@ -86,34 +86,44 @@ def main():
 				"max_pubs": params["journal_max_pubs"],
 				"selection_strategy": {
 					"name": params["journal_selection_strategy_name"]
-				}
+				},
+		        "meta_analysis_metrics": [
+		            {
+		                "name": "RandomEffectEstimator",
+		                "estimator": "DL"
+		            },
+		            {
+		                "name": "EggersTestEstimator",
+		                "alpha": 0.1
+		            }
+		        ]
 			},
 			"researcher_parameters": {
 				"decision_strategy": {
 					"name": params["decision_strategy_name"],
 					"between_hacks_selection_policies": [
-					[
-					    "effect > 0",
-					    "min(pvalue)"
-					],
-					[
-					    "effect < 0",
-					    "max(pvalue)"
-					]
+						[
+						    "effect > 0",
+						    "min(pvalue)"
+						],
+						[
+						    "effect < 0",
+						    "max(pvalue)"
+						]
 					],
 					"between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["effect > 0", "sig", "first"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]],
 					# "between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["last"]],
 					"initial_selection_policies": [
-					[
-					    "id == 2",
-					    "sig",
-					    "effect > 0"
-					],
-					[
-					    "id == 3",
-					    "sig",
-					    "effect > 0"
-					]
+						[
+						    "id == 2",
+						    "sig",
+						    "effect > 0"
+						],
+						[
+						    "id == 3",
+						    "sig",
+						    "effect > 0"
+						]
 					],
 					"stashing_policy": [
 						"all"
@@ -215,7 +225,7 @@ def main():
 		        "save_all_pubs": True,
 		        "save_meta": True,
 		        "save_overall_summaries": True,
-		        "save_pubs_per_sim_summaries": True,
+		        "save_pubs_per_sim_summaries": False,
 		        "save_rejected": False
 			}
 		}
