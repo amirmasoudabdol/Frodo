@@ -24,12 +24,7 @@ params_info = {
 		"densities": [0, 0,   0, 1,  1,  1, 0.75, 0.25, 0.1, 0.1, 0.05, 0.05, 0.05]
 	}],
 	"seed": ["random"],
-	"is_pre_processing": [False],
 	"hacking_probability": [0, 1],
-	"save_pubs": [True],
-	"save_sims": [False],
-	"save_stats": [False],
-	"save_rejected": [False],
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
@@ -115,16 +110,16 @@ def main():
 				"decision_strategy": {
 			        "name": "DefaultDecisionMaker",
 		            "initial_selection_policies": [
-		                ["id == 1"] if not params["hacking_probability"] else ["id == 1"]
+		                ["id == 1"]
 		            ],
 		            "will_start_hacking_decision_policies": [
 		                "!sig"
 		            ],
-                    "between_hacks_selection_policies": [
-		                ["last"]
-		            ],
 		            "stashing_policy": [
 		                "min(pvalue)"
+		            ],
+                    "between_hacks_selection_policies": [
+		                ["last"]
 		            ],
 		            "between_replications_selection_policies": [[""]],
 		            "will_continue_replicating_decision_policy": [""],
@@ -139,8 +134,8 @@ def main():
 		                {
 		                    "name": "OptionalStopping",
 				            "target": "Both",
-				            "prevalence": 0.1,
-				            "defensibility": 0.1,
+				            "prevalence": 1,
+				            "defensibility": 1,
 		                    "max_attempts": 1,
 		                    "n_attempts": 1,
 		                    "num": 0,
@@ -159,8 +154,8 @@ def main():
 		                {
 		                    "name": "OptionalStopping",
 				            "target": "Both",
-				            "prevalence": 0.1,
-				            "defensibility": 0.1,
+				            "prevalence": 1,
+				            "defensibility": 1,
 		                    "max_attempts": 1,
 		                    "n_attempts": 1,
 		                    "num": 0,
@@ -179,8 +174,8 @@ def main():
 		                {
 		                    "name": "OptionalStopping",
 				            "target": "Both",
-				            "prevalence": 0.1,
-				            "defensibility": 0.1,
+				            "prevalence": 1,
+				            "defensibility": 1,
 		                    "max_attempts": 1,
 		                    "n_attempts": 1,
 		                    "num": 0,
@@ -196,15 +191,9 @@ def main():
 		                ]
 	               	]
 			    ],
-				"is_pre_processing": params["is_pre_processing"],
+				"is_pre_processing": False,
 				"pre_processing_methods": [
-					{
-		               "name": "OptionalStopping",
-		               "level": "dv",
-		               "num": 10,
-		               "n_attempts": 1,
-		               "max_attempts": 1
-		          	}
+					""
 				]
 			},
 			"simulation_parameters": {
