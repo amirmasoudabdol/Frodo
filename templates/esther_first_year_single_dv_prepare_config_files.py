@@ -6,7 +6,7 @@ import tqdm
 
 params_info = {
 	"n_sims": [1000],
-	"debug": ["info"],
+	"log_level": ["info"],
 	"progress": [False],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [1],
@@ -215,7 +215,7 @@ def main():
 				"output_prefix": "",
 		        "update_config": True,
 		        "progress": False,
-		        "save_all_pubs": True,
+		        "save_all_pubs": False,
 		        "save_meta": True,
 		        "save_overall_summaries": True,
 		        "save_pubs_per_sim_summaries": True,

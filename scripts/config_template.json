@@ -55,7 +55,7 @@
         "is_phacker": true
     },
     "simulation_parameters": {
-        "debug": false,
+        "log_level": false,
         "master_seed": 42,
         "n_sims": 5,
         "output_path": "../outputs/",

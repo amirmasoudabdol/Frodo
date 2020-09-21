@@ -6,7 +6,7 @@ import tqdm
 
 params_info = {
 	"n_sims": [1000],
-	"debug": ["info"],
+	"log_level": ["info"],
 	"progress": [False],
 	"data_strategy_n_conditions": [5],
 	"data_strategy_n_dep_vars": [1],
@@ -123,7 +123,7 @@ def main():
 		                "!sig"
 		            ],
                     "between_hacks_selection_policies": [
-			                ["last"]
+			            ["last"]
 		            ],
 		            "stashing_policy": [
 		                "min(pvalue)"

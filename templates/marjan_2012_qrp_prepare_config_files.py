@@ -95,6 +95,10 @@ def main():
 		            {
 		                "name": "EggersTestEstimator",
 		                "alpha": 0.1
+		            },
+		            {
+		            	"name": "TestOfObsOverExptSig",
+		            	"alpha": 0.1
 		            }
 		        ]
 			},
