@@ -95,14 +95,18 @@ def main():
 		            },
 		            {
 		                "name": "TrimAndFill",
-		                "alpha": 0.05,
+		                "alpha": 0.1,
 		                "estimator": "R0",
 		                "side": "auto"
 		            },
 		            {
 		                "name": "RankCorrelation",
-		                "alpha": 0.05,
+		                "alpha": 0.1,
 		                "alternative": "TwoSided"
+		            },
+		            {
+		            	"name": "TestOfObsOverExptSig",
+		            	"alpha": 0.1
 		            }
 		        ]
 			},
@@ -110,9 +114,7 @@ def main():
 				"decision_strategy": {
 			      "name": "DefaultDecisionMaker",
 					"initial_selection_policies": [
-					    [
-					        "min(pvalue)"
-					    ]
+					    ["min(pvalue)"]
 					],
 		            "will_start_hacking_decision_policies": [
 		                "!sig"
@@ -206,7 +208,7 @@ def main():
 				"output_prefix": "",
 		        "update_config": True,
 		        "progress": False,
-		        "save_all_pubs": True,
+		        "save_all_pubs": False,
 		        "save_meta": True,
 		        "save_overall_summaries": True,
 		        "save_pubs_per_sim_summaries": True,

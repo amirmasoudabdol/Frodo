@@ -103,6 +103,10 @@ def main():
 		                "name": "RankCorrelation",
 		                "alpha": 0.05,
 		                "alternative": "TwoSided"
+		            },
+		            {
+		            	"name": "TestOfObsOverExptSig",
+		            	"alpha": 0.1
 		            }
 		        ]
 			},
