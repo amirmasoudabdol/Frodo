@@ -149,9 +149,7 @@ def main():
 			"probability_of_being_a_hacker": params["hacking_probability"],
 	        "probability_of_committing_a_hack": 1,
 			    "hacking_strategies": [
-		            [
-		                ""
-		            ]
+		            ""
 		        ],
 				"is_pre_processing": params["is_pre_processing"],
 				"pre_processing_methods": [
