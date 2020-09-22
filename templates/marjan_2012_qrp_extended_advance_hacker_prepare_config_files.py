@@ -8,7 +8,7 @@ nSmall = np.array([5, 10, 20])
 nLarge = 5 * nSmall
 
 params_info = {
-	"n_sims": [250],
+	"n_sims": [1000],
 	"log_level": ["info"],
 	"progress": [False],
 	"data_strategy_n_conditions": [2],
@@ -37,20 +37,14 @@ params_info = {
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
-	"test_alpha": [0.05, 0.005, 0.0005, 0.00005],
+	"test_alpha": [0.05, 0.005, 0.0005],
 	"test_strategy_name": ["TTest"],
 	"test_strategy_alternative": ["TwoSided"],
 
 	"effect_strategy_name": ["MeanDifference"],
 
-	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [40],
-
-	"continue_replication_rules": [
-        [""]
-	],
-
-	"pub_bias": [0.1, 0.5, 0.9],
+	"journal_max_pubs": [8, 24],
+	"journal_pub_bias": [z for z in np.arange(0, 1.01, 0.1)],
 
 	"decision_strategy_name": ["DefaultDecisionMaker"]
 	}
@@ -92,7 +86,7 @@ def main():
 		        "selection_strategy": {
 		            "name": "SignificantSelection",
 		            "alpha": params["test_alpha"],
-		            "pub_bias": params["pub_bias"],
+		            "pub_bias": params["journal_pub_bias"],
 		            "side": 0
 		        },
 		        "meta_analysis_metrics": [
@@ -103,6 +97,21 @@ def main():
 		            {
 		                "name": "EggersTestEstimator",
 		                "alpha": 0.1
+		            },
+		            {
+		                "name": "TrimAndFill",
+		                "alpha": 0.1,
+		                "estimator": "R0",
+		                "side": "auto"
+		            },
+		            {
+		                "name": "RankCorrelation",
+		                "alpha": 0.1,
+		                "alternative": "TwoSided"
+		            },
+		            {
+		            	"name": "TestOfObsOverExptSig",
+		            	"alpha": 0.1
 		            }
 		        ],
 			},
@@ -138,7 +147,7 @@ def main():
 		            "submission_decision_policies": [
 		                ""
 		            ],
-					"will_continue_replicating_decision_policy": params["continue_replication_rules"],
+					"will_continue_replicating_decision_policy": [""],
 		            "will_start_hacking_decision_policies": [
 		                "effect < 0",
 		                "!sig"
@@ -198,26 +207,7 @@ def main():
 		        ],
 				"is_pre_processing": params["is_pre_processing"],
 				"pre_processing_methods": [
-					{
-		               "name": "OptionalStopping",
-		               "level": "dv",
-		               "num": 10,
-		               "n_attempts": 1,
-		               "max_attempts": 1
-		          	},
-					{
-						"name": "OutliersRemoval",
-						"level": "dv",
-						"max_attempts": 1,
-						"min_observations": 1,
-						"mode": "Recursive",
-						"multipliers": [
-								2
-						],
-						"n_attempts": 1,
-						"num": params["n_obs"],
-						"order": "random"
-					}
+					""
 				]
 			},
 			"simulation_parameters": {
@@ -228,7 +218,7 @@ def main():
 				"output_prefix": "",
 		        "update_config": True,
 		        "progress": False,
-		        "save_all_pubs": True,
+		        "save_all_pubs": False,
 		        "save_meta": True,
 		        "save_overall_summaries": True,
 		        "save_pubs_per_sim_summaries": True,

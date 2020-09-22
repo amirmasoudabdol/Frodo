@@ -142,8 +142,8 @@ def main():
 				            ]
 				    },
 				    "submission_probability": params["researcher_submission_pro"],
-									"probability_of_being_a_hacker": params["hacking_probability"],
-		        "probability_of_committing_a_hack": 1,
+					"probability_of_being_a_hacker": params["hacking_probability"],
+		        	"probability_of_committing_a_hack": 1,
 					"hacking_probability_strategy": {
 			            "base_hp": params["hacking_prob_base_hp"],
 			            "lo_p": params["hacking_prob_lo_se"],
