@@ -78,21 +78,7 @@ def main():
 				"max_pubs": params["journal_max_pubs"],
 				"selection_strategy": {
 						"name": params["journal_selection_strategy_name"]
-				},
-		        "meta_analysis_metrics": [
-		            {
-		                "name": "RandomEffectEstimator",
-		                "estimator": "DL"
-		            },
-		            {
-		                "name": "EggersTestEstimator",
-		                "alpha": 0.1
-		            },
-		            {
-		            	"name": "TestOfObsOverExptSig",
-		            	"alpha": 0.1
-		            }
-		        ]
+				}
 			},
 			"researcher_parameters": {
 				"decision_strategy": {
