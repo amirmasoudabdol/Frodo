@@ -65,7 +65,7 @@ def main():
 				"n_conditions": params["data_strategy_n_conditions"],
 				"n_dep_vars": params["data_strategy_n_dep_vars"],
 				"n_obs": params["n_obs"],
-                "n_reps": 1 if params["n_obs"] in nLarge else params["n_reps"],
+                "n_reps": 1 if params["n_obs"] in nLarge else 5,
 				"test_strategy": {
 					"name": params["test_strategy_name"],
 					"alpha": params["test_alpha"],
@@ -145,7 +145,7 @@ def main():
 				            "target": "Both",
 				            "prevalence": 0.1,
 				            "defensibility": 0.1,
-		                    "num": params["nb"]
+		                    "num": params["n_obs"]
 		                },
 		                [
                             [
