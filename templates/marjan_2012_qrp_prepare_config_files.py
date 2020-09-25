@@ -95,7 +95,7 @@ def main():
 			},
 			"researcher_parameters": {
 				"decision_strategy": {
-					"name": "DefaultDecisionMaker,
+					"name": "DefaultDecisionMaker",
 					"between_hacks_selection_policies": [
 						[
 						    "effect > 0",
