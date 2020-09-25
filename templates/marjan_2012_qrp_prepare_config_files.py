@@ -9,7 +9,7 @@ nLarge = 5 * nSmall
 
 params_info = {
 	"n_sims": [1],
-	"log_level": ["off"],
+	"log_level": ["info"],
 	"progress": [False],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [2],
@@ -227,8 +227,8 @@ def main():
 		        "update_config": True,
 		        "progress": False,
 		        "save_all_pubs": True,
-		        "save_meta": True,
-		        "save_overall_summaries": True,
+		        "save_meta": False,
+		        "save_overall_summaries": False,
 		        "save_pubs_per_sim_summaries": False,
 		        "save_rejected": False
 			}
