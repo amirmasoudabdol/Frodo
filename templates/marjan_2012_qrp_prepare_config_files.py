@@ -21,17 +21,13 @@ params_info = {
 	              [0.5,   1.0,   0.0,   0.0],
 	              [0.0,   0.0,   1.0,   0.5],
 	              [0.0,   0.0,   0.5,   1.0]]
-		} for x in np.arange(0.0, 1.01, 0.1)
+		} for x in np.arange(0.0, 1.01, 0.05)
 	],
 	"n_obs": [5, 10, 20, 25, 50, 100],
 	"k": [2],
 	"seed": ["random"],
 	"is_pre_processing": [False],
 	"hacking_probability": [1],
-	"save_pubs": [True],
-	"save_sims": [False],
-	"save_stats": [False],
-	"save_rejected": [False],
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
@@ -42,12 +38,7 @@ params_info = {
 	"effect_strategy_name": ["MeanDifference"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [5000],
-
-	"decision_strategy_name": ["DefaultDecisionMaker"],
-
-	"n_reps": [5],
-	"nb": [10]
+	"journal_max_pubs": [5000]
 	}
 
 
@@ -104,7 +95,7 @@ def main():
 			},
 			"researcher_parameters": {
 				"decision_strategy": {
-					"name": params["decision_strategy_name"],
+					"name": "DefaultDecisionMaker,
 					"between_hacks_selection_policies": [
 						[
 						    "effect > 0",
