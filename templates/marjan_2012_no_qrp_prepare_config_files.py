@@ -42,7 +42,7 @@ params_info = {
 	"effect_strategy_name": ["MeanDifference"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [1000],
+	"journal_max_pubs": [5000],
 
 	"decision_strategy_name": ["DefaultDecisionMaker"],
 
