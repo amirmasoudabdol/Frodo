@@ -8,7 +8,7 @@ nSmall = np.array([5, 10, 20])
 nLarge = 5 * nSmall
 
 params_info = {
-	"n_sims": [1000],
+	"n_sims": [1],
 	"log_level": ["info"],
 	"progress": [False],
 	"data_strategy_n_conditions": [2],
