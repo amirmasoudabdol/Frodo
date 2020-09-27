@@ -40,14 +40,13 @@ summarize_each_file <- function(fname) {
     mutate(size = determine_size(as.numeric(tnobs))) %>%
     mutate(nobs = nobs,
            tnobs = factor(tnobs),
-           covs = factor(experiment_parameters_data_strategy_measurements_covs),
            decision_strategy = factor(researcher_parameters_decision_strategy_name),
            is_hacked = factor(researcher_parameters_probability_of_being_a_hacker),
            tmean = experiment_parameters_data_strategy_measurements_means_2,
            alpha = experiment_parameters_test_strategy_alpha,
            test_strategy = experiment_parameters_test_strategy_name,
            n_pos_sig = if_else(effect > 0 & sig, 1, 0)) %>%
-    group_by(tmean, covs, tnobs, alpha, sizeclass, decision_strategy, test_strategy, is_hacked) %>%
+    group_by(tmean, tnobs, alpha, sizeclass, decision_strategy, test_strategy, is_hacked) %>%
     summarize(sigmean = sum(n_pos_sig) / n(),
               mean_nobs = mean(nobs),
               mean_eff = mean(effect),
