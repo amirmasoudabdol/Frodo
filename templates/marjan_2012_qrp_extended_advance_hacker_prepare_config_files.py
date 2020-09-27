@@ -23,7 +23,7 @@ params_info = {
 	              [0.5,   1.0,   0.0,   0.0],
 	              [0.0,   0.0,   1.0,   0.5],
 	              [0.0,   0.0,   0.5,   1.0]]
-		} for x in np.arange(0.0, 1.01, 0.05)
+		} for x in np.arange(0.0, 1.01, 0.1)
 	],
 	"n_obs": [5, 10, 20, 25, 50, 100],
 	"k": [2],
@@ -43,8 +43,11 @@ params_info = {
 
 	"effect_strategy_name": ["MeanDifference"],
 
-	"journal_max_pubs": [8, 24],
-	"journal_pub_bias": [z for z in np.arange(0, 1.01, 0.1)],
+	# "journal_max_pubs": [8, 24],
+	# "journal_pub_bias": [z for z in np.arange(0, 1.01, 0.1)],
+
+	"journal_max_pubs": [5000],
+	"journal_pub_bias": [0],
 
 	"decision_strategy_name": ["DefaultDecisionMaker"]
 	}
@@ -163,8 +166,9 @@ def main():
 				            "prevalence": 0.1,
 				            "defensibility": 0.1,
 		                    "max_attempts": 1,
-		                    "n_attempts": 1,
-		                    "num": max(5, params["n_obs"]/2)
+		                    "n_attempts": 10,
+		                    "num": 1,
+		                    "stopping_condition": ["sig"]
 		                },
 		                [
                             [
@@ -180,7 +184,7 @@ def main():
 		            [
 		               {
 			                "name": "SubjectiveOutlierRemoval",
-			                "min_observations": params["n_obs"]/2,
+			                "min_observations": 5,
 			                "range": [
 			                    2,
 			                    4
