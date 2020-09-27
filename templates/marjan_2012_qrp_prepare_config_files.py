@@ -76,7 +76,7 @@ def main():
 			"journal_parameters": {
 				"max_pubs": params["journal_max_pubs"],
 				"selection_strategy": {
-					"name": "FreeSelection"
+					"name": params["journal_selection_strategy_name"]
 				}
 			},
 			"researcher_parameters": {

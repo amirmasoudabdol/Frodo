@@ -81,36 +81,8 @@ def main():
 			"journal_parameters": {
 				"max_pubs": params["journal_max_pubs"],
 		        "selection_strategy": {
-		            "name": "SignificantSelection",
-		            "alpha": params["test_alpha"],
-		            "pub_bias": params["journal_pub_bias"],
-		            "side": 0
-		        },
-		        "meta_analysis_metrics": [
-		            {
-		                "name": "RandomEffectEstimator",
-		                "estimator": "DL"
-		            },
-		            {
-		                "name": "EggersTestEstimator",
-		                "alpha": 0.1
-		            },
-		            {
-		                "name": "TrimAndFill",
-		                "alpha": 0.1,
-		                "estimator": "R0",
-		                "side": "auto"
-		            },
-		            {
-		                "name": "RankCorrelation",
-		                "alpha": 0.1,
-		                "alternative": "TwoSided"
-		            },
-		            {
-		            	"name": "TestOfObsOverExptSig",
-		            	"alpha": 0.1
-		            }
-		        ],
+		            "name": "FreeSelection"
+		        }
 			},
 			"researcher_parameters": {
 				"decision_strategy": {
