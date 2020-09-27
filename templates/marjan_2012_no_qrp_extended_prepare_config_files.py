@@ -17,8 +17,6 @@ params_info = {
 		{
 		"dist": "mvnorm_distribution",
     	"means": [0.0, 0.0, x, x],
-        "covs": 0.5,
-        "stddevs": 1.0,
         "sigma": [[1.0,   0.5,   0.0,   0.0],
 	              [0.5,   1.0,   0.0,   0.0],
 	              [0.0,   0.0,   1.0,   0.5],
@@ -30,10 +28,6 @@ params_info = {
 	"seed": ["random"],
 	"is_pre_processing": [False],
 	"hacking_probability": [0],
-	"save_pubs": [True],
-	"save_sims": [False],
-	"save_stats": [False],
-	"save_rejected": [False],
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
@@ -87,36 +81,8 @@ def main():
 			"journal_parameters": {
 				"max_pubs": params["journal_max_pubs"],
 		        "selection_strategy": {
-		            "name": "SignificantSelection",
-		            "alpha": params["test_alpha"],
-		            "pub_bias": params["journal_pub_bias"],
-		            "side": 0
-		        },
-		        "meta_analysis_metrics": [
-		            {
-		                "name": "RandomEffectEstimator",
-		                "estimator": "DL"
-		            },
-		            {
-		                "name": "EggersTestEstimator",
-		                "alpha": 0.1
-		            },
-		            {
-		                "name": "TrimAndFill",
-		                "alpha": 0.1,
-		                "estimator": "R0",
-		                "side": "auto"
-		            },
-		            {
-		                "name": "RankCorrelation",
-		                "alpha": 0.1,
-		                "alternative": "TwoSided"
-		            },
-		            {
-		            	"name": "TestOfObsOverExptSig",
-		            	"alpha": 0.1
-		            }
-		        ],
+		            "name": "FreeSelection"
+		        }
 			},
 			"researcher_parameters": {
 				"decision_strategy": {
