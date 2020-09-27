@@ -84,7 +84,7 @@ def main():
 		            "name": "SignificantSelection",
 		            "alpha": params["test_alpha"],
 		            "side": 0,
-		            "pub_bias": params["pub_bias"]
+		            "pub_bias": params["journal_pub_bias"]
 		        },
 		        "meta_analysis_metrics": [
 		            {
