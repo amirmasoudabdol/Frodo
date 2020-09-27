@@ -167,10 +167,10 @@ def main():
 				"output_prefix": "",
 		        "update_config": True,
 		        "progress": False,
-		        "save_all_pubs": False,
-		        "save_meta": True,
-		        "save_overall_summaries": True,
-		        "save_pubs_per_sim_summaries": True,
+		        "save_all_pubs": True,
+		        "save_meta": False,
+		        "save_overall_summaries": False,
+		        "save_pubs_per_sim_summaries": False,
 		        "save_rejected": False
 			}
 		}
