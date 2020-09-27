@@ -49,7 +49,6 @@ summarize_each_file <- function(fname) {
     group_by(tmean, tnobs, alpha, sizeclass, decision_strategy, test_strategy, is_hacked) %>%
     summarize(sigmean = sum(n_pos_sig) / n(),
               mean_nobs = mean(nobs),
-              n_reps = head(n_reps),
               mean_eff = mean(effect),
               mean_eff_diff = mean(effect) - head(tmean, 1),
               mean_pvalue = mean(pvalue),
