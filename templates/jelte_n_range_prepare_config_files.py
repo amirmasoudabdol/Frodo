@@ -10,19 +10,17 @@ params_info = {
 	"progress": [False],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [2],
+	"n_obs": [x for x in range(8, 100)],
 	"data_strategy_measurements": [
 		{
 		"dist": "mvnorm_distribution",
     	"means": [0.0, 0.0, x, x],
-        "covs": 0.5,
-        "stddevs": 1.0,
         "sigma": [[1.0,   0.5,   0.0,   0.0],
 	              [0.5,   1.0,   0.0,   0.0],
 	              [0.0,   0.0,   1.0,   0.5],
 	              [0.0,   0.0,   0.5,   1.0]]
 		} for x in np.arange(0.0, 1.01, 0.1)
 	],
-	"n_obs": [x for x in range(8, 100)],
 	"seed": ["random"],
 	"hacking_probability": [1],
 	"output_path": ["../outputs/"],
