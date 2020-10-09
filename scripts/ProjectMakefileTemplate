@@ -101,9 +101,8 @@ stack: ## Stack several CSV files into one CSV file
 
 stacker: ## Faster version of stacker. Use this for lager data files
 	@printf '$(<b>)> Stacking $(from) output files... $(</b>)\n'
-	rm outputs/$(from)_Stacked.csv
-	touch outputs/$(from)_Stacked.csv
-	@./yourprojectname_large_stacker.sh $(from)
+	@touch outputs/$(from)_Stacked.csv
+	@./scripts/yourprojectname_large_stacker.sh $(from)
 
 database: ## Aggregate output files into a SQLite database
 	@$(MAKE) stats from=$(from)
