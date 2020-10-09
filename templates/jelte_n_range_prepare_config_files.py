@@ -22,7 +22,7 @@ params_info = {
 		} for x in np.arange(0.0, 1.01, 0.1)
 	],
 	"seed": ["random"],
-	"hacking_probability": [1],
+	"hacking_probability": [0],
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
@@ -104,7 +104,7 @@ def main():
 				"probability_of_being_a_hacker": params["hacking_probability"],
 		        "probability_of_committing_a_hack": 1,
 			    "hacking_strategies": [
-					
+					""
 			    ],
 				"is_pre_processing": False,
 				"pre_processing_methods": [
