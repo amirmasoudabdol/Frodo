@@ -5,8 +5,8 @@
 #SBATCH --mail-type=BEGIN,END
 #SBATCH --mail-user=a.m.abdol@uvt.nl
 
-module load pre2019
-module load stopos
+module load 2020
+module load Stopos/0.93-GCC-9.3.0
 module load sara-batch-resources
 
 export STOPOS_POOL=yourprojectname_pool

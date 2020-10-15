@@ -26,7 +26,7 @@ params_info = {
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
-	"test_alpha": [0.05, 0.005],
+	"test_alpha": [0.05],
 	"test_strategy_name": ["TTest"],
 	"test_strategy_alternative": ["TwoSided"],
 
@@ -84,7 +84,7 @@ def main():
 				"decision_strategy": {
 			        "name": "DefaultDecisionMaker",
 		            "initial_selection_policies": [
-		                ["min(pvalue)"]
+		                ["effect > 0", "sig", "min(pvalue)"]
 		            ],
 		            "will_start_hacking_decision_policies": [
 		                "!sig"
