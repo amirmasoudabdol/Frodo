@@ -38,8 +38,9 @@ params_info = {
 	"effect_strategy_name": ["MeanDifference"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [5000]
+	"journal_max_pubs": [5000],
 
+	"n_reps": [1, 2, 3, 4, 5]
 	}
 
 
@@ -66,7 +67,7 @@ def main():
 				"n_conditions": params["data_strategy_n_conditions"],
 				"n_dep_vars": params["data_strategy_n_dep_vars"],
 				"n_obs": params["n_obs"],
-                "n_reps": 1 if params["n_obs"] in nLarge else 5,
+                "n_reps": 1 if params["n_obs"] in nLarge else params["n_reps"],
 				"test_strategy": {
 					"name": params["test_strategy_name"],
 					"alpha": params["test_alpha"],
