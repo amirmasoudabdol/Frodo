@@ -54,7 +54,7 @@ for (( k = 0; k < nply; k++ )); do
 	for ((i = 1; i <= ncores; i++)) ; do
 	(
 		# Getting the next parameters from the pool
-		stopos next -p yourprojectname_pool
+		stoposclient next -p yourprojectname_pool
 
 		# Checking if the parameters pool is empty
 		if [ "$STOPOS_RC" != "OK" ]; then
@@ -66,7 +66,7 @@ for (( k = 0; k < nply; k++ )); do
 		CONFIG_FILE="${PROJECT_DIR}/configs/${CONFIG_FILE_NAME}.json"
 		
 		# Removing the used parameter from the pool
-		stopos remove -p yourprojectname_pool
+		stoposclient remove -p yourprojectname_pool
 		
 		echo
 		echo "Running the simulation for: ${CONFIG_FILE_NAME}.json"
