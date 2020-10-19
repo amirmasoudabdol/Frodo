@@ -132,11 +132,11 @@ run-par-local: ## Running the simulation in parallel on the local machine
 run-par-lisa: ## Running the simulation in parallel on the Lisa cluster
 	@printf '$(<b>)> Preparing Lisa enviroment, and submitting an array job... $(</b>)\n'
 	@awk '{gsub(/$(project)_nply/,"$(nply)");}1' scripts/$(project)_lisa_par_run.sh > tmp && mv tmp scripts/$(project)_lisa_par_run.sh
-	module load 2020
-	module load Stopos/0.93-GCC-9.3.0
-	stoposclient purge -p yourprojectname_pool
-	stoposclient create -p yourprojectname_pool
-	stoposclient add -p yourprojectname_pool configfilenames.pool
+	module load pre2019
+	module load stopos
+	stopos purge -p yourprojectname_pool
+	stopos create -p yourprojectname_pool
+	stopos add -p yourprojectname_pool configfilenames.pool
 	chmod +x scripts/yourprojectname_lisa_par_run.sh
 	@echo "Requesting $(n_nodes) nodes..."
 	sbatch -a 1-$(n_nodes) scripts/yourprojectname_lisa_par_run.sh
@@ -146,9 +146,9 @@ run-par-lisa-batch: ## Running the simulation in parallel on the Lisa cluster
 	@sed -i '49s/.*/nply=$(nply)/' scripts/yourprojectname_lisa_par_run_batch.sh
 	module load 2020
 	module load Stopos/0.93-GCC-9.3.0
-	stoposclient purge -p yourprojectname_pool
-	stoposclient create -p yourprojectname_pool
-	stoposclient add -p yourprojectname_pool configfilenames.pool
+	stopos purge -p yourprojectname_pool
+	stopos create -p yourprojectname_pool
+	stopos add -p yourprojectname_pool configfilenames.pool
 	chmod +x scripts/yourprojectname_lisa_par_run_batch.sh
 	@echo "Requesting $(n_nodes) nodes..."
 	sbatch -a 1-$(n_nodes) scripts/yourprojectname_lisa_par_run_batch.sh
