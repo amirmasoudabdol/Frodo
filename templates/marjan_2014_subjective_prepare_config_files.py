@@ -27,7 +27,7 @@ params_info = {
 	"test_strategy_alternative": ["TwoSided"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [10000],
+	"journal_max_pubs": [5000],
 
 	"decision_strategy_name": ["DefaultDecisionMaker"],
 	"decision_strategy_init_dec_policies": [["id == 1"]]
@@ -54,13 +54,18 @@ def main():
 						"stddevs": 1.0,
 						"covs": 0.0
 					},
-					"difficulties": [
-		                {
-		                    "dist": "normal_distribution",
-		                    "mean": params["data_strategy_difficulties_mean"],
-		                    "stddev": 1.0
-		                } for x in range(params["data_strategy_n_categories"])
-		           	],
+					"difficulties": {
+	                    "dist": "mvnorm_distribution",
+	                    "means": [params["data_strategy_difficulties_mean"]] * params["data_strategy_n_categories"],
+	                    "stddevs": 1.0,
+	                    "covs": 0.0
+	                } if params["data_strategy_n_categories"] == 5 else [
+	                	{
+	                		"dist": "normal_distribution",
+	                		"mean": params["data_strategy_difficulties_mean"],
+	                		"stddev": 1.0
+	                	}
+	                ],
 					"n_categories": params["data_strategy_n_categories"],
 					"n_items": params["data_strategy_n_items"],
 					"name": "GradedResponseModel"
@@ -114,7 +119,6 @@ def main():
 					[
 						{
 							"name": "OutliersRemoval",
-							"level": "dv",
 							"max_attempts": 10,
 							"min_observations": 20,
 							"prevalence": 0.5,
