@@ -82,7 +82,7 @@ def main():
 				"decision_strategy": {
 			        "name": "DefaultDecisionMaker",
 		            "initial_selection_policies": [
-		                ["min(pvalue)"]
+		                ["effect > 0", "min(pvalue)"]
 		            ],
 		            "will_start_hacking_decision_policies": [
 		                "!sig"

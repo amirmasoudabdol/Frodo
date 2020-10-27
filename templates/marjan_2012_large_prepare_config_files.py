@@ -39,7 +39,7 @@ params_info = {
 	"journal_selection_strategy_name": ["FreeSelection"],
 	"journal_max_pubs": [10000],
 
-	"decision_strategy_name": ["ImpatientDecisionMaker"],
+	"decision_strategy_name": ["ImDefaultDecisionMaker"],
 	"decision_strategy_policies": [[["first"]], [["random"]], [["min(pvalue)"]], [["max(pvalue)"]]]
 	}
 
@@ -83,7 +83,7 @@ def main():
 			},
 			"researcher_parameters": {
 					"decision_strategy": {
-			            "name": "ImpatientDecisionMaker",
+			            "name": "ImDefaultDecisionMaker",
 			            "decision_policies": 
 			            	params["decision_strategy_policies"]
 			            ,

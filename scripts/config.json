@@ -30,7 +30,7 @@
    },
    "researcher_parameters": {
       "decision-strategy": {
-         "name": "PatientDecisionMaker",
+         "name": "DefaultDecisionMaker",
          "preference": "MinPvalue"
       },
       "is-phacker": false,

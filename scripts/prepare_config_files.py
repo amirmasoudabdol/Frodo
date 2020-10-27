@@ -33,7 +33,7 @@ params_info = {
 	"journal_selection_strategy_name": ["FreeSelection"],
 	"journal_max_pubs": [10],
 
-	"decision_strategy_name": ["PatientDecisionMaker"],
+	"decision_strategy_name": ["DefaultDecisionMaker"],
 	"decision_strategy_preference": ["MinPvalue"],
 	"decision_strategy_submission_policy": ["Anything"]
 	}

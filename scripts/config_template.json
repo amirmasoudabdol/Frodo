@@ -32,7 +32,7 @@
     },
     "researcher_parameters": {
         "decision_strategy": {
-            "name": "PatientDecisionMaker",
+            "name": "DefaultDecisionMaker",
             "preference": "MinPvalue"
         },
         "hacking_strategies": [
