@@ -31,6 +31,8 @@ _end=$(wc -l < configfilenames.pool)
 
 for CONFIG_FILE in "configs/"*.json; do
 
+	progressBar ${_number} ${_end} ${FILE_NAME}
+
 	# Extracting the UUID, i.e., filename without extension
 	FILE_NAME=$(basename ${CONFIG_FILE})
 	CONFIG_FILE_NAME="${FILE_NAME%%.*}"
@@ -43,8 +45,6 @@ for CONFIG_FILE in "configs/"*.json; do
 	SIM_FILE="${PROJECT_DIR}/outputs/${CONFIG_FILE_NAME}_sim.csv"
 
 	_number=$(echo $((_number + 1)))
-	
-	progressBar ${_number} ${_end} ${FILE_NAME}
 
 	# echo
 	# echo "Running Rscripts"

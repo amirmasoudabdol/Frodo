@@ -5,14 +5,14 @@ import numpy as np
 import tqdm
 
 params_info = {
-	"n_sims": [1],
+	"n_sims": [5000],
 	"log_level": ["info"],
 	"progress": [False],
-	"n_obs": [20, 40, 100],
 	"data_strategy_n_items": [2, 5, 10, 20, 40],
+	"n_obs": [10, 20, 40, 100],
 	"data_strategy_difficulties_mean": [0, 3],
 	"data_strategy_abilities_mean": [[0, 0]],
-	"data_strategy_n_categories": [1, 5],
+	"data_strategy_n_categories": [2, 5],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [1],
 	"k": [x for x in np.arange(2.0, 4.1, 0.25)],
@@ -31,7 +31,7 @@ params_info = {
 	"test_strategy_alternative": ["TwoSided"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [5000],
+	"journal_max_pubs": [8, 24],
 
 	"decision_strategy_name": ["DefaultDecisionMaker"],
 	"decision_strategy_init_dec_policies": [["id == 1"]]
@@ -60,7 +60,7 @@ def main():
 					},
 					"difficulties": {
 	                    "dist": "mvnorm_distribution",
-	                    "means": [params["data_strategy_difficulties_mean"]] * params["data_strategy_n_categories"],
+	                    "means": [params["data_strategy_difficulties_mean"]] * (params["data_strategy_n_categories"] - 1),
 	                    "stddevs": 1.0,
 	                    "covs": 0.0
 	                } if params["data_strategy_n_categories"] == 5 else [
@@ -72,6 +72,7 @@ def main():
 	                ], 
 					"n_categories": params["data_strategy_n_categories"],
 					"n_items": params["data_strategy_n_items"],
+					"response_function": "Rasch",
 					"name": "GradedResponseModel"
 				},
 				"effect_strategy": {
@@ -92,7 +93,20 @@ def main():
 				"max_pubs": params["journal_max_pubs"],
 				"selection_strategy": {
 					"name": params["journal_selection_strategy_name"]
-				}
+				},
+		        "meta_analysis_metrics": [
+		            {
+		                "name": "FixedEffectEstimator"
+		            },
+		            {
+		                "name": "RandomEffectEstimator",
+		                "estimator": "DL"
+		            },
+		            {
+		                "name": "EggersTestEstimator",
+		                "alpha": 0.1
+		            }
+		        ]
 			},
 			"researcher_parameters": {
 				"decision_strategy": {
@@ -116,33 +130,11 @@ def main():
 						""
 					],
 					"will_start_hacking_decision_policies": [
-						"!sig"
+						""
 					]
 			    },
 				"hacking_strategies": [
-					[
-						{
-							"name": "OutliersRemoval",
-							"target": "Both",
-							"prevalence": 0.5,
-					        "defensibility": 0.1, 
-							"max_attempts": 10,
-							"min_observations": 20,
-							"mode": "Recursive",
-							"multipliers": [
-									1
-							],
-							"n_attempts": 4,
-							"num": 2,
-							"order": "max first"
-						},
-						[
-							["sig"]
-						],
-						[
-							"sig"
-						]
-					]
+					""
 				],
 				"probability_of_being_a_hacker": params["hacking_probability"],
 		        "probability_of_committing_a_hack": 1,
@@ -153,7 +145,6 @@ def main():
 						"target": "Both",
 						"prevalence": 0.5,
 				        "defensibility": 0.1, 
-						"max_attempts": 1,
 						"min_observations": 5,
 						"multipliers": [
 							params["k"]
@@ -173,8 +164,8 @@ def main():
 				"update_config": True,
 		        "progress": False,
 		        "save_all_pubs": True,
-		        "save_meta": False,
-		        "save_overall_summaries": False,
+		        "save_meta": True,
+		        "save_overall_summaries": True,
 		        "save_pubs_per_sim_summaries": False,
 		        "save_rejected": False
 			}
@@ -185,7 +176,7 @@ def main():
 		configfilenames.write(filename + "\n")
 
 		# Replacing the output prefix with a unique id
-		data["output_prefix"] = uid
+		data["simulation_parameters"]["output_prefix"] = uid
 
 		with open("configs/" + filename, 'w') as f:
 				json.dump(data, f, indent = 4)
