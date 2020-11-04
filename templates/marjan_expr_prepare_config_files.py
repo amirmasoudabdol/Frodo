@@ -87,7 +87,7 @@ def main():
 			"journal_parameters": {
 					"max_pubs": params["journal_max_pubs"],
 					"selection_strategy": {
-							"name": params["journal_selection_strategy_name"]
+						"name": params["journal_selection_strategy_name"]
 					},
 			        "meta_analysis_metrics": [
 		            {
