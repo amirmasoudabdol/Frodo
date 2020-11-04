@@ -150,7 +150,7 @@ def main():
 				"update_config": True,
 		        "progress": False,
 		        "save_all_pubs": True,
-		        "save_meta": True,
+		        "save_meta": False,
 		        "save_overall_summaries": True,
 		        "save_pubs_per_sim_summaries": False,
 		        "save_rejected": False
