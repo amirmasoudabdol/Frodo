@@ -70,7 +70,7 @@ def main():
 						"name": "GradedResponseModel"
 					},
 					"effect_strategy": {
-							"name": "MeanDifference"
+							"name": "StandardizedMeanDifference"
 					},
 					"n_conditions": params["data_strategy_n_conditions"],
 					"n_dep_vars": params["data_strategy_n_dep_vars"],

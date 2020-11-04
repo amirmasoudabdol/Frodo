@@ -46,6 +46,7 @@ def main():
 		params = dict(zip(params_info.keys(), param_vals))
 
 		data = {
+			"name": "Bakker_Subjective",
 			"experiment_parameters": {
 				"data_strategy": {
 					"abilities": {
@@ -72,7 +73,7 @@ def main():
 					"name": "GradedResponseModel"
 				},
 				"effect_strategy": {
-					"name": "MeanDifference"
+					"name": "StandardizedMeanDifference"
 				},
 				"n_conditions": params["data_strategy_n_conditions"],
 				"n_dep_vars": params["data_strategy_n_dep_vars"],
@@ -89,20 +90,7 @@ def main():
 				"max_pubs": params["journal_max_pubs"],
 				"selection_strategy": {
 					"name": params["journal_selection_strategy_name"]
-				},
-		        "meta_analysis_metrics": [
-		            {
-		                "name": "FixedEffectEstimator"
-		            },
-		            {
-		                "name": "RandomEffectEstimator",
-		                "estimator": "DL"
-		            },
-		            {
-		                "name": "EggersTestEstimator",
-		                "alpha": 0.1
-		            }
-		        ]
+				}
 			},
 			"researcher_parameters": {
 				"decision_strategy": {

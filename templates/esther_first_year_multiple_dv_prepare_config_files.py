@@ -32,7 +32,7 @@ params_info = {
 	"test_strategy_name": ["TTest"],
 	"test_strategy_alternative": ["TwoSided"],
 
-	"effect_strategy_name": ["MeanDifference"],
+	"effect_strategy_name": ["StandardizedMeanDifference"],
 
 	"journal_max_pubs": [8, 24, 72],
 
