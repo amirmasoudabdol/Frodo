@@ -18,6 +18,8 @@ params_info = {
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
+	"test_alpha": [0.05],
+
 	"journal_selection_strategy_name": ["FreeSelection"],
 	"journal_max_pubs": [8, 24],
 
@@ -144,7 +146,7 @@ def main():
 				"output_prefix": "",
 				"update_config": True,
 		        "progress": False,
-		        "save_all_pubs": True,
+		        "save_all_pubs": False,
 		        "save_meta": True,
 		        "save_overall_summaries": True,
 		        "save_pubs_per_sim_summaries": False,
