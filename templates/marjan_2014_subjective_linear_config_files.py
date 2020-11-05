@@ -5,24 +5,16 @@ import numpy as np
 import tqdm
 
 params_info = {
-	"n_sims": [1],
+	"n_sims": [5000],
 	"log_level": ["info"],
-	"progress": [False],
-	"data_strategy_n_items": [2, 5, 10, 20, 40],
+	"progress": [True],
 	"n_obs": [10, 20, 40, 100],
-	"data_strategy_difficulties_mean": [0, 3],
-	"data_strategy_abilities_mean": [[0, 0]],
-	"data_strategy_n_categories": [2, 5],
+	"data_strategy_means": [[0, 0], [0, 3]],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [1],
-	"k": [x for x in np.arange(2.0, 4.1, 0.25)],
 	"seed": ["random"],
 	"is_pre_processing": [True],
 	"hacking_probability": [0],
-	"save_pubs": [True],
-	"save_sims": [False],
-	"save_stats": [False],
-	"save_rejected": [False],
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
@@ -31,7 +23,7 @@ params_info = {
 	"test_strategy_alternative": ["TwoSided"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [5000],
+	"journal_max_pubs": [8, 24],
 
 	"journal_pub_bias": [z for z in np.arange(0, 1.01, 0.2)],
 
@@ -57,7 +49,7 @@ params_info = {
 			"use_continuity": True
 		}
 	]
-	}
+}
 
 
 def main():
@@ -72,31 +64,16 @@ def main():
 		params = dict(zip(params_info.keys(), param_vals))
 
 		data = {
-			"name": "Bakker_Non_Subjective",
+			"name": "Bakker_Subjective_Linear",
 			"experiment_parameters": {
 				"data_strategy": {
-					"abilities": {
+					"measurements": {
 						"dist": "mvnorm_distribution",
-						"means": params["data_strategy_abilities_mean"],
+						"means": params["data_strategy_means"],
 						"stddevs": 1.0,
 						"covs": 0.0
 					},
-					"difficulties": {
-	                    "dist": "mvnorm_distribution",
-	                    "means": [params["data_strategy_difficulties_mean"]] * (params["data_strategy_n_categories"] - 1),
-	                    "stddevs": 1.0,
-	                    "covs": 0.0
-	                } if params["data_strategy_n_categories"] == 5 else [
-	                	{
-	                		"dist": "normal_distribution",
-	                		"mean": params["data_strategy_difficulties_mean"],
-	                		"stddev": 1.0
-	                	}
-	                ], 
-					"n_categories": params["data_strategy_n_categories"],
-					"n_items": params["data_strategy_n_items"],
-					"response_function": "Rasch",
-					"name": "GradedResponseModel"
+					"name": "LinearModel"
 				},
 				"effect_strategy": {
 					"name": "MeanDifference"
@@ -114,20 +91,30 @@ def main():
 		            "alpha": params["test_alpha"],
 		            "pub_bias": params["journal_pub_bias"],
 		            "side": 0
-		        }
+		        },
+		        "meta_analysis_metrics": [
+		            {
+		                "name": "RandomEffectEstimator",
+		                "estimator": "DL"
+		            },
+		            {
+		                "name": "EggersTestEstimator",
+		                "alpha": 0.1
+		            }
+		        ]
 			},
 			"researcher_parameters": {
 				"decision_strategy": {
 					"name": params["decision_strategy_name"],
-					"between_hacks_selection_policies": [
-						[""]
-					],
-					"between_replications_selection_policies": [[""]],
 					"initial_selection_policies": [
 						[
 						    "id == 1"
 						]
 					],
+					"between_hacks_selection_policies": [
+						[""]
+					],
+					"between_replications_selection_policies": [[""]],
 					"stashing_policy": [
 						""
 					],
@@ -138,30 +125,32 @@ def main():
 						""
 					],
 					"will_start_hacking_decision_policies": [
-						""
+						"!sig"
 					]
 			    },
 				"hacking_strategies": [
 					""
 				],
 				"probability_of_being_a_hacker": params["hacking_probability"],
-		        "probability_of_committing_a_hack": 1,
+	        	"probability_of_committing_a_hack": 1,
 				"is_pre_processing": params["is_pre_processing"],
-				"pre_processing_methods": [
-					{
-						"name": "OutliersRemoval",
-						"target": "Both",
-						"prevalence": 0.5,
-				        "defensibility": 0.1, 
-						"min_observations": 5,
-						"multipliers": [
-							params["k"]
-						],
-						"n_attempts": 1,
-						"num": params["n_obs"],
-						"order": "random"
-					}
-				]
+		        "pre_processing_methods": [
+		            {
+		                "name": "SubjectiveOutlierRemoval",
+		                "min_observations": 5,
+		                "prevalence": 0.5,
+		                "target": "Both",
+		                "defensibility": 0.1, 
+		                "range": [
+		                    2,
+		                    3
+		                ],
+		                "step_size": 0.5,
+		                "stopping_condition": [
+		                    "sig"
+		                ]
+		            }
+		        ]
 			},
 			"simulation_parameters": {
 				"log_level": params["log_level"],
@@ -172,7 +161,7 @@ def main():
 				"update_config": True,
 		        "progress": False,
 		        "save_all_pubs": True,
-		        "save_meta": False,
+		        "save_meta": True,
 		        "save_overall_summaries": True,
 		        "save_pubs_per_sim_summaries": False,
 		        "save_rejected": False

@@ -5,14 +5,11 @@ import numpy as np
 import tqdm
 
 params_info = {
-	"n_sims": [1],
+	"n_sims": [5000],
 	"log_level": ["info"],
 	"progress": [False],
-	"data_strategy_n_items": [2, 5, 10, 20, 40],
 	"n_obs": [10, 20, 40, 100],
-	"data_strategy_difficulties_mean": [0, 3],
-	"data_strategy_abilities_mean": [[0, 0]],
-	"data_strategy_n_categories": [2, 5],
+	"data_strategy_means": [[0, 0], [0, 3]],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [1],
 	"k": [x for x in np.arange(2.0, 4.1, 0.25)],
@@ -31,7 +28,7 @@ params_info = {
 	"test_strategy_alternative": ["TwoSided"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [5000],
+	"journal_max_pubs": [8, 24],
 
 	"journal_pub_bias": [z for z in np.arange(0, 1.01, 0.2)],
 
@@ -72,31 +69,16 @@ def main():
 		params = dict(zip(params_info.keys(), param_vals))
 
 		data = {
-			"name": "Bakker_Non_Subjective",
+			"name": "Bakker_Non_Subjective_Linear",
 			"experiment_parameters": {
 				"data_strategy": {
-					"abilities": {
+					"measurements": {
 						"dist": "mvnorm_distribution",
-						"means": params["data_strategy_abilities_mean"],
+						"means": params["data_strategy_means"],
 						"stddevs": 1.0,
 						"covs": 0.0
 					},
-					"difficulties": {
-	                    "dist": "mvnorm_distribution",
-	                    "means": [params["data_strategy_difficulties_mean"]] * (params["data_strategy_n_categories"] - 1),
-	                    "stddevs": 1.0,
-	                    "covs": 0.0
-	                } if params["data_strategy_n_categories"] == 5 else [
-	                	{
-	                		"dist": "normal_distribution",
-	                		"mean": params["data_strategy_difficulties_mean"],
-	                		"stddev": 1.0
-	                	}
-	                ], 
-					"n_categories": params["data_strategy_n_categories"],
-					"n_items": params["data_strategy_n_items"],
-					"response_function": "Rasch",
-					"name": "GradedResponseModel"
+					"name": "LinearModel"
 				},
 				"effect_strategy": {
 					"name": "MeanDifference"
@@ -114,7 +96,17 @@ def main():
 		            "alpha": params["test_alpha"],
 		            "pub_bias": params["journal_pub_bias"],
 		            "side": 0
-		        }
+		        },
+		        "meta_analysis_metrics": [
+		            {
+		                "name": "RandomEffectEstimator",
+		                "estimator": "DL"
+		            },
+		            {
+		                "name": "EggersTestEstimator",
+		                "alpha": 0.1
+		            }
+		        ]
 			},
 			"researcher_parameters": {
 				"decision_strategy": {
@@ -172,7 +164,7 @@ def main():
 				"update_config": True,
 		        "progress": False,
 		        "save_all_pubs": True,
-		        "save_meta": False,
+		        "save_meta": True,
 		        "save_overall_summaries": True,
 		        "save_pubs_per_sim_summaries": False,
 		        "save_rejected": False

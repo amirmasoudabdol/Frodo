@@ -5,7 +5,7 @@ import numpy as np
 import tqdm
 
 params_info = {
-	"n_sims": [5000],
+	"n_sims": [1],
 	"log_level": ["info"],
 	"progress": [True],
 	"data_strategy_n_items": [2, 5, 10, 20, 40],
@@ -15,7 +15,6 @@ params_info = {
 	"data_strategy_n_categories": [2, 5],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [1],
-	# "k": [x for x in np.arange(2.0, 4.1, 0.25)],
 	"seed": ["random"],
 	"is_pre_processing": [True],
 	"hacking_probability": [0],
@@ -27,10 +26,32 @@ params_info = {
 	"test_strategy_alternative": ["TwoSided"],
 
 	"journal_selection_strategy_name": ["FreeSelection"],
-	"journal_max_pubs": [8, 24],
+	"journal_max_pubs": [5000],
+
+	"journal_pub_bias": [z for z in np.arange(0, 1.01, 0.2)],
 
 	"decision_strategy_name": ["DefaultDecisionMaker"],
-	"decision_strategy_init_dec_policies": [["id == 1"]]
+
+	"test_strategy": [
+		{
+			"name": "TTest",
+			"alpha": 0.05,
+			"alternative": "TwoSided",
+			"var_equal": True
+		},
+	 	{
+			"name": "YuenTest",
+			"alpha": 0.05,
+			"trim": 0.2,
+			"paried": False
+		},
+		{
+			"name": "WilcoxonTest",
+			"alpha": 0.05,
+			"alternative": "TwoSided",
+			"use_continuity": True
+		}
+	]
 	}
 
 
@@ -79,18 +100,16 @@ def main():
 				"n_dep_vars": params["data_strategy_n_dep_vars"],
 				"n_obs": params["n_obs"],
                 "n_reps": 1,
-				"test_strategy": {
-					"name": params["test_strategy_name"],
-					"alpha": params["test_alpha"],
-					"alternative": params["test_strategy_alternative"],
-					"var_equal": True
-				}
+				"test_strategy": params["test_strategy"]
 			},
 			"journal_parameters": {
 				"max_pubs": params["journal_max_pubs"],
-				"selection_strategy": {
-					"name": params["journal_selection_strategy_name"]
-				}
+		        "selection_strategy": {
+		            "name": "SignificantSelection",
+		            "alpha": params["test_alpha"],
+		            "pub_bias": params["journal_pub_bias"],
+		            "side": 0
+		        }
 			},
 			"researcher_parameters": {
 				"decision_strategy": {
