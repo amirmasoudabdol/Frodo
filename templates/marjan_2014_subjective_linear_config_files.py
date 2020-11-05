@@ -18,10 +18,6 @@ params_info = {
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
-	"test_alpha": [0.05],
-	"test_strategy_name": ["TTest"],
-	"test_strategy_alternative": ["TwoSided"],
-
 	"journal_selection_strategy_name": ["FreeSelection"],
 	"journal_max_pubs": [8, 24],
 
@@ -35,18 +31,6 @@ params_info = {
 			"alpha": 0.05,
 			"alternative": "TwoSided",
 			"var_equal": True
-		},
-	 	{
-			"name": "YuenTest",
-			"alpha": 0.05,
-			"trim": 0.2,
-			"paried": False
-		},
-		{
-			"name": "WilcoxonTest",
-			"alpha": 0.05,
-			"alternative": "TwoSided",
-			"use_continuity": True
 		}
 	]
 }
