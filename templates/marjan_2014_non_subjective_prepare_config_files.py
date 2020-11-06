@@ -28,7 +28,7 @@ params_info = {
 
 	"test_alpha": [0.05],
 
-	"journal_max_pubs": [5000],
+	"journal_max_pubs": [50000],
 
 	"journal_pub_bias": [z for z in np.arange(0, 1.01, 0.2)],
 
