@@ -9,7 +9,7 @@ params_info = {
 	"log_level": ["info"],
 	"progress": [False],
 	"data_strategy_n_items": [2, 5, 10, 20, 40],
-	"n_obs": [10, 20, 40, 100],
+	"n_obs": [10, 20, 40, 100, 500],
 	"data_strategy_difficulties_mean": [0, 3],
 	"data_strategy_abilities_mean": [[0, 0]],
 	"data_strategy_n_categories": [2, 5],
@@ -28,9 +28,9 @@ params_info = {
 
 	"test_alpha": [0.05],
 
-	"journal_max_pubs": [50000],
+	"journal_max_pubs": [25000],
 
-	"journal_pub_bias": [z for z in np.arange(0, 1.01, 0.2)],
+	"journal_pub_bias": [z for z in np.arange(0, 0.81, 0.2)],
 
 	"decision_strategy_name": ["DefaultDecisionMaker"],
 
