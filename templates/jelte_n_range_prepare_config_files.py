@@ -122,7 +122,7 @@ def main():
 		        "save_all_pubs": False,
 		        "save_meta": False,
 		        "save_overall_summaries": True,
-		        "save_pubs_per_sim_summaries": True,
+		        "save_pubs_per_sim_summaries": False,
 		        "save_rejected": False
 			}
 		}
