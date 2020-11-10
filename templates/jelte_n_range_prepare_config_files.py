@@ -15,10 +15,29 @@ params_info = {
 		{
 		"dist": "mvnorm_distribution",
     	"means": [0.0, 0.0, x, x],
-        "sigma": [[1.0,   0.5,   0.0,   0.0],
-	              [0.5,   1.0,   0.0,   0.0],
-	              [0.0,   0.0,   1.0,   0.5],
-	              [0.0,   0.0,   0.5,   1.0]]
+        "covs": 0.5,
+        "stddevs": 1.0
+		} for x in np.arange(0.0, 1.01, 0.1)
+	] + [
+		{
+		"dist": "mvnorm_distribution",
+    	"means": [0.0, 0.0, 0.0, x, x, x],
+        "covs": 0.5,
+        "stddevs": 1.0
+		} for x in np.arange(0.0, 1.01, 0.1)
+	] + [
+		{
+		"dist": "mvnorm_distribution",
+    	"means": [0.0, 0.0, 0.0, 0.0, x, x, x, x],
+        "covs": 0.5,
+        "stddevs": 1.0
+		} for x in np.arange(0.0, 1.01, 0.1)
+	] + [
+		{
+		"dist": "mvnorm_distribution",
+    	"means": [0.0, 0.0, 0.0, 0.0, 0.0, x, x, x, x, x],
+        "covs": 0.5,
+        "stddevs": 1.0
 		} for x in np.arange(0.0, 1.01, 0.1)
 	],
 	"seed": ["random"],
@@ -55,7 +74,7 @@ def main():
 			"experiment_parameters": {
                     "n_reps": 1,
 					"n_conditions": params["data_strategy_n_conditions"],
-					"n_dep_vars": params["data_strategy_n_dep_vars"],
+					"n_dep_vars": len(params["data_strategy_measurements"]["means"]) // 2,
 					"n_obs": params["n_obs"],
 				    "data_strategy": {
 				        "name": "LinearModel",
