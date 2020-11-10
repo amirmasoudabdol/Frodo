@@ -53,7 +53,7 @@ params_info = {
 
 	"journal_max_pubs": [5000],
 
-	"journal_pub_bias": [z for z in np.arange(0, 1.01, 0.1)],
+	"journal_pub_bias": [z for z in np.arange(0, 0.91, 0.1)],
 
 	"decision_strategy_name": ["DefaultDecisionMaker"]
 	}
