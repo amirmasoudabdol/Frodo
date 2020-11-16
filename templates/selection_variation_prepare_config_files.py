@@ -50,7 +50,7 @@ params_info = {
 
 	"effect_strategy_name": ["StandardizedMeanDifference"],
 
-	"journal_max_pubs": [5000],
+	"journal_max_pubs": [10000],
 
 	"journal_pub_bias": [0, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95],
 
@@ -103,19 +103,13 @@ def main():
 		            "alpha": params["test_alpha"],
 		            "pub_bias": params["journal_pub_bias"],
 		            "side": 0
-		        },
-		        "meta_analysis_metrics": [
-		            {
-		                "name": "EggersTestEstimator",
-		                "alpha": 0.1
-		            }
-		        ]
+		        }
 			},
 			"researcher_parameters": {
 				"decision_strategy": {
 			        "name": "DefaultDecisionMaker",
 		            "initial_selection_policies": [
-		                params["decision_initial_selection"]
+		                params["decision_initial_selection"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]
 		            ],
 		            "will_start_hacking_decision_policies": [
 		                "!sig"
@@ -151,7 +145,7 @@ def main():
 		        "update_config": True,
 		        "progress": False,
 		        "save_all_pubs": False,
-		        "save_meta": True,
+		        "save_meta": False,
 		        "save_overall_summaries": True,
 		        "save_pubs_per_sim_summaries": False,
 		        "save_rejected": False

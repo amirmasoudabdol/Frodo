@@ -97,13 +97,7 @@ def main():
 		            "alpha": params["test_alpha"],
 		            "pub_bias": params["journal_pub_bias"],
 		            "side": 0
-		        },
-		        "meta_analysis_metrics": [
-		            {
-		                "name": "EggersTestEstimator",
-		                "alpha": 0.1
-		            }
-		        ]
+		        }
 			},
 			"researcher_parameters": {
 				"decision_strategy": {
