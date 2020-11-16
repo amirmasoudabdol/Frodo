@@ -12,40 +12,40 @@ params_info = {
 	"data_strategy_n_dep_vars": [2],
 	"n_obs": [x for x in range(8, 100)],
 	"data_strategy_measurements": [
-		{
-		"dist": "mvnorm_distribution",
-    	"means": [0.0, 0.0, x, x],
-        "covs": 0.5,
-        "stddevs": 1.0
-		} for x in np.arange(0.0, 1.01, 0.1)
-	] + [
-		{
-		"dist": "mvnorm_distribution",
-    	"means": [0.0, 0.0, 0.0, x, x, x],
-        "covs": 0.5,
-        "stddevs": 1.0
-		} for x in np.arange(0.0, 1.01, 0.1)
-	] + [
-		{
-		"dist": "mvnorm_distribution",
-    	"means": [0.0, 0.0, 0.0, 0.0, x, x, x, x],
-        "covs": 0.5,
-        "stddevs": 1.0
-		} for x in np.arange(0.0, 1.01, 0.1)
-	] + [
-		{
-		"dist": "mvnorm_distribution",
-    	"means": [0.0, 0.0, 0.0, 0.0, 0.0, x, x, x, x, x],
-        "covs": 0.5,
-        "stddevs": 1.0
-		} for x in np.arange(0.0, 1.01, 0.1)
-	],
+			{
+			"dist": "mvnorm_distribution",
+	    	"means": [0.0, 0.0, x, x],
+	        "covs": 0.5,
+	        "stddevs": 1.0
+			} for x in np.arange(0.0, 1.01, 0.1)
+		] + [
+			{
+			"dist": "mvnorm_distribution",
+	    	"means": [0.0, 0.0, 0.0, x, x, x],
+	        "covs": 0.5,
+	        "stddevs": 1.0
+			} for x in np.arange(0.0, 1.01, 0.1)
+		] + [
+			{
+			"dist": "mvnorm_distribution",
+	    	"means": [0.0, 0.0, 0.0, 0.0, x, x, x, x],
+	        "covs": 0.5,
+	        "stddevs": 1.0
+			} for x in np.arange(0.0, 1.01, 0.1)
+		] + [
+			{
+			"dist": "mvnorm_distribution",
+	    	"means": [0.0, 0.0, 0.0, 0.0, 0.0, x, x, x, x, x],
+	        "covs": 0.5,
+	        "stddevs": 1.0
+			} for x in np.arange(0.0, 1.01, 0.1)
+		],
 	"seed": ["random"],
 	"hacking_probability": [0],
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
-	"test_alpha": [0.05],
+	"test_alpha": [0.05, 0.005, 0.0005],
 	"test_strategy_name": ["TTest"],
 	"test_strategy_alternative": ["TwoSided"],
 
@@ -53,7 +53,7 @@ params_info = {
 
 	"journal_max_pubs": [5000],
 
-	"journal_pub_bias": [z for z in np.arange(0, 0.91, 0.1)],
+	"journal_pub_bias": [0, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95],
 
 	"decision_strategy_name": ["DefaultDecisionMaker"]
 	}
