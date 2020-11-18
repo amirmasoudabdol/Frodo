@@ -67,12 +67,22 @@ params_info = {
                     "stopping_condition": ["sig"]
                 },
 				[
-                    [
-                        "min(pvalue)"
-                    ]
+	                [
+	                    "sig",
+	                    "effect > 0",
+	                    "random"
+	                ],
+	                [
+	                    "effect > 0",
+	                    "min(pvalue)"
+	                ],
+	                [
+	                    "effect < 0",
+	                    "max(pvalue)"
+	                ]
                 ],
 				[
-                    "!sig"
+                    "id < 0"
                 ]
            	]
 		] for f in itertools.product([1, 3, 5], [0.1, 0.2, 0.3, 0.4, 0.5])
@@ -124,7 +134,7 @@ def main():
 				"decision_strategy": {
 			        "name": "DefaultDecisionMaker",
 		            "initial_selection_policies": [
-		                params["decision_initial_selection"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]
+		                params["decision_initial_selection"]
 		            ],
 		            "will_start_hacking_decision_policies": [
 		                "!sig"
