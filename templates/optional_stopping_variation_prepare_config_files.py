@@ -61,9 +61,9 @@ params_info = {
 		            "prevalence": 1,
 		            "defensibility": 1,
                     "max_attempts": 1,
-                    "n_attempts": 1,
+                    "n_attempts": f[0],
                     "num": 0,
-                    "add_by_fraction": f,
+                    "add_by_fraction": f[1],
                     "stopping_condition": ["sig"]
                 },
 				[
@@ -75,7 +75,7 @@ params_info = {
                     "!sig"
                 ]
            	]
-		] for f in [0.1, 0.2, 0.3, 0.4, 0.5]
+		] for f in itertools.product([1, 3, 5], [0.1, 0.2, 0.3, 0.4, 0.5])
 	]
 }
 
@@ -143,9 +143,9 @@ def main():
 			    },
 				"probability_of_being_a_hacker": params["hacking_probability"],
 		        "probability_of_committing_a_hack": 1,
-			    "hacking_strategies": [
+			    "hacking_strategies": 
 					params["hacking_strategies"]
-			    ],
+			    ,
 				"is_pre_processing": False,
 				"pre_processing_methods": [
 					""
