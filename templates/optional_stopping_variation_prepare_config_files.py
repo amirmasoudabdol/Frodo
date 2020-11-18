@@ -9,18 +9,11 @@ params_info = {
 	"log_level": ["info"],
 	"progress": [False],
 	"data_strategy_n_conditions": [2],
-	"n_obs": [5, 10, 20, 30, 50, 80],
+	"n_obs": [10, 20, 30, 40, 50, 60, 70, 80],
 	"data_strategy_measurements": [
 			{
 			"dist": "mvnorm_distribution",
 	    	"means": [0.0, 0.0, x, x],
-	        "covs": 0.5,
-	        "stddevs": 1.0
-			} for x in np.arange(0.0, 1.01, 0.1)
-		] + [
-			{
-			"dist": "mvnorm_distribution",
-	    	"means": [0.0, 0.0, 0.0, x, x, x],
 	        "covs": 0.5,
 	        "stddevs": 1.0
 			} for x in np.arange(0.0, 1.01, 0.1)
@@ -34,7 +27,7 @@ params_info = {
 		] + [
 			{
 			"dist": "mvnorm_distribution",
-	    	"means": [0.0, 0.0, 0.0, 0.0, 0.0, x, x, x, x, x],
+	    	"means": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, x, x, x, x, x, x],
 	        "covs": 0.5,
 	        "stddevs": 1.0
 			} for x in np.arange(0.0, 1.01, 0.1)
