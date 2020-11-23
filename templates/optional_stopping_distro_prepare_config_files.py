@@ -5,7 +5,7 @@ import numpy as np
 import tqdm
 
 params_info = {
-	"n_sims": [1],
+	"n_sims": [750],
 	"log_level": ["info"],
 	"progress": [False],
 	"data_strategy_n_conditions": [2],
@@ -24,6 +24,13 @@ params_info = {
 	        "covs": 0.5,
 	        "stddevs": 1.0
 			} for x in np.arange(0.0, 1.01, 0.1)
+		] + [
+			{
+			"dist": "mvnorm_distribution",
+	    	"means": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, x, x, x, x, x, x],
+	        "covs": 0.5,
+	        "stddevs": 1.0
+			} for x in np.arange(0.0, 1.01, 0.1)
 		],
 	"seed": ["random"],
 	"hacking_probability": [1],
@@ -36,7 +43,7 @@ params_info = {
 
 	"effect_strategy_name": ["StandardizedMeanDifference"],
 
-	"journal_max_pubs": [10000],
+	"journal_max_pubs": [8, 24],
 
 	"journal_pub_bias": [0, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95],
 
@@ -46,6 +53,7 @@ params_info = {
 	],
 
 	"hacking_strategies": [
+		[""],
 		[
 		    [
                 {
@@ -54,9 +62,16 @@ params_info = {
 		            "prevalence": 1,
 		            "defensibility": 1,
                     "max_attempts": 1,
-                    "n_attempts": f[0],
-                    "num": 0,
-                    "ratio": f[1],
+                    "n_attempts": {
+                        "dist": "piecewise_constant_distribution",
+                        "intervals": [1, 2, 3, 4],
+                        "densities": [0.7, 0.2, 0.1]
+                    },
+                    "ratio": {
+                        "dist": "piecewise_constant_distribution",
+                        "intervals": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6],
+                        "densities": [0.5, 0.2, 0.15, 0.1, 0.0]
+                    },
                     "stopping_condition": ["sig"]
                 },
 				[
@@ -78,7 +93,7 @@ params_info = {
                     "id < 0"
                 ]
            	]
-		] for f in itertools.product([1, 3, 5], [0.1, 0.2, 0.3, 0.4, 0.5])
+		] 
 	]
 }
 
@@ -121,7 +136,22 @@ def main():
 		            "alpha": params["test_alpha"],
 		            "pub_bias": params["journal_pub_bias"],
 		            "side": 0
-		        }
+		        },
+		        "meta_analysis_metrics": [
+		            {
+		                "name": "RandomEffectEstimator",
+		                "estimator": "DL"
+		            },
+		            {
+		                "name": "EggersTestEstimator",
+		                "alpha": 0.1
+		            },
+		            {
+		                "name": "RankCorrelation",
+		                "alpha": 0.05,
+		                "alternative": "TwoSided"
+		            }
+		        ]
 			},
 			"researcher_parameters": {
 				"decision_strategy": {
@@ -163,7 +193,7 @@ def main():
 		        "update_config": True,
 		        "progress": False,
 		        "save_all_pubs": False,
-		        "save_meta": False,
+		        "save_meta": True,
 		        "save_overall_summaries": True,
 		        "save_pubs_per_sim_summaries": False,
 		        "save_rejected": False
