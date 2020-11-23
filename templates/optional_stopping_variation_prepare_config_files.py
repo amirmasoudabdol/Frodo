@@ -24,6 +24,13 @@ params_info = {
 	        "covs": 0.5,
 	        "stddevs": 1.0
 			} for x in np.arange(0.0, 1.01, 0.1)
+		] + [
+			{
+			"dist": "mvnorm_distribution",
+	    	"means": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, x, x, x, x, x, x],
+	        "covs": 0.5,
+	        "stddevs": 1.0
+			} for x in np.arange(0.0, 1.01, 0.1)
 		],
 	"seed": ["random"],
 	"hacking_probability": [1],
