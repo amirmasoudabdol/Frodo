@@ -9,18 +9,11 @@ params_info = {
 	"log_level": ["info"],
 	"progress": [False],
 	"data_strategy_n_conditions": [2],
-	"n_obs": [5, 10, 20, 30, 50, 80],
+	"n_obs": [10, 20, 30, 40, 50, 60, 70, 80],
 	"data_strategy_measurements": [
 			{
 			"dist": "mvnorm_distribution",
 	    	"means": [0.0, 0.0, x, x],
-	        "covs": 0.5,
-	        "stddevs": 1.0
-			} for x in np.arange(0.0, 1.01, 0.1)
-		] + [
-			{
-			"dist": "mvnorm_distribution",
-	    	"means": [0.0, 0.0, 0.0, x, x, x],
 	        "covs": 0.5,
 	        "stddevs": 1.0
 			} for x in np.arange(0.0, 1.01, 0.1)
@@ -34,7 +27,7 @@ params_info = {
 		] + [
 			{
 			"dist": "mvnorm_distribution",
-	    	"means": [0.0, 0.0, 0.0, 0.0, 0.0, x, x, x, x, x],
+	    	"means": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, x, x, x, x, x, x],
 	        "covs": 0.5,
 	        "stddevs": 1.0
 			} for x in np.arange(0.0, 1.01, 0.1)
@@ -78,7 +71,17 @@ params_info = {
             },
      		[
                 [
+                    "sig",
+                    "effect > 0",
+                    "random"
+                ],
+                [
+                    "effect > 0",
                     "min(pvalue)"
+                ],
+                [
+                    "effect < 0",
+                    "max(pvalue)"
                 ]
             ],
             [
@@ -133,7 +136,7 @@ def main():
 				"decision_strategy": {
 			        "name": "DefaultDecisionMaker",
 		            "initial_selection_policies": [
-		                params["decision_initial_selection"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]
+		                params["decision_initial_selection"]
 		            ],
 		            "will_start_hacking_decision_policies": [
 		                "!sig"
@@ -152,9 +155,9 @@ def main():
 			    },
 				"probability_of_being_a_hacker": params["hacking_probability"],
 		        "probability_of_committing_a_hack": 1,
-			    "hacking_strategies": [
+			    "hacking_strategies": 
 					params["hacking_strategies"]
-			    ],
+			    ,
 				"is_pre_processing": False,
 				"pre_processing_methods": [
 					""

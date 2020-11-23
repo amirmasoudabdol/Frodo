@@ -63,7 +63,7 @@ params_info = {
                     "max_attempts": 1,
                     "n_attempts": f[0],
                     "num": 0,
-                    "add_by_fraction": f[1],
+                    "ratio": f[1],
                     "stopping_condition": ["sig"]
                 },
 				[

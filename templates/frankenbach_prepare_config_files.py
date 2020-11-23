@@ -160,7 +160,7 @@ def main():
 					                    "max_attempts": 1,
 					                    "n_attempts": 1,
 					                    "num": 0,
-					                    "add_by_fraction": 0.5
+					                    "ratio": 0.5
 					                },
 					                [
 					                    {
