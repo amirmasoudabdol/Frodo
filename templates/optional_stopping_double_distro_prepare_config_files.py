@@ -13,7 +13,7 @@ params_info = {
 		"dist": "piecewise_linear_distribution",
 		"intervals": [0, 3, 5.9, 6, 20, 24, 25 , 30  , 40 , 50,   100,  200,  300],
 		"densities": [0, 0,   0, 1,  1,  1, 0.75, 0.25, 0.1, 0.1, 0.05, 0.05, 0.05]
-	}]
+	}],
 	"data_strategy_measurements": [
 			{
 			"dist": "mvnorm_distribution",
