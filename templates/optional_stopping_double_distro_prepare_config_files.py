@@ -5,14 +5,14 @@ import numpy as np
 import tqdm
 
 params_info = {
-	"n_sims": [1000],
+	"n_sims": [750],
 	"log_level": ["info"],
 	"progress": [False],
 	"data_strategy_n_conditions": [2],
 	"n_obs": [{
-		"dist": "piecewise_linear_distribution",
-		"intervals": [0, 3, 5.9, 6, 20, 24, 25 , 30  , 40 , 50,   100,  200,  300],
-		"densities": [0, 0,   0, 1,  1,  1, 0.75, 0.25, 0.1, 0.1, 0.05, 0.05, 0.05]
+		"dist": "piecewise_constant_distribution",
+		"intervals": [6, 24, 300],
+		"densities": [0.75,  0.25]
 	}],
 	"data_strategy_measurements": [
 			{
@@ -65,16 +65,19 @@ params_info = {
 		            "target": "Both",
 		            "prevalence": 1,
 		            "defensibility": 1,
-                    "max_attempts": 1,
-                    "n_attempts": {
-                        "dist": "piecewise_constant_distribution",
-                        "intervals": [1, 2, 3, 4],
-                        "densities": [0.7, 0.2, 0.1]
-                    },
                     "ratio": {
-                        "dist": "piecewise_constant_distribution",
-                        "intervals": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6],
-                        "densities": [0.5, 0.2, 0.15, 0.1, 0.0]
+                        "dist": "truncated_normal_distribution",
+                        "mean": 0.1,
+                        "stddev": 0.125,
+                        "lower": 0.1,
+                        "upper": 0.5,
+                    },
+                    "n_attempts": {
+                        "dist": "truncated_normal_distribution",
+                        "mean": 1,
+                        "stddev": 1.25,
+                        "lower": 1,
+                        "upper": 5
                     },
                     "stopping_condition": ["sig"]
                 },

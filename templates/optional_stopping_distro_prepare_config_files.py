@@ -61,16 +61,19 @@ params_info = {
 		            "target": "Both",
 		            "prevalence": 1,
 		            "defensibility": 1,
-                    "max_attempts": 1,
-                    "n_attempts": {
-                        "dist": "piecewise_constant_distribution",
-                        "intervals": [1, 2, 3, 4],
-                        "densities": [0.7, 0.2, 0.1]
-                    },
                     "ratio": {
-                        "dist": "piecewise_constant_distribution",
-                        "intervals": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6],
-                        "densities": [0.5, 0.2, 0.15, 0.1, 0.0]
+                        "dist": "truncated_normal_distribution",
+                        "mean": 0.1,
+                        "stddev": 0.125,
+                        "lower": 0.1,
+                        "upper": 0.5,
+                    },
+                    "n_attempts": {
+                        "dist": "truncated_normal_distribution",
+                        "mean": 1,
+                        "stddev": 1.25,
+                        "lower": 1,
+                        "upper": 5
                     },
                     "stopping_condition": ["sig"]
                 },
