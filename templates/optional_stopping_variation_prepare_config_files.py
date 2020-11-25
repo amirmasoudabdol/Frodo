@@ -62,7 +62,6 @@ params_info = {
 		            "defensibility": 1,
                     "max_attempts": 1,
                     "n_attempts": f[0],
-                    "num": 0,
                     "ratio": f[1],
                     "stopping_condition": ["sig"]
                 },
