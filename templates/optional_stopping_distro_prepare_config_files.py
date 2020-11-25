@@ -53,7 +53,6 @@ params_info = {
 	],
 
 	"hacking_strategies": [
-		[""],
 		[
 		    [
                 {
@@ -177,7 +176,7 @@ def main():
 		                ""
 		            ]
 			    },
-				"probability_of_being_a_hacker": 0 if params["hacking_strategies"][0] == "" else params["hacking_probability"],
+				"probability_of_being_a_hacker": params["hacking_probability"],
 		        "probability_of_committing_a_hack": 1,
 			    "hacking_strategies": 
 					params["hacking_strategies"]
