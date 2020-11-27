@@ -19,9 +19,9 @@ params_info = {
 		} for x in np.arange(0.0, 1.01, 0.1)
 	],
 	"n_obs": [{
-		"dist": "piecewise_linear_distribution",
-		"intervals": [0, 3, 5.9, 6, 20, 24, 25 , 30  , 40 , 50,   100,  200,  300],
-		"densities": [0, 0,   0, 1,  1,  1, 0.75, 0.25, 0.1, 0.1, 0.05, 0.05, 0.05]
+		"dist": "piecewise_constant_distribution",
+		"intervals": [6, 24, 300],
+		"densities": [0.75,  0.25]
 	}],
 	"seed": ["random"],
 	"hacking_probability": [0, 1],
