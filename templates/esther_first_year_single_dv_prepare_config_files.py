@@ -137,9 +137,7 @@ def main():
 				            "target": "Both",
 				            "prevalence": 1,
 				            "defensibility": 1,
-		                    "max_attempts": 1,
 		                    "n_attempts": 1,
-		                    "num": 0,
 		                    "ratio": 0.3
 		                },
 						[
@@ -157,9 +155,7 @@ def main():
 				            "target": "Both",
 				            "prevalence": 1,
 				            "defensibility": 1,
-		                    "max_attempts": 1,
 		                    "n_attempts": 1,
-		                    "num": 0,
 		                    "ratio": 0.3
 		                },
 						[
@@ -177,9 +173,7 @@ def main():
 				            "target": "Both",
 				            "prevalence": 1,
 				            "defensibility": 1,
-		                    "max_attempts": 1,
 		                    "n_attempts": 1,
-		                    "num": 0,
 		                    "ratio": 0.3
 		                },
 						[
