@@ -103,7 +103,7 @@ def main():
 			"researcher_parameters": {
 					"decision_strategy": {
 				      "name": params["decision_strategy_name"],
-	                  "between_hacks_selection_policies": [
+	                  "between_stashed_selection_policies": [
 				                [
 				                    "effect > 0",
 				                    "min(pvalue)"

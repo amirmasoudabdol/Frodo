@@ -144,7 +144,7 @@ def main():
 		            "stashing_policy": [
 		                ""
 		            ],
-                    "between_hacks_selection_policies": [
+                    "between_stashed_selection_policies": [
 		                [""]
 		            ],
 		            "between_replications_selection_policies": [[""]],

@@ -84,7 +84,7 @@ def main():
 			"researcher_parameters": {
 				"decision_strategy": {
 					"name": "DefaultDecisionMaker",
-					"between_hacks_selection_policies": [
+					"between_stashed_selection_policies": [
 						[
 						    "effect > 0",
 						    "min(pvalue)"

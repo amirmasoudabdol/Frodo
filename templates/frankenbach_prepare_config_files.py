@@ -123,7 +123,7 @@ def main():
 			"researcher_parameters": {
 					"decision_strategy": {
 				      "name": "DefaultDecisionMaker",
-	                  "between_hacks_selection_policies": [
+	                  "between_stashed_selection_policies": [
 				                ["sig", "min(pvalue)"]
 				            ],
 				            "between_replications_selection_policies": [[""]],
