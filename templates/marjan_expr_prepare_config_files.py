@@ -46,7 +46,7 @@ params_info = {
 	"journal_selection_strategy_name": ["FreeSelection"],
 	"journal_max_pubs": [40],
 
-	"decision_strategy_name": ["DefaultDecisionMaker"],
+	"research_strategy_name": ["DefaultResearchStrategy"],
 
 	"n_reps": [5],
 	"nb": [10]
@@ -101,8 +101,8 @@ def main():
 		        ]
 			},
 			"researcher_parameters": {
-					"decision_strategy": {
-				      "name": params["decision_strategy_name"],
+					"research_strategy": {
+				      "name": params["research_strategy_name"],
 	                  "between_stashed_selection_policies": [
 				                [
 				                    "effect > 0",

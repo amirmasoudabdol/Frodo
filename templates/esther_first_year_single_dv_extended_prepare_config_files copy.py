@@ -5,104 +5,41 @@ import numpy as np
 import tqdm
 
 params_info = {
-	"n_sims": [750],
+	"n_sims": [1000],
 	"log_level": ["info"],
 	"progress": [False],
 	"data_strategy_n_conditions": [2],
-	"n_obs": [{
-		"dist": "piecewise_constant_distribution",
-		"intervals": [6, 24, 300],
-		"densities": [0.75,  0.25]
-	}],
+	"data_strategy_n_dep_vars": [1],
 	"data_strategy_measurements": [
-			{
-			"dist": "mvnorm_distribution",
-	    	"means": [0.0, 0.0, x, x],
-	        "covs": 0.5,
-	        "stddevs": 1.0
-			} for x in np.arange(0.0, 1.01, 0.1)
-		] + [
-			{
-			"dist": "mvnorm_distribution",
-	    	"means": [0.0, 0.0, 0.0, 0.0, x, x, x, x],
-	        "covs": 0.5,
-	        "stddevs": 1.0
-			} for x in np.arange(0.0, 1.01, 0.1)
-		] + [
-			{
-			"dist": "mvnorm_distribution",
-	    	"means": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, x, x, x, x, x, x],
-	        "covs": 0.5,
-	        "stddevs": 1.0
-			} for x in np.arange(0.0, 1.01, 0.1)
-		],
+		{
+		"dist": "mvnorm_distribution",
+    	"means": [0.0, x],
+        "covs": 0.0,
+        "stddevs": 1.0
+		} for x in np.arange(0.0, 1.01, 0.1)
+	],
+	"n_obs": [{
+		"dist": "piecewise_linear_distribution",
+		"intervals": [0, 3, 5.9, 6, 20, 24, 25 , 30  , 40 , 50,   100,  200,  300],
+		"densities": [0, 0,   0, 1,  1,  1, 0.75, 0.25, 0.1, 0.1, 0.05, 0.05, 0.05]
+	}],
 	"seed": ["random"],
-	"hacking_probability": [1],
+	"hacking_probability": [0, 1],
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
-	"test_alpha": [0.05, 0.005, 0.0005],
+	"test_alpha": [0.05],
 	"test_strategy_name": ["TTest"],
 	"test_strategy_alternative": ["TwoSided"],
 
 	"effect_strategy_name": ["StandardizedMeanDifference"],
 
-	"journal_max_pubs": [8, 24],
+	"journal_max_pubs": [8, 24, 72],
 
-	"journal_pub_bias": [0, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95],
+	"journal_pub_bias": [z for z in np.arange(0, 1.01, 0.1)],
 
-	"research_strategy_name": ["DefaultResearchStrategy"],
-	"decision_initial_selection": [
-		["sig", "effect > 0", "random"]
-	],
-
-	"hacking_strategies": [
-		[""],
-		[
-		    [
-                {
-                    "name": "OptionalStopping",
-		            "target": "Both",
-		            "prevalence": 1,
-		            "defensibility": 1,
-                    "ratio": {
-                        "dist": "truncated_normal_distribution",
-                        "mean": 0.1,
-                        "stddev": 0.125,
-                        "lower": 0.1,
-                        "upper": 0.5,
-                    },
-                    "n_attempts": {
-                        "dist": "truncated_normal_distribution",
-                        "mean": 1,
-                        "stddev": 1.25,
-                        "lower": 1,
-                        "upper": 5
-                    },
-                    "stopping_condition": ["sig"]
-                },
-				[
-	                [
-	                    "sig",
-	                    "effect > 0",
-	                    "random"
-	                ],
-	                [
-	                    "effect > 0",
-	                    "min(pvalue)"
-	                ],
-	                [
-	                    "effect < 0",
-	                    "max(pvalue)"
-	                ]
-                ],
-				[
-                    "id < 0"
-                ]
-           	]
-		] 
-	]
-}
+	"research_strategy_name": ["DefaultResearchStrategy"]
+	}
 
 
 def main():
@@ -120,7 +57,7 @@ def main():
 			"experiment_parameters": {
                     "n_reps": 1,
 					"n_conditions": params["data_strategy_n_conditions"],
-					"n_dep_vars": len(params["data_strategy_measurements"]["means"]) // 2,
+					"n_dep_vars": params["data_strategy_n_dep_vars"],
 					"n_obs": params["n_obs"],
 				    "data_strategy": {
 				        "name": "LinearModel",
@@ -141,10 +78,13 @@ def main():
 		        "selection_strategy": {
 		            "name": "SignificantSelection",
 		            "alpha": params["test_alpha"],
-		            "pub_bias": params["journal_pub_bias"],
+		            "journal_pub_bias": params["journal_pub_bias"],
 		            "side": 0
 		        },
 		        "meta_analysis_metrics": [
+		            {
+		                "name": "FixedEffectEstimator"
+		            },
 		            {
 		                "name": "RandomEffectEstimator",
 		                "estimator": "DL"
@@ -152,6 +92,12 @@ def main():
 		            {
 		                "name": "EggersTestEstimator",
 		                "alpha": 0.1
+		            },
+		            {
+		                "name": "TrimAndFill",
+		                "alpha": 0.05,
+		                "estimator": "R0",
+		                "side": "auto"
 		            },
 		            {
 		                "name": "RankCorrelation",
@@ -164,16 +110,16 @@ def main():
 				"research_strategy": {
 			        "name": "DefaultResearchStrategy",
 		            "initial_selection_policies": [
-		                params["decision_initial_selection"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]
+		                ["id == 1"]
 		            ],
 		            "will_start_hacking_decision_policies": [
 		                "!sig"
 		            ],
 		            "stashing_policy": [
-		                ""
+		                "min(pvalue)"
 		            ],
                     "between_stashed_selection_policies": [
-		                [""]
+		                ["last"]
 		            ],
 		            "between_replications_selection_policies": [[""]],
 		            "will_continue_replicating_decision_policy": [""],
@@ -181,11 +127,70 @@ def main():
 		                ""
 		            ]
 			    },
-				"probability_of_being_a_hacker": 0 if params["hacking_strategies"][0] == "" else params["hacking_probability"],
+				"probability_of_being_a_hacker": params["hacking_probability"],
 		        "probability_of_committing_a_hack": 1,
-			    "hacking_strategies": 
-					params["hacking_strategies"]
-			    ,
+			    "hacking_strategies": [
+					[
+		                {
+		                    "name": "OptionalStopping",
+				            "target": "Both",
+				            "prevalence": 1,
+				            "defensibility": 1,
+		                    "max_attempts": 1,
+		                    "n_attempts": 1,
+		                    "num": 0,
+		                    "ratio": 0.3
+		                },
+						[
+                            [
+                                "min(pvalue)"
+                            ]
+                        ],
+						[
+                            "!sig"
+		                ]
+	               	],
+	               	[
+		                {
+		                    "name": "OptionalStopping",
+				            "target": "Both",
+				            "prevalence": 1,
+				            "defensibility": 1,
+		                    "max_attempts": 1,
+		                    "n_attempts": 1,
+		                    "num": 0,
+		                    "ratio": 0.3
+		                },
+						[
+                            [
+                                "min(pvalue)"
+                            ]
+                        ],
+						[
+                            "!sig"
+		                ]
+	               	],
+	               	[
+		                {
+		                    "name": "OptionalStopping",
+				            "target": "Both",
+				            "prevalence": 1,
+				            "defensibility": 1,
+		                    "max_attempts": 1,
+		                    "n_attempts": 1,
+		                    "num": 0,
+		                    "ratio": 0.3
+		                },
+						[
+                            [
+                                "min(pvalue)"
+                            ]
+                        ],
+						[
+                            "!sig"
+		                ]
+	               	]
+			    ],
 				"is_pre_processing": False,
 				"pre_processing_methods": [
 					""
@@ -202,7 +207,7 @@ def main():
 		        "save_all_pubs": False,
 		        "save_meta": True,
 		        "save_overall_summaries": True,
-		        "save_pubs_per_sim_summaries": False,
+		        "save_pubs_per_sim_summaries": True,
 		        "save_rejected": False
 			}
 		}

@@ -82,8 +82,8 @@ def main():
 				}
 			},
 			"researcher_parameters": {
-				"decision_strategy": {
-					"name": "DefaultDecisionMaker",
+				"research_strategy": {
+					"name": "DefaultResearchStrategy",
 					"between_stashed_selection_policies": [
 						[
 						    "effect > 0",

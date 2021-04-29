@@ -30,7 +30,7 @@
    },
    "researcher_parameters": {
       "decision-strategy": {
-         "name": "DefaultDecisionMaker",
+         "name": "DefaultResearchStrategy",
          "preference": "MinPvalue"
       },
       "is-phacker": false,

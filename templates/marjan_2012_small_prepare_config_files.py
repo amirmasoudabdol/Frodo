@@ -36,11 +36,11 @@ params_info = {
 
 	"effect_strategy_name": ["StandardizedMeanDifference"],
 
-	"journal_selection_strategy_name": ["FreeSelection"],
+	"journal_review_strategy_name": ["FreeSelection"],
 	"journal_max_pubs": [10000],
 
-	"decision_strategy_name": ["ImDefaultDecisionMaker"],
-	"decision_strategy_policies": [[["first"]], [["random"]], [["min(pvalue)"]], [["max(pvalue)"]]]
+	"research_strategy_name": ["ImDefaultResearchStrategy"],
+	"research_strategy_policies": [[["first"]], [["random"]], [["min(pvalue)"]], [["max(pvalue)"]]]
 	}
 
 
@@ -77,15 +77,15 @@ def main():
 			},
 			"journal_parameters": {
 					"max_pubs": params["journal_max_pubs"],
-					"selection_strategy": {
-							"name": params["journal_selection_strategy_name"]
+					"review_strategy": {
+							"name": params["journal_review_strategy_name"]
 					}
 			},
 			"researcher_parameters": {
-					"decision_strategy": {
-			            "name": "ImDefaultDecisionMaker",
+					"research_strategy": {
+			            "name": "ImDefaultResearchStrategy",
 			            "decision_policies": 
-			            	params["decision_strategy_policies"]
+			            	params["research_strategy_policies"]
 			            ,
 			            "final_decision_policies": ["none"],
 			            "submission_policies": ["none"]

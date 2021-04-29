@@ -54,7 +54,7 @@ params_info = {
 
 	"journal_pub_bias": [0, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95],
 
-	"decision_strategy_name": ["DefaultDecisionMaker"],
+	"research_strategy_name": ["DefaultResearchStrategy"],
 	"decision_initial_selection": [
 		["sig", "effect > 0", "first"],
 		["sig", "effect > 0", "random"],
@@ -106,8 +106,8 @@ def main():
 		        }
 			},
 			"researcher_parameters": {
-				"decision_strategy": {
-			        "name": "DefaultDecisionMaker",
+				"research_strategy": {
+			        "name": "DefaultResearchStrategy",
 		            "initial_selection_policies": [
 		                params["decision_initial_selection"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]
 		            ],

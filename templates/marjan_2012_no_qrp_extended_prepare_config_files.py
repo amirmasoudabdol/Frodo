@@ -43,7 +43,7 @@ params_info = {
 	# "journal_max_pubs": [5000],
 	# "journal_pub_bias": [0],
 
-	"decision_strategy_name": ["DefaultDecisionMaker"]
+	"research_strategy_name": ["DefaultResearchStrategy"]
 	}
 
 
@@ -98,8 +98,8 @@ def main():
 		        ]
 			},
 			"researcher_parameters": {
-				"decision_strategy": {
-			      	"name": "DefaultDecisionMaker",
+				"research_strategy": {
+			      	"name": "DefaultResearchStrategy",
                   	"between_stashed_selection_policies": [
 		                [
 		                    "effect > 0",

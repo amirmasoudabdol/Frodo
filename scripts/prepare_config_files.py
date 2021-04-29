@@ -30,12 +30,12 @@ params_info = {
 	"test_strategy_name": ["TTest"],
 	"test_strategy_alternative": ["TwoSided"],
 
-	"journal_selection_strategy_name": ["FreeSelection"],
+	"journal_review_strategy_name": ["FreeSelection"],
 	"journal_max_pubs": [10],
 
-	"decision_strategy_name": ["DefaultDecisionMaker"],
-	"decision_strategy_preference": ["MinPvalue"],
-	"decision_strategy_submission_policy": ["Anything"]
+	"research_strategy_name": ["DefaultResearchStrategy"],
+	"research_strategy_preference": ["MinPvalue"],
+	"research_strategy_submission_policy": ["Anything"]
 	}
 
 
@@ -74,15 +74,15 @@ def main():
 			},
 			"journal_parameters": {
 					"max_pubs": params["journal_max_pubs"],
-					"selection_strategy": {
-							"name": params["journal_selection_strategy_name"]
+					"review_strategy": {
+							"name": params["journal_review_strategy_name"]
 					}
 			},
 			"researcher_parameters": {
-					"decision_strategy": {
-							"name": params["decision_strategy_name"],
-							"preference": params["decision_strategy_preference"],
-							"submission_policy": params["decision_strategy_submission_policy"]
+					"research_strategy": {
+							"name": params["research_strategy_name"],
+							"preference": params["research_strategy_preference"],
+							"submission_policy": params["research_strategy_submission_policy"]
 					},
 					"hacking_strategies": [
 							[

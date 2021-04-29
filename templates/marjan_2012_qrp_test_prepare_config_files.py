@@ -8,8 +8,8 @@ nSmall = np.array([5, 10, 20])
 nLarge = 5 * nSmall
 
 params_info = {
-	"n_sims": [1000],
-	"log_level": ["info"],
+	"n_sims": [1],
+	"log_level": ["off"],
 	"progress": [False],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [2],
@@ -21,7 +21,7 @@ params_info = {
 	              [0.5,   1.0,   0.0,   0.0],
 	              [0.0,   0.0,   1.0,   0.5],
 	              [0.0,   0.0,   0.5,   1.0]]
-		} for x in np.arange(0.0, 1.01, 0.1)
+		} for x in np.arange(0.0, 1.01, 0.05)
 	],
 	"n_obs": [5, 10, 20, 25, 50, 100],
 	"k": [2],
@@ -31,19 +31,16 @@ params_info = {
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
-	"test_alpha": [0.05, 0.005, 0.0005],
+	"test_alpha": [0.05],
 	"test_strategy_name": ["TTest"],
 	"test_strategy_alternative": ["TwoSided"],
 
 	"effect_strategy_name": ["StandardizedMeanDifference"],
 
-	"journal_max_pubs": [8, 24],
-	"journal_pub_bias": [z for z in np.arange(0, 1.01, 0.1)],
+	"journal_selection_strategy_name": ["FreeSelection"],
+	"journal_max_pubs": [1000],
 
-	# "journal_max_pubs": [5000],
-	# "journal_pub_bias": [0],
-
-	"research_strategy_name": ["DefaultResearchStrategy"]
+	"n_reps": [5]
 	}
 
 
@@ -70,7 +67,7 @@ def main():
 				"n_conditions": params["data_strategy_n_conditions"],
 				"n_dep_vars": params["data_strategy_n_dep_vars"],
 				"n_obs": params["n_obs"],
-                "n_reps": 1 if params["n_obs"] in nLarge else 5,
+                "n_reps": 1 if params["n_obs"] in nLarge else params["n_reps"],
 				"test_strategy": {
 					"name": params["test_strategy_name"],
 					"alpha": params["test_alpha"],
@@ -80,60 +77,44 @@ def main():
 			},
 			"journal_parameters": {
 				"max_pubs": params["journal_max_pubs"],
-		        "selection_strategy": {
-		            "name": "SignificantSelection",
-		            "alpha": params["test_alpha"],
-		            "side": 0,
-		            "pub_bias": params["journal_pub_bias"]
-		        },
-		        "meta_analysis_metrics": [
-		            {
-		                "name": "RandomEffectEstimator",
-		                "estimator": "DL"
-		            },
-		            {
-		                "name": "EggersTestEstimator",
-		                "alpha": 0.1
-		            }
-		        ]
+				"selection_strategy": {
+					"name": params["journal_selection_strategy_name"]
+				}
 			},
 			"researcher_parameters": {
 				"research_strategy": {
-			      "name": params["research_strategy_name"],
-                  "between_stashed_selection_policies": [
-		                [
-		                    "effect > 0",
-		                    "min(pvalue)"
-		                ],
-		                [
-		                    "effect < 0",
-		                    "max(pvalue)"
-		                ]
-		            ],
-		            "between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["effect > 0", "sig", "first"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]],
-		            "initial_selection_policies": [
-		                [
-		                    "id == 2",
-		                    "sig",
-		                    "effect > 0"
-		                ],
-		                [
-		                    "id == 3",
-		                    "sig",
-		                    "effect > 0"
-		                ]
-		            ],
-		            "stashing_policy": [
-		                "all"
-		            ],
-		            "submission_decision_policies": [
-		                ""
-		            ],
-					"will_continue_replicating_decision_policy": [""],
-		            "will_start_hacking_decision_policies": [
-		                "effect < 0",
-		                "!sig"
-		            ]
+					"name": "DefaultResearchStrategy",
+					"initial_selection_policies": [
+						[
+						    "id == 2",
+						    "sig",
+						    "effect > 0"
+						],
+						[
+						    "id == 3",
+						    "sig",
+						    "effect > 0"
+						]
+					],
+					"between_stashed_selection_policies": [
+						["effect > 0", "min(pvalue)"],
+						["effect < 0", "max(pvalue)"]
+					],
+					"between_replications_selection_policies": 
+					[[""]] if params["n_obs"] in nLarge else [["effect > 0", "sig", "first"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]],
+					"stashing_policy": [
+						"all"
+					],
+					"submission_decision_policies": [
+						""
+					],
+					"will_continue_replicating_decision_policy": [
+						""
+					],
+					"will_start_hacking_decision_policies": [
+						"effect < 0",
+						"!sig"
+					]
 			    },
 				"probability_of_being_a_hacker": params["hacking_probability"],
 	        	"probability_of_committing_a_hack": 1,
@@ -141,13 +122,12 @@ def main():
 	    			[
 		                {
 		                    "name": "OptionalStopping",
+		                    "max_attempts": 1,
+		                    "n_attempts": 1,
 				            "target": "Both",
 				            "prevalence": 0.1,
 				            "defensibility": 0.1,
-		                    "max_attempts": 1,
-		                    "n_attempts": 10,
-		                    "num": 1,
-		                    "stopping_condition": ["sig"]
+		                    "num": 10
 		                },
 		                [
                             [
@@ -156,41 +136,59 @@ def main():
                             ]
                         ],
 						[
-                            "effect < 0",
+							"effect < 0",
                             "!sig"
                         ]
 		            ],
 		            [
-		               {
-			                "name": "SubjectiveOutlierRemoval",
-			                "min_observations": 5,
-			                "range": [
-			                    2,
-			                    4
-			                ],
-			                "step_size": 0.5,
+		                {
+		                    "name": "OutliersRemoval",
+		                    "max_attempts": 1,
+		                    "min_observations": 1,
+		                    "multipliers": [
+		                        2
+		                    ],
+		                    "n_attempts": 1,
 				            "target": "Both",
 				            "prevalence": 0.1,
-				            "defensibility": 0.1,
-			                "stopping_condition": [
-			                    "sig"
-			                ]
-			            },
-		            	[
+				            "defensibility": 0.1,		                    
+		                    "num": params["n_obs"],
+		                    "order": "random"
+		                },
+	             		[
                             [
                                 "effect > 0",
                                 "min(pvalue)"
                             ]
                         ],
-		                [        
+                        [
                             "effect < 0",
                             "!sig"
-                        ]
+		                ]
 		            ]
 		        ],
 				"is_pre_processing": params["is_pre_processing"],
 				"pre_processing_methods": [
-					""
+					{
+		               "name": "OptionalStopping",
+		               "level": "dv",
+		               "num": 10,
+		               "n_attempts": 1,
+		               "max_attempts": 1
+		          	},
+					{
+						"name": "OutliersRemoval",
+						"level": "dv",
+						"max_attempts": 1,
+						"min_observations": 1,
+						"mode": "Recursive",
+						"multipliers": [
+								2
+						],
+						"n_attempts": 1,
+						"num": params["n_obs"],
+						"order": "random"
+					}
 				]
 			},
 			"simulation_parameters": {
@@ -202,7 +200,7 @@ def main():
 		        "update_config": True,
 		        "progress": False,
 		        "save_all_pubs": True,
-		        "save_meta": True,
+		        "save_meta": False,
 		        "save_overall_summaries": True,
 		        "save_pubs_per_sim_summaries": False,
 		        "save_rejected": False

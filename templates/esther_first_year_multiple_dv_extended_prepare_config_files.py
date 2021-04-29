@@ -4,44 +4,39 @@ import itertools
 import numpy as np
 import tqdm
 
-nSmall = np.array([5, 10, 20])
-nLarge = 5 * nSmall
-
 params_info = {
 	"n_sims": [1000],
 	"log_level": ["info"],
 	"progress": [False],
-	"data_strategy_n_conditions": [2],
-	"data_strategy_n_dep_vars": [2],
+	"data_strategy_n_conditions": [5],
+	"data_strategy_n_dep_vars": [1],
 	"data_strategy_measurements": [
 		{
 		"dist": "mvnorm_distribution",
-    	"means": [0.0, 0.0, x, x],
-        "sigma": [[1.0,   0.5,   0.0,   0.0],
-	              [0.5,   1.0,   0.0,   0.0],
-	              [0.0,   0.0,   1.0,   0.5],
-	              [0.0,   0.0,   0.5,   1.0]]
+    	"means": [0.0, x, x, x, x],
+        "covs": 0.0,
+        "stddevs": 1.0
 		} for x in np.arange(0.0, 1.01, 0.1)
 	],
-	"n_obs": [5, 10, 20, 25, 50, 100],
-	"k": [2],
+	"n_obs": [{
+		"dist": "piecewise_linear_distribution",
+		"intervals": [0, 3, 5.9, 6, 20, 24, 25 , 30  , 40 , 50,   100,  200,  300],
+		"densities": [0, 0,   0, 1,  1,  1, 0.75, 0.25, 0.1, 0.1, 0.05, 0.05, 0.05]
+	}],
 	"seed": ["random"],
-	"is_pre_processing": [False],
-	"hacking_probability": [1],
+	"hacking_probability": [0, 1],
 	"output_path": ["../outputs/"],
 	"output_prefix": [""],
 
-	"test_alpha": [0.05, 0.005, 0.0005],
+	"test_alpha": [0.05],
 	"test_strategy_name": ["TTest"],
 	"test_strategy_alternative": ["TwoSided"],
 
 	"effect_strategy_name": ["StandardizedMeanDifference"],
 
-	"journal_max_pubs": [8, 24],
-	"journal_pub_bias": [z for z in np.arange(0, 1.01, 0.1)],
+	"journal_max_pubs": [8, 24, 72],
 
-	# "journal_max_pubs": [5000],
-	# "journal_pub_bias": [0],
+	"journal_pub_bias": [z for z in np.arange(0, 1.01, 0.1)],
 
 	"research_strategy_name": ["DefaultResearchStrategy"]
 	}
@@ -60,6 +55,10 @@ def main():
 
 		data = {
 			"experiment_parameters": {
+                "n_reps": 1,
+				"n_conditions": params["data_strategy_n_conditions"],
+				"n_dep_vars": params["data_strategy_n_dep_vars"],
+				"n_obs": params["n_obs"],
 			    "data_strategy": {
 			        "name": "LinearModel",
 			        "measurements": params["data_strategy_measurements"]
@@ -67,10 +66,6 @@ def main():
 				"effect_strategy": {
 					"name": params["effect_strategy_name"]
 				},
-				"n_conditions": params["data_strategy_n_conditions"],
-				"n_dep_vars": params["data_strategy_n_dep_vars"],
-				"n_obs": params["n_obs"],
-                "n_reps": 1 if params["n_obs"] in nLarge else 5,
 				"test_strategy": {
 					"name": params["test_strategy_name"],
 					"alpha": params["test_alpha"],
@@ -83,10 +78,13 @@ def main():
 		        "selection_strategy": {
 		            "name": "SignificantSelection",
 		            "alpha": params["test_alpha"],
-		            "side": 0,
-		            "pub_bias": params["journal_pub_bias"]
+		            "journal_pub_bias": params["journal_pub_bias"],
+		            "side": 0
 		        },
 		        "meta_analysis_metrics": [
+		            {
+		                "name": "FixedEffectEstimator"
+		            },
 		            {
 		                "name": "RandomEffectEstimator",
 		                "estimator": "DL"
@@ -94,101 +92,108 @@ def main():
 		            {
 		                "name": "EggersTestEstimator",
 		                "alpha": 0.1
+		            },
+		            {
+		                "name": "TrimAndFill",
+		                "alpha": 0.05,
+		                "estimator": "R0",
+		                "side": "auto"
+		            },
+		            {
+		                "name": "RankCorrelation",
+		                "alpha": 0.05,
+		                "alternative": "TwoSided"
 		            }
 		        ]
 			},
 			"researcher_parameters": {
 				"research_strategy": {
-			      "name": params["research_strategy_name"],
-                  "between_stashed_selection_policies": [
-		                [
-		                    "effect > 0",
-		                    "min(pvalue)"
-		                ],
-		                [
-		                    "effect < 0",
-		                    "max(pvalue)"
-		                ]
-		            ],
-		            "between_replications_selection_policies": [[""]] if params["n_obs"] in nLarge else [["effect > 0", "sig", "first"], ["effect > 0", "min(pvalue)"], ["effect < 0", "max(pvalue)"]],
-		            "initial_selection_policies": [
-		                [
-		                    "id == 2",
-		                    "sig",
-		                    "effect > 0"
-		                ],
-		                [
-		                    "id == 3",
-		                    "sig",
-		                    "effect > 0"
-		                ]
+			      "name": "DefaultResearchStrategy",
+					"initial_selection_policies": [
+					    [
+					        "min(pvalue)"
+					    ]
+					],
+		            "will_start_hacking_decision_policies": [
+		                "!sig"
 		            ],
 		            "stashing_policy": [
-		                "all"
+		                "min(pvalue)"
 		            ],
+                    "between_stashed_selection_policies": [
+			            ["last"]
+		            ],
+		            "between_replications_selection_policies": [[""]],
+		            "will_continue_replicating_decision_policy": [""],
 		            "submission_decision_policies": [
 		                ""
 		            ],
-					"will_continue_replicating_decision_policy": [""],
-		            "will_start_hacking_decision_policies": [
-		                "effect < 0",
-		                "!sig"
-		            ]
 			    },
 				"probability_of_being_a_hacker": params["hacking_probability"],
-	        	"probability_of_committing_a_hack": 1,
+		        "probability_of_committing_a_hack": 1,
 			    "hacking_strategies": [
-	    			[
+					[
 		                {
 		                    "name": "OptionalStopping",
-				            "target": "Both",
-				            "prevalence": 0.1,
-				            "defensibility": 0.1,
+		                    "target": "Both",
+		                    "prevalence": 1,
+		                    "defensibility": 1,
 		                    "max_attempts": 1,
-		                    "n_attempts": 10,
-		                    "num": 1,
-		                    "stopping_condition": ["sig"]
+		                    "n_attempts": 1,
+		                    "num": 0,
+		                    "ratio": 0.3
 		                },
-		                [
+						[
                             [
-                                "effect > 0",
                                 "min(pvalue)"
                             ]
                         ],
 						[
-                            "effect < 0",
                             "!sig"
-                        ]
-		            ],
-		            [
-		               {
-			                "name": "SubjectiveOutlierRemoval",
-			                "min_observations": 5,
-			                "range": [
-			                    2,
-			                    4
-			                ],
-			                "step_size": 0.5,
-				            "target": "Both",
-				            "prevalence": 0.1,
-				            "defensibility": 0.1,
-			                "stopping_condition": [
-			                    "sig"
-			                ]
-			            },
-		            	[
+		                ]
+	               	],
+	               	[
+		                {
+		                    "name": "OptionalStopping",
+		                    "target": "Both",
+		                    "prevalence": 1,
+		                    "defensibility": 1,
+		                    "max_attempts": 1,
+		                    "n_attempts": 1,
+		                    "num": 0,
+		                    "ratio": 0.3
+		                },
+						[
                             [
-                                "effect > 0",
                                 "min(pvalue)"
                             ]
                         ],
-		                [        
-                            "effect < 0",
+						[
                             "!sig"
-                        ]
-		            ]
-		        ],
-				"is_pre_processing": params["is_pre_processing"],
+		                ]
+	               	],
+	               	[
+		                {
+		                    "name": "OptionalStopping",
+		                    "target": "Both",
+		                    "prevalence": 1,
+		                    "defensibility": 1,
+		                    "max_attempts": 1,
+		                    "n_attempts": 1,
+		                    "num": 0,
+		                    "ratio": 0.3
+		                },
+						[
+                            [
+                                "min(pvalue)"
+                            ]
+                        ],
+						[
+                            "!sig"
+		                ]
+	               	]
+				],
+				"is_pre_processing": False,
 				"pre_processing_methods": [
 					""
 				]
@@ -204,7 +209,7 @@ def main():
 		        "save_all_pubs": True,
 		        "save_meta": True,
 		        "save_overall_summaries": True,
-		        "save_pubs_per_sim_summaries": False,
+		        "save_pubs_per_sim_summaries": True,
 		        "save_rejected": False
 			}
 		}

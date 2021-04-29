@@ -30,11 +30,11 @@ params_info = {
 	"test_strategy_name": ["TTest"],
 	"test_strategy_alternative": ["TwoSided"],
 
-	"journal_selection_strategy_name": ["FreeSelection"],
+	"journal_review_strategy_name": ["FreeSelection"],
 	"journal_max_pubs": [100],
 
-	"decision_strategy_name": ["DefaultDecisionMaker"],
-	"decision_strategy_init_dec_policies": [["id == 1"]]
+	"research_strategy_name": ["DefaultResearchStrategy"],
+	"research_strategy_init_dec_policies": [["id == 1"]]
 	}
 
 
@@ -85,17 +85,17 @@ def main():
 			},
 			"journal_parameters": {
 					"max_pubs": params["journal_max_pubs"],
-					"selection_strategy": {
-							"name": params["journal_selection_strategy_name"]
+					"review_strategy": {
+							"name": params["journal_review_strategy_name"]
 					}
 			},
 			"researcher_parameters": {
-					"decision_strategy": {
-				      "name": params["decision_strategy_name"],
+					"research_strategy": {
+				      "name": params["research_strategy_name"],
 				      "between_replications_decision_policies": [[""]],
 				      "final_decision_policies": [[""]],
 				      "initial_decision_policies": [
-				      	params["decision_strategy_init_dec_policies"]
+				      	params["research_strategy_init_dec_policies"]
 				      ],
 				      "submission_policies": [""]
 				    },

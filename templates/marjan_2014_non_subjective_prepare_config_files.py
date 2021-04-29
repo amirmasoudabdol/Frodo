@@ -32,7 +32,7 @@ params_info = {
 
 	"journal_pub_bias": [z for z in np.arange(0, 0.81, 0.2)],
 
-	"decision_strategy_name": ["DefaultDecisionMaker"],
+	"research_strategy_name": ["DefaultResearchStrategy"],
 
 	"test_strategy": [
 		{
@@ -102,8 +102,8 @@ def main():
 		        }
 			},
 			"researcher_parameters": {
-				"decision_strategy": {
-					"name": params["decision_strategy_name"],
+				"research_strategy": {
+					"name": params["research_strategy_name"],
 					"between_stashed_selection_policies": [
 						[""]
 					],

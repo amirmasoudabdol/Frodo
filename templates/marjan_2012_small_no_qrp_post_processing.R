@@ -41,13 +41,13 @@ summarize_each_file <- function(fname) {
     mutate(nobs = nobs,
            tnobs = factor(tnobs),
            covs = factor(experiment_parameters_data_strategy_measurements_covs),
-           decision_strategy = factor(researcher_parameters_decision_strategy_name),
+           research_strategy = factor(researcher_parameters_research_strategy_name),
            is_hacked = factor(researcher_parameters_probability_of_being_a_hacker),
-           selection_policy = factor(researcher_parameters_decision_strategy_initial_decision_policies_0_0),
+           selection_policy = factor(researcher_parameters_research_strategy_initial_decision_policies_0_0),
            tmean = experiment_parameters_data_strategy_measurements_means_5,
            effect = effect) %>%
     mutate(eff_abs_diff= effect - tmean) %>%
-    group_by(tmean, covs, tnobs, sizeclass, decision_strategy, is_hacked, selection_policy) %>%
+    group_by(tmean, covs, tnobs, sizeclass, research_strategy, is_hacked, selection_policy) %>%
     summarize(sigmean = mean(sig),
               mean_nobs = mean(nobs),
               mean_eff = mean(effect),

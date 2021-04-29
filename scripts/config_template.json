@@ -23,7 +23,7 @@
     },
     "journal_parameters": {
         "max_pubs": 20,
-        "selection_strategy": {
+        "review_strategy": {
             "name": "FreeSelection",
             "alpha": 0.05,
             "pub_bias": 0.95,
@@ -31,8 +31,8 @@
         }
     },
     "researcher_parameters": {
-        "decision_strategy": {
-            "name": "DefaultDecisionMaker",
+        "research_strategy": {
+            "name": "DefaultResearchStrategy",
             "preference": "MinPvalue"
         },
         "hacking_strategies": [
