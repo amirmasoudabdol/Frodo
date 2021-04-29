@@ -138,7 +138,7 @@ config: check ## Building necessary files and folders for a new project
 	@cp scripts/ProjectMakefileTemplate $(path)/$(project)/Makefile
 	@awk '{gsub(/yourprojectname/,"$(project)");}1' $(path)/$(project)/Makefile > tmp && mv tmp $(path)/$(project)/Makefile
 
-load: check
+load: check ## Overwrite the project's scripts with files available in the templates folder.
 	@printf '$(<b>)> Loading existing project files... $(</b>)\n'
 
 ifneq ("$(wildcard templates/$(project)_post_processing.R)","")
