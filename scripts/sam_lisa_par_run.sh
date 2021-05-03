@@ -17,9 +17,9 @@ ncores=`sara-get-num-cores`
 
 PROJECT_DIR=$(pwd)
 
-SAMoo_DIR=${PROJECT_DIR}/projects/yourprojectname
+FRODO_DIR=${PROJECT_DIR}/projects/yourprojectname
 SAMrr_DIR=${PROJECT_DIR}/rscripts
-SAMpp_DIR=${PROJECT_DIR}/build
+SAM_DIR=${PROJECT_DIR}/build
 
 # -----------------------------------
 # Copying everything to the /scratch

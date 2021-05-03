@@ -6,10 +6,8 @@ SHELL:=/bin/bash
 
 # This is a utility Makefile
 
-SAMpp_DIR=$(HOME)/Projects/SAMpp
-baaraan_DIR=$(HOME)/Projects/baaraan
-ooDIR=$(HOME)/Projects/SAMoo
-rrDIR=$(HOME)/Projects/SAMrr
+SAM_DIR=$(HOME)/Projects/SAM
+FRODO_DIR=$(HOME)/Projects/FRODO
 
 currentdatetime:=$(shell date '+%Y-%m-%d_%H-%M%p')
 
@@ -35,14 +33,14 @@ n_cores=$(shell echo $$(( $(ncores) - 1)) )
 .PHONY: help
 
 help:  ## Display this help
-	@printf "\n This is SAMoo, a handy toolset for preparing a new project using SAM.\n"
-	@printf " In the process of 'prepare'-ing a new project, this Makefile produces\n"
-	@printf " several template files for configuring and running a SAM project on\n"
-	@printf " your local machine or on Lisa cluster.\n\n"
+	@printf "\nThis is Frodo, a handy toolset for preparing a new project for SAM.\n"
+	@printf "In the process of 'prepare'-ing a new project, Frodo produces\n"
+	@printf "several template files for configuring and running a SAM project on\n"
+	@printf "your local machine or on SURFsara's Lisa cluster.\n\n"
 	@printf "$(<b>)> Make sure that this Makefile knows where SAM and other $(</b>)\n"
 	@printf "$(<b>)  dependencies are located. You can set their path through the $(</b>)\n"
 	@printf "$(<b>)  parameters defined in line 9 – 12 of the Makefile.$(</b>)\n"
-	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target> parameter=value \033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<command> parameter=value \033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 	@echo
 	@echo "Example Usage:"
 	@echo "    make prepare project=apollo path=HOME/Projects/"
@@ -66,8 +64,8 @@ ifeq ("$(project)","")
 endif
 
 prepare: check ## Create a new project by running <config> and <sam>
+	@mkdir -p $(path)
 	@printf '$(<b>)> Preparing $(project)... $(</b>)\n'
-	@mkdir -p $(path)/$(project)/build
 	@mkdir -p $(path)/$(project)/configs
 
 	@mkdir -p $(path)/$(project)/scripts
@@ -159,18 +157,17 @@ endif
 sam: check ## Build SAMrun executable. Note: This will update SAM source directory and rebuild it
 	@printf '$(<b>)> Copying SAM... $(</b>)\n'
 	@mkdir -p $(path)/$(project)/SAM
-	@rsync -rtu ${SAMpp_DIR}/ $(path)/$(project)/SAM/SAMpp/ --exclude-from=.rsync-exclude-list
-	@rsync -rtu ${baaraan_DIR}/ $(path)/$(project)/SAM/baaraan/ --exclude-from=.rsync-exclude-list
+	@rsync -rtu ${SAM_DIR}/ $(path)/$(project)/SAM/SAM/ --exclude-from=.rsync-exclude-list
 
-	@mkdir -p $(path)/$(project)/SAM/SAMpp/build
+	@mkdir -p $(path)/$(project)/SAM/SAM/build
 	
 	@printf '$(<b>)> Configuring SAM... $(</b>)\n'
-	@cmake -DCMAKE_BUILD_TYPE=Release -H$(path)/$(project)/SAM/SAMpp -B$(path)/$(project)/SAM/SAMpp/build
+	@cmake -DCMAKE_BUILD_TYPE=Release -H$(path)/$(project)/SAM/SAM -B$(path)/$(project)/SAM/SAM/build
 	
 	@printf '$(<b>)> Building SAM... $(</b>)\n'
-	@cmake --build $(path)/$(project)/SAM/SAMpp/build --parallel $(n_cores)
+	@cmake --build $(path)/$(project)/SAM/SAM/build --parallel $(n_cores)
 	
-	@mv $(path)/$(project)/SAM/SAMpp/build/SAMrun $(path)/$(project)/
+	@mv $(path)/$(project)/SAM/SAM/build/SAMrun $(path)/$(project)/
 
 compress: check ## Zip everything in the <project>
 	@printf '$(<b>)> Compressing $(project)... $(</b>)\n'

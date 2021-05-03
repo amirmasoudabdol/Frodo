@@ -11,7 +11,7 @@ echo "# Setting Paths"
 echo
 echo "PROJECT_DIR=\$(pwd)"
 echo 
-echo "SAMoo_DIR=\${PROJECT_DIR}"
+echo "FRODO_DIR=\${PROJECT_DIR}"
 echo "SAMrr_DIR=\${PROJECT_DIR}/rscripts"
 echo 
 echo "# -----------------------------------"

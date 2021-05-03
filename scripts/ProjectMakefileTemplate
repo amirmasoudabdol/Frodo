@@ -55,11 +55,11 @@ n_cores=$(shell echo $$(( $(ncores) - 1)) )
 .PHONY: help
 
 help:  ## Display this help
-	@echo " \nYou can control your project using this Makefile. There are several"
-	@echo " commands are available for running your simulation locally or on a "
-	@echo " cluster. It's also possible to run the simulation sequentially or in"
-	@echo " parallel on your local machine."
-	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target> \033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
+	@printf "\nThis is Frodo too, a handy toolset for controling your newly created project."
+	@printf "There are several commands are available for running your simulation locally or on a "
+	@printf "cluster. It's also possible to run the simulation sequentially or in"
+	@printf "parallel on your local machine."
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<command> \033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 	@echo
 	@echo "Example Usage:"
 	@echo "    make parameters using=~/projects_config/2012_project.py"
@@ -79,9 +79,9 @@ name: ## The name of the archive
 
 sam-build: ## Rebuild the binaries, run this if you've modified the code
 	# TODO: Run the `cmake` first
-	@cmake -DCMAKE_BUILD_TYPE=Release -HSAM/SAMpp -BSAM/SAMpp/build
-	@cmake --build SAM/SAMpp/build --parallel $(n_cores)
-	@mv SAM/SAMpp/build/SAMrun .
+	@cmake -DCMAKE_BUILD_TYPE=Release -HSAM/SAM -BSAM/SAM/build
+	@cmake --build SAM/SAM/build --parallel $(n_cores)
+	@mv SAM/SAM/build/SAMrun .
 
 parameters: clean ## Preparing config files for SAM
 	@printf '$(<b>)> Make sure that you have set all the parameters correctly... $(</b>)\n'
@@ -115,7 +115,7 @@ summary: ## Runinng the `post-processing.R` script on every file in output/ fold
 	@printf '$(<b>)> Summarizing the dataset... $(</b>)\n'
 	@Rscript scripts/yourprojectname_post_processing.R
 
-stats:
+stats: ## Use `xsv` tool to group and calculate summary statistics of each file
 	@printf '$(<b>)> Preparing statistics from $(from)... $(</b>)\n'
 	@./scripts/yourprojectname_prepare_stats.sh $(from) $(n_cores)
 	@python3 scripts/yourprojectname_transpose_csv.py $(from)_Stats
