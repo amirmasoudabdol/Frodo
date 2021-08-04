@@ -97,7 +97,7 @@ csv: ## Create a set of files `*_prepared.csv` by adding all keys/values to them
 
 stack: ## Stack several CSV files into one CSV file
 	@printf '$(<b>)> Stacking $(from) output files... $(</b>)\n'
-	@xsv cat rows outputs/*_$(from)_prepared.csv -o outputs/$(from)_Stacked.csv
+	@xsv cat rows outputs/*_$(from)_prepared.csv -o outputs/$(project)_$(from)_Stacked.csv
 
 stacker: ## Faster version of stacker. Use this for lager data files
 	@printf '$(<b>)> Stacking $(from) output files... $(</b>)\n'
