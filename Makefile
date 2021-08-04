@@ -79,7 +79,7 @@ prepare: check ## Create a new project by running <config> and <sam>
 
 	@$(MAKE) sam
 
-	@printf '$(<b>)> Successfully preapred and saved "$(project)" in "$(path)" ... $(</b>)\n'
+	@printf '$(<b>)> Successfully prepared and saved "$(project)" in "$(path)" ... $(</b>)\n'
 	@printf '$(<b>)> `cd` into the project folder and start with the `make` command ... $(</b>)\n'
 
 config: check ## Building necessary files and folders for a new project
