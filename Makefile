@@ -6,8 +6,8 @@ SHELL:=/bin/bash
 
 # This is a utility Makefile
 
-SAM_DIR=$(pwd)/../SAM
-FRODO_DIR=$(pwd)/
+SAM_DIR=$(shell pwd)/../SAM
+FRODO_DIR=$(shell pwd)
 
 currentdatetime:=$(shell date '+%Y-%m-%d_%H-%M%p')
 

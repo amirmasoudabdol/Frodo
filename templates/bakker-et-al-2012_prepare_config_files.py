@@ -41,7 +41,7 @@ params_info = {
 	"journal_max_pubs": [500],
 
 	"n_reps": [1, 2, 3, 4, 5]
-	}
+}
 
 
 def main():

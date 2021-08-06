@@ -5,17 +5,17 @@ import numpy as np
 import tqdm
 
 params_info = {
-	"n_sims": [100],
-	"log_level": ["info"],
+	"n_sims": [1000],
+	"log_level": ["off"],
 	"progress": [False],
 	"data_strategy_n_conditions": [2],
 	"data_strategy_n_dep_vars": [1],
 	"data_strategy_measurements": [
 		{
-		"dist": "mvnorm_distribution",
-    	"means": [0.0, x],
-        "covs": 0.0,
-        "stddevs": 1.0
+			"dist": "mvnorm_distribution",
+	    	"means": [0.0, x],
+	        "covs": 0.0,
+	        "stddevs": 1.0
 		} for x in [0, 0.15, 0.39, 0.67]
 	],
 	"data_strategy_errors": [
@@ -24,9 +24,9 @@ params_info = {
     	"means": [0.0, x],
         "covs": 0.0,
         "stddevs": 1.0
-		} for x in [0]
+		} for x in [0, 0.25, 0.75, 1]
 	],
-	"n_obs": [52]
+	"n_obs": [52, 50, 150],
 	"seed": ["random"],
 	"hacking_probability": [0],
 	"output_path": ["../outputs/"],
@@ -79,10 +79,10 @@ def main():
 			},
 			"journal_parameters": {
 				"max_pubs": params["journal_max_pubs"],
-		        "selection_strategy": {
+		        "review_strategy": {
 		            "name": "SignificantSelection",
 		            "alpha": params["test_alpha"],
-		            "pub_bias": params["journal_pub_bias"],
+		            "pub_bias_rate": params["journal_pub_bias"],
 		            "side": 0
 		        },
 		        "meta_analysis_metrics": [
@@ -135,6 +135,7 @@ def main():
 				"probability_of_being_a_hacker": params["hacking_probability"],
 		        "probability_of_committing_a_hack": 1,
 			    "hacking_strategies": [
+			    [
 					[
 		                {
 		                    "name": "OptionalStopping",
@@ -189,6 +190,7 @@ def main():
                             "!sig"
 		                ]
 	               	]
+	               ]
 			    ],
 				"is_pre_processing": False,
 				"pre_processing_methods": [
@@ -203,7 +205,7 @@ def main():
 				"output_prefix": "",
 		        "update_config": True,
 		        "progress": False,
-		        "save_all_pubs": False,
+		        "save_all_pubs": True,
 		        "save_meta": True,
 		        "save_overall_summaries": True,
 		        "save_pubs_per_sim_summaries": True,
