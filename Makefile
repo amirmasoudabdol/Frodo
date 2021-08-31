@@ -18,6 +18,13 @@ else
 	path=$(path)
 endif
 
+from=""
+ifeq ($(from),"")
+	from=$(shell pwd)/templates
+else
+	from=$(from)
+endif
+
 OSTYPE=$(shell uname -s)
 ifeq ($(OSTYPE),Linux)
 	ncores=$(shell grep -c ^processor /proc/cpuinfo)
@@ -139,19 +146,19 @@ config: check ## Building necessary files and folders for a new project
 load: check ## Overwrite the project's scripts with files available in the templates folder.
 	@printf '$(<b>)> Loading existing project files... $(</b>)\n'
 
-ifneq ("$(wildcard templates/$(project)_post_processing.R)","")
+ifneq ("$(wildcard $(from)/$(project)_post_processing.R)","")
 	@echo "Found and copied $(project)_post_processing.R"
-	@cp $(shell pwd)/templates/$(project)_post_processing.R $(path)/$(project)/scripts/$(project)_post_processing.R
+	@cp $(shell pwd)/$(from)/$(project)_post_processing.R $(path)/$(project)/scripts/$(project)_post_processing.R
 endif
 
-ifneq ("$(wildcard templates/$(project)_prepare_config_files.py)","")
+ifneq ("$(wildcard $(from)/$(project)_prepare_config_files.py)","")
 	@echo "Found and copied $(project)_prepare_config_files.py"
-	@cp $(shell pwd)/templates/$(project)_prepare_config_files.py $(path)/$(project)/scripts/$(project)_prepare_config_files.py
+	@cp $(shell pwd)/$(from)/$(project)_prepare_config_files.py $(path)/$(project)/scripts/$(project)_prepare_config_files.py
 endif
 
-ifneq ("$(wildcard templates/$(project)_lisa_par_run.sh)","")
+ifneq ("$(wildcard $(from)/$(project)_lisa_par_run.sh)","")
 	@echo "Found and copied $(project)_lisa_par_run.sh"
-	@cp $(shell pwd)/templates/$(project)_lisa_par_run.sh $(path)/$(project)/scripts/$(project)_lisa_par_run.sh
+	@cp $(shell pwd)/$(from)/$(project)_lisa_par_run.sh $(path)/$(project)/scripts/$(project)_lisa_par_run.sh
 endif
 
 sam: check ## Build SAMrun executable. Note: This will update SAM source directory and rebuild it
