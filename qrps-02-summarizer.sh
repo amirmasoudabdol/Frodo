@@ -11,10 +11,16 @@ make summary
 make csv from=Publications_Summaries
 make stack from=Publications_Summaries
 
+rm ~/Projects/FRODO/projects/qrps-02/*_prepared.csv
+
 make stats from=Meta_Analysis_Test
 make csv from=Meta_Analysis_Test_Stats
 make stack from=Meta_Analysis_Test_Stats
 
+rm ~/Projects/FRODO/projects/qrps-02/*_prepared.csv
+
 make stats from=Caliper_Test
 make csv from=Caliper_Test_Stats
 make stack from=Caliper_Test_Stats
+
+rm ~/Projects/FRODO/projects/qrps-02/*_prepared.csv
