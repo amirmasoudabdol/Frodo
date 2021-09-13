@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -N 1
 #SBATCH --ntasks-per-node 16
-#SBATCH -t 12:00:00
+#SBATCH -t 03:00:00
 #SBATCH --mail-type=BEGIN,END
 #SBATCH --mail-user=a.m.abdol@uvt.nl
 
@@ -13,9 +13,9 @@ make stack from=Publications_Summaries
 
 rm ~/Projects/FRODO/projects/qrps-10/*_prepared.csv
 
-make stats from=Meta_Analysis_Test
-make csv from=Meta_Analysis_Test_Stats
-make stack from=Meta_Analysis_Test_Stats
+make stats from=Meta_Analysis
+make csv from=Meta_Analysis_Stats
+make stack from=Meta_Analysis_Stats
 
 rm ~/Projects/FRODO/projects/qrps-10/*_prepared.csv
 
