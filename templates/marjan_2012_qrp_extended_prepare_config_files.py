@@ -80,11 +80,11 @@ def main():
 			},
 			"journal_parameters": {
 				"max_pubs": params["journal_max_pubs"],
-		        "selection_strategy": {
+		        "review_strategy": {
 		            "name": "SignificantSelection",
 		            "alpha": params["test_alpha"],
 		            "side": 0,
-		            "pub_bias": params["journal_pub_bias"]
+		            "pub_bias_rate": params["journal_pub_bias"]
 		        },
 		        "meta_analysis_metrics": [
 		            {

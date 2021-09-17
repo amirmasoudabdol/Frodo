@@ -17,7 +17,6 @@ ncores=`sara-get-num-cores`
 PROJECT_DIR=$(pwd)
 
 FRODO_DIR=${PROJECT_DIR}/projects/yourprojectname
-SAMrr_DIR=${PROJECT_DIR}/rscripts
 SAM_DIR=${PROJECT_DIR}/build
 
 # -----------------------------------

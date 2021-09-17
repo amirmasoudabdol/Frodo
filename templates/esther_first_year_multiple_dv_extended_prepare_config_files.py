@@ -75,7 +75,7 @@ def main():
 			},
 			"journal_parameters": {
 				"max_pubs": params["journal_max_pubs"],
-		        "selection_strategy": {
+		        "review_strategy": {
 		            "name": "SignificantSelection",
 		            "alpha": params["test_alpha"],
 		            "journal_pub_bias": params["journal_pub_bias"],
